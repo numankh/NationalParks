@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Osman Balci on 2018.10.20
+Created by Osman Balci on 2018.06.15
 Copyright © 2018 Osman Balci. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -21,7 +21,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
         (c) displays a title for the page in search-engine results.
         -->
         <title>
-            <ui:insert name="title">Health Survey</ui:insert>
+            <ui:insert name="title">Cloud Drive</ui:insert>
         </title>
 
         <!-- 
@@ -41,7 +41,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
         -->
         <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};
               url=#{request.contextPath}/template/sessionTimeout.xhtml"/>
-        
+
         <!-- 
         =============================
         *   CSS for the Entire UI   *
@@ -50,29 +50,19 @@ Copyright © 2018 Osman Balci. All rights reserved.
         -->
         <h:outputStylesheet library="css" name="siteStyles.css" />
 
-        <!-- 
-        ===============================
-        *   JavaScript Image Slider   *
-        ===============================
-        The following CSS and JavaScript files are required for the JavaScript Image Slider
-        downloaded from http://www.menucool.com/javascript-image-slider to work.
-        -->
-        <h:outputStylesheet library="css" name="js-image-slider.css" />
-        <h:outputScript name="js/js-image-slider.js" />
-
-        <!-- 
-        ======================================== 
-        * Font Awesome "SVG with JS" Icons * 
-        ======================================== 
+        <!--
+        ========================================
+        *   Font Awesome "SVG with JS" Icons   *
+        ========================================
         The following enables the use of more than 1,300 "Scalable Vector Graphics (SVG) with
-        JavaScript (JS)" free icons. For details, see: 
-        https://fontawesome.com/how-to-use/on-the-web/setup/getting-started?using=svg-with-js 
+        JavaScript (JS)" free icons. For details, see:
+        https://fontawesome.com/how-to-use/on-the-web/setup/getting-started?using=svg-with-js
         -->
-        <script defer='defer' src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
-               integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" 
-               crossorigin="anonymous">
+        <script defer='defer' src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" 
+            integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy"
+            crossorigin="anonymous">
         </script>
-        
+
         <!-- 
         =====================
         *   Favorite Icon   *
