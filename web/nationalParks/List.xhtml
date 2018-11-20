@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2018.06.27
+Copyright © 2018 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="National Parks"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" style="width:97%">
+                
+                <h:form id="ParkListForm">
+                    <p:panel header="National Parks">
+                        <p:dataTable id="datalist" value="#{parkController.parks}" var="park"
+                                     selectionMode="single" selection="#{parkController.selected}"
+                                     reflow="true"
+                                     paginator="true"
+                                     rowKey="#{park.id}"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,15,20,25,30,40,50">
+
+                            <p:ajax event="rowSelect" update="viewButton"/>
+                            <p:ajax event="rowUnselect" update="viewButton"/>
+                            
+                            <!-- 
+                            =================
+                            VT Building Image
+                            =================
+                            -->
+                            <p:column headerText="Image" style="width:85px;" class="standardText">
+                                <div align="center">
+                                    <h:graphicImage value="#{park.imageUrl}" class="buildingImage" />
+                                </div>
+                            </p:column>
+
+                            <!-- 
+                            ================
+                            VT Building Name
+                            ================
+                            -->
+                            <p:column sortBy="#{park.fullName}" headerText="Park Name" class="standardText">
+                                <h:outputText value="#{park.fullName}"/>
+                            </p:column>
+                            
+                            <!-- 
+                            ========================
+                            VT Building Abbreviation
+                            ========================
+                            -->
+                            <p:column sortBy="#{park.states}" headerText="States" 
+                                      style="width:100px; text-align:center" class="standardText">
+                                <h:outputText value="#{park.states}"/>
+                            </p:column>
+
+                            <!-- PrimeFaces data table's footer -->
+                            <f:facet name="footer">
+                                <!-- PrimeFaces button 'View Selected' -->
+                                <p:commandButton id="viewButton" value="View Selected" icon="fas fa-eye" 
+                                                 action="#{parkController.displayParkInformation()}" />
+                            </f:facet>
+
+                        </p:dataTable>
+                    </p:panel>
+
+                </h:form>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
