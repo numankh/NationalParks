@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Created by Osman Balci on 2018.06.15
+Copyright © 2018 Osman Balci. All rights reserved.
+-->
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <!-- 
+    This file is used to configure the application, 
+    managed beans, convertors, validators, and navigation.
+    -->
+    <application>
+        <!--
+        This defines 'bundle' as the variable name to use in an Expression Language
+        to access the Bundle.properties internationalization configuration file.
+        For example: #{bundle.CreateUserLabel_lastName}
+        -->
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+    </application>
+</faces-config>

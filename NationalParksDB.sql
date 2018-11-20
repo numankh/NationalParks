@@ -4,13 +4,13 @@ CREATE TABLE NationalParks
 (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT
 	,fullName VARCHAR(44) NOT NULL
-        ,states VARCHAR(4) NOT NULL
-	,parkCode VARCHAR(8) NOT NULL
+        ,states VARCHAR(8) NOT NULL
+	,parkCode VARCHAR(4) NOT NULL
 	,imageUrl VARCHAR(90) NOT NULL
 	,PRIMARY KEY (id)
 );
 
-INSERT INTO NationalParks (fullName, states, parkCode, imageUrl) VALUES
+INSERT INTO NationalParks (fullName, parkCode, states, imageUrl) VALUES
 ('Acadia National Park','acad','ME','https://www.nps.gov/common/uploads/structured_data/3C7B45AE-1DD8-B71B-0B7EE131C7DFC2F5.jpg')
 ,('Arches National Park','arch','UT','https://www.nps.gov/common/uploads/structured_data/3C79850F-1DD8-B71B-0BC4A88BA85DE6B0.jpg')
 ,('Badlands National Park','badl','SD','https://www.nps.gov/customcf/structured_data/upload/5853560268_bce0ab5b6c_o.jpg')

@@ -6,10 +6,11 @@ Copyright © 2018 Osman Balci. All rights reserved.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      >
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -17,7 +18,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="National Parks"></h:outputText>
+            <h:outputText value="VT Buildings"></h:outputText>
         </ui:define>
 
         <!-- Create the content for this page below -->
@@ -25,15 +26,16 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
             <div align="center" style="width:97%">
                 
-                <h:form id="ParkListForm">
-                    <p:panel header="National Parks">
-                        <p:dataTable id="datalist" value="#{parkController.parks}" var="park"
+                <h:form id="BuildingListForm">
+                    <p:panel header="Virginia Tech Buildings">
+                        <p:dataTable id="datalist" value="#{parkController.items}" var="park"
                                      selectionMode="single" selection="#{parkController.selected}"
                                      reflow="true"
                                      paginator="true"
                                      rowKey="#{park.id}"
                                      rows="5"
-                                     rowsPerPageTemplate="5,10,15,20,25,30,40,50">
+                                     rowsPerPageTemplate="5,10,15,20,25,30,40,50"
+                                     class="dataTable">
 
                             <p:ajax event="rowSelect" update="viewButton"/>
                             <p:ajax event="rowUnselect" update="viewButton"/>
@@ -45,7 +47,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             -->
                             <p:column headerText="Image" style="width:85px;" class="standardText">
                                 <div align="center">
-                                    <h:graphicImage value="#{park.imageUrl}" class="buildingImage" />
+                                    <h:graphicImage value="#{park.imageUrl}" class="parkImage" />
                                 </div>
                             </p:column>
 
@@ -54,7 +56,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             VT Building Name
                             ================
                             -->
-                            <p:column sortBy="#{park.fullName}" headerText="Park Name" class="standardText">
+                            <p:column sortBy="#{park.fullName}" headerText="Building Name" class="standardText">
                                 <h:outputText value="#{park.fullName}"/>
                             </p:column>
                             
@@ -63,14 +65,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             VT Building Abbreviation
                             ========================
                             -->
-                            <p:column sortBy="#{park.states}" headerText="States" 
+                            <p:column sortBy="#{park.states}" headerText="Abbreviation" 
                                       style="width:100px; text-align:center" class="standardText">
                                 <h:outputText value="#{park.states}"/>
                             </p:column>
 
-                            <!-- PrimeFaces data table's footer -->
                             <f:facet name="footer">
-                                <!-- PrimeFaces button 'View Selected' -->
                                 <p:commandButton id="viewButton" value="View Selected" icon="fas fa-eye" 
                                                  action="#{parkController.displayParkInformation()}" />
                             </f:facet>
@@ -80,6 +80,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                 </h:form>
             </div>
+
+           
         </ui:define>
 
     </ui:composition>

@@ -23,7 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author brn2s
  */
 @Entity
+
 @Table(name = "NationalParks")
+
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "NationalParks.findAll", query = "SELECT n FROM NationalParks n")
@@ -41,6 +43,7 @@ public class NationalParks implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    
     @NotNull
     @Size(min = 1, max = 44)
     @Column(name = "fullName")
@@ -138,7 +141,7 @@ public class NationalParks implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.vt.EntityBeans.NationalParks[ id=" + id + " ]";
+        return id.toString();
     }
     
 }
