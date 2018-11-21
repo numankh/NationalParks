@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Adam Wilborn on 2018.11.20 
-Copyright © 2018 Adam Wilborn. All rights reserved.
+Created by Osman Balci on 2018.06.27
+Copyright © 2018 Osman Balci. All rights reserved.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Building Info"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center">
+                <h:form>
+                    <div class="buildingInfo">
+                        <h:outputLabel value="#{parkController.selected.fullName}" class="heading" />
+                        <br/><br/>
+                        <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 50%"/>
+                        <br/><br/>
+                        <h:outputText value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
+                    </div>
+                    <br/>
+                    <p:button outcome="/nationalParks/List" value="Back" icon="fas fa-arrow-left"  />
+                    &nbsp;&nbsp;
+                </h:form>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
 </html>

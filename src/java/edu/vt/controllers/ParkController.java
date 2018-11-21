@@ -6,11 +6,18 @@ package edu.vt.controllers;
 
 import edu.vt.EntityBeans.NationalParks;
 import edu.vt.FacadeBeans.ParkFacade;
+import edu.vt.globals.Methods;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONObject;
 
 @Named("parkController")
 @SessionScoped
@@ -21,10 +28,12 @@ public class ParkController implements Serializable {
     
     @EJB
     private ParkFacade parkFacade;
+    private SSLTool tool = new SSLTool();
     
     public ParkController() {
         
     }
+    
     
     public List<NationalParks> getItems() {
         if (items == null) {
@@ -48,4 +57,83 @@ public class ParkController implements Serializable {
     public void setParkFacade(ParkFacade parkFacade) {
         this.parkFacade = parkFacade;
     }
+    
+    public String displayParkInformation() {
+        if (selected == null) {
+            return "";
+        }
+        return "/nationalParks/View?faces-redirect=true";
+    }
+    
+    public String selectedParkDescription() throws Exception {
+        tool.disableCertificateValidation();
+        String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
+//        try {
+//            String jsonData = readUrlContent(apiUrl);
+//            JSONObject data = new JSONObject(jsonData);
+//            parkDescription = data.optString("data", "");
+//        } catch (IOException ex) {
+//            Methods.showMessage("Fatal Error", "Error in processing JSON data returned from API", "See: " + ex.getMessage());
+//        }
+        String jsonData = readUrlContent(apiUrl);
+        JSONObject data = new JSONObject(jsonData);
+        JSONArray params = data.getJSONArray("data");
+        JSONObject param1 = params.getJSONObject(0);
+        String parkDescription = param1.optString("description", "");
+        return parkDescription;
+    }
+    
+    public String readUrlContent(String webServiceURL) throws Exception {
+        /*
+        reader is an object reference pointing to an object instantiated from the BufferedReader class.
+        Currently, it is "null" pointing to nothing.
+         */
+        BufferedReader reader = null;
+
+        try {
+            // Create a URL object from the webServiceURL given
+            URL url = new URL(webServiceURL);
+            /*
+            The BufferedReader class reads text from a character-input stream, buffering characters
+            so as to provide for the efficient reading of characters, arrays, and lines.
+             */
+            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            // Create a mutable sequence of characters and store its object reference into buffer
+            StringBuilder buffer = new StringBuilder();
+
+            // Create an array of characters of size 10240
+            char[] chars = new char[10240];
+
+            int numberOfCharactersRead;
+            /*
+            The read(chars) method of the reader object instantiated from the BufferedReader class
+            reads 10240 characters as defined by "chars" into a portion of a buffered array.
+
+            The read(chars) method attempts to read as many characters as possible by repeatedly
+            invoking the read method of the underlying stream. This iterated read continues until
+            one of the following conditions becomes true:
+
+                (1) The specified number of characters have been read, thus returning the number of characters read.
+                (2) The read method of the underlying stream returns -1, indicating end-of-file, or
+                (3) The ready method of the underlying stream returns false, indicating that further input requests would block.
+
+            If the first read on the underlying stream returns -1 to indicate end-of-file then the read(chars) method returns -1.
+            Otherwise the read(chars) method returns the number of characters actually read.
+             */
+            while ((numberOfCharactersRead = reader.read(chars)) != -1) {
+                buffer.append(chars, 0, numberOfCharactersRead);
+            }
+
+            // Return the String representation of the created buffer
+            return buffer.toString();
+
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+    }
 }
+
+
