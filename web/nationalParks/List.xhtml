@@ -18,7 +18,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="VT Buildings"></h:outputText>
+            <h:outputText value="List of National Parks"></h:outputText>
         </ui:define>
 
         <!-- Create the content for this page below -->
@@ -27,7 +27,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
             <div align="center" style="width:97%">
                 
                 <h:form id="BuildingListForm">
-                    <p:panel header="Virginia Tech Buildings">
+                    <p:panel header="List of National Parks">
                         <p:dataTable id="datalist" value="#{parkController.items}" var="park"
                                      selectionMode="single" selection="#{parkController.selected}"
                                      reflow="true"
@@ -42,30 +42,30 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             
                             <!-- 
                             =================
-                            VT Building Image
+                            National Park Images
                             =================
                             -->
-                            <p:column headerText="Image" style="width:85px;" class="standardText">
+                            <p:column headerText="Image" style="width:210px;" class="standardText">
                                 <div align="center">
-                                    <h:graphicImage value="#{park.imageUrl}" class="parkImage" />
+                                    <h:graphicImage value="#{park.imageUrl}" class="parkImage"/>
                                 </div>
                             </p:column>
 
                             <!-- 
                             ================
-                            VT Building Name
+                            National Park Name
                             ================
                             -->
-                            <p:column sortBy="#{park.fullName}" headerText="Building Name" class="standardText">
+                            <p:column sortBy="#{park.fullName}" headerText="National Park Name" class="standardText">
                                 <h:outputText value="#{park.fullName}"/>
                             </p:column>
                             
                             <!-- 
                             ========================
-                            VT Building Abbreviation
+                            National Park State
                             ========================
                             -->
-                            <p:column sortBy="#{park.states}" headerText="Abbreviation" 
+                            <p:column sortBy="#{park.states}" headerText="State" 
                                       style="width:100px; text-align:center" class="standardText">
                                 <h:outputText value="#{park.states}"/>
                             </p:column>

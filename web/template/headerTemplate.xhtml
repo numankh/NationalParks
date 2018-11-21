@@ -79,9 +79,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                     <i class="fas fa-home"></i>&nbsp;Home
                                 </h:link>
                                 
-                                <h:link outcome="/nationalParks/List" class="standardText">
-                                    <i class="fas fa-list"></i>&nbsp;National Parks
-                                </h:link>
+                                
 
                                 <!-- 
                                 ===========================================
@@ -90,10 +88,6 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
                                     
-                                    <h:link outcome="/userFile/ListUserFiles" class="standardText" >
-                                        <i class="fas fa-file-alt"></i>&nbsp;My Files
-                                    </h:link>
-
                                     <!-- Clicking "My Account" displays the Profile.xhtml file -->
                                     <h:link outcome="/userAccount/Profile" class="standardText">
                                         <!-- 
@@ -127,6 +121,29 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                         <i class="fas fa-user-plus"></i>&nbsp;Create an Account
                                     </h:link>
                                 </c:if>
+                                
+                                <!-- 
+                                ============================================
+                                |   The Rest of the Menu Options    |
+                                ============================================
+                                -->
+                                
+                                
+                                <h:link outcome="/nationalParks/List" class="standardText">
+                                    <i class="fas fa-list"></i>&nbsp;National Parks
+                                </h:link>
+                                
+                                <h:link outcome="/nationalParks/List" class="standardText">
+                                    <i class="fas fa-map-marked-alt"></i>&nbsp;Trip Planner
+                                </h:link>
+                                
+                                <h:link outcome="/nationalParks/List" class="standardText">
+                                    <i class="fas fa-search"></i>&nbsp;Search
+                                </h:link>
+                                
+                                <h:link outcome="/About" class="standardText">
+                                    <i class="fas fa-info-circle"></i>&nbsp;About
+                                </h:link>
 
                             </div>
                         </div>
