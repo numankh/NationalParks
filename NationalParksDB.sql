@@ -13,7 +13,7 @@ CREATE TABLE NationalParks
 INSERT INTO NationalParks (fullName, parkCode, states, imageUrl) VALUES
 ('Acadia National Park','acad','ME','https://www.nps.gov/common/uploads/structured_data/3C7B45AE-1DD8-B71B-0B7EE131C7DFC2F5.jpg')
 ,('Arches National Park','arch','UT','https://www.nps.gov/common/uploads/structured_data/3C79850F-1DD8-B71B-0BC4A88BA85DE6B0.jpg')
-,('Badlands National Park','badl','SD','https://www.nps.gov/customcf/structured_data/upload/5853560268_bce0ab5b6c_o.jpg')
+,('Badlands National Park','badl','SD','https://upload.wikimedia.org/wikipedia/commons/b/b9/MK00609_Badlands.jpg')
 ,('Big Bend National Park','bibe','TX','https://www.nps.gov/common/uploads/structured_data/3C84EF64-1DD8-B71B-0B44D9F693CAA78C.jpg')
 ,('Biscayne National Park','bisc','FL','https://www.nps.gov/common/uploads/structured_data/3C870533-1DD8-B71B-0B70CFF5EF6538F1.jpg')
 ,('Black Canyon Of The Gunnison National Park','blca','CO','https://www.nps.gov/common/uploads/structured_data/3C81655F-1DD8-B71B-0B4BCFFDB74EE723.jpg')
