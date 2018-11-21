@@ -42,22 +42,31 @@ public class NationalParks implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
     
+    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 44)
     @Column(name = "fullName")
     private String fullName;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "twitterHandle")
+    private String twitterHandle;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
     @Column(name = "states")
     private String states;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
     @Column(name = "parkCode")
     private String parkCode;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 90)
@@ -71,9 +80,10 @@ public class NationalParks implements Serializable {
         this.id = id;
     }
 
-    public NationalParks(Integer id, String fullName, String states, String parkCode, String imageUrl) {
+    public NationalParks(Integer id, String fullName, String twitterHandle, String states, String parkCode, String imageUrl) {
         this.id = id;
         this.fullName = fullName;
+        this.twitterHandle = twitterHandle;
         this.states = states;
         this.parkCode = parkCode;
         this.imageUrl = imageUrl;
@@ -93,6 +103,14 @@ public class NationalParks implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+    
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+    
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
 
     public String getStates() {

@@ -16,7 +16,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="Building Info"></h:outputText>
+            <h:outputText value="Park Info"></h:outputText>
         </ui:define>
 
         <!-- Create the content for this page below -->
@@ -28,7 +28,23 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <br/><br/>
                         <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 50%"/>
                         <br/><br/>
+                        <h:outputText value="Description:"/>
+                        <br/>
                         <h:outputText value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
+                        <br/><br/>
+                        <h:outputText value="Twitter Feed:"/>
+                        <br/>
+                        <a class="twitter-timeline" 
+                           data-chrome="nofooter"
+                           data-width="750"
+                           data-height="750"
+                           href="https://twitter.com/#{parkController.selected.twitterHandle}?ref_src=twsrc%5Etfw">
+                            Tweets by #{parkController.selected.twitterHandle}
+                        </a> 
+                        <script async="async" 
+                                src="https://platform.twitter.com/widgets.js" 
+                                charset="utf-8">
+                        </script>
                     </div>
                     <br/>
                     <p:button outcome="/nationalParks/List" value="Back" icon="fas fa-arrow-left"  />
