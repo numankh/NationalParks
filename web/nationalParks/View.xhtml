@@ -45,6 +45,18 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 src="https://platform.twitter.com/widgets.js" 
                                 charset="utf-8">
                         </script>
+                        <br/><br/>
+                        <h:outputText value="Flickr Images:"/>
+                        <br/>
+                        <iframe style="position: relative; top: 0; left: 0; width: 1000px; height: 550px;"
+                                src="https://flickrembed.com/cms_embed.php?source=flickr&amp;layout=responsive&amp;input=#{parkController.selected.fullName}&amp;sort=0&amp;by=keywords&amp;theme=default&amp;scale=fill&amp;speed=15000&amp;limit=10&amp;skin=default&amp;autoplay=true" 
+                            scrolling="no" 
+                            frameborder="0" 
+                            allowFullScreen="true" 
+                            webkitallowfullscreen="true" 
+                            mozallowfullscreen="true">
+                        </iframe>
+                        <script type="text/javascript">function showpics(){var a=$("#box").val();$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+a+"&amp;tagmode=any&amp;format=json&amp;jsoncallback=?",function(a){$("#images").hide().html(a).fadeIn("fast"),$.each(a.items,function(a,e){$("<img/>").attr("src",e.media.m).appendTo("#images")})})}</script>
                     </div>
                     <br/>
                     <p:button outcome="/nationalParks/List" value="Back" icon="fas fa-arrow-left"  />
