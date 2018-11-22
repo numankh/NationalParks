@@ -49,7 +49,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <h:outputText value="Flickr Images:"/>
                         <br/>
                         <iframe style="position: relative; top: 0; left: 0; width: 1000px; height: 550px;"
-                                src="https://flickrembed.com/cms_embed.php?source=flickr&amp;layout=responsive&amp;input=#{parkController.selected.fullName}&amp;sort=0&amp;by=keywords&amp;theme=default_notextpanel&amp;scale=fit&amp;speed=3000&amp;limit=60&amp;skin=default-light&amp;autoplay=false" 
+                            src="https://flickrembed.com/cms_embed.php?source=flickr&amp;layout=responsive&amp;input=#{parkController.selected.fullName}&amp;sort=0&amp;by=keywords&amp;theme=default_notextpanel&amp;scale=fit&amp;speed=3000&amp;limit=60&amp;skin=default-light&amp;autoplay=false" 
                             scrolling="no" 
                             frameborder="0" 
                             allowFullScreen="true" 
@@ -59,9 +59,9 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <script type="text/javascript">function showpics() {
                             var a=$("#box").val();$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+a+"&amp;tagmode=any&amp;format=json&amp;jsoncallback=?",function(a) {
                                 $("#images").hide().html(a).fadeIn("fast"),$.each(a.items,function(a,e) {
-                                    $("<img/>").attr("src",e.media.m).appendTo("#images")
-                                })
-                            })
+                                    $("<img/>").attr("src",e.media.m).appendTo("#images");
+                                });
+                            });
                         }
                         </script>
                     </div>
