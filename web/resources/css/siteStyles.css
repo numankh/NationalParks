@@ -389,7 +389,7 @@ Proportionately scale image to show on mobile devices and smaller browser window
 Scale the image downward, but do not enlarge it beyond the width size of 500px.
 */
 .scalableImage {
-    width: 90%;
+    width: 50%;
     max-width: 500px;
     height: auto;
     border: none;
