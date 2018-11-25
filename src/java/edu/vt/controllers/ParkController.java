@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
@@ -29,6 +30,9 @@ public class ParkController implements Serializable {
     @EJB
     private ParkFacade parkFacade;
     private SSLTool tool = new SSLTool();
+    
+    @Inject
+    private ParkMarkers parkMarkers;
     
     public ParkController() {
         
@@ -133,6 +137,18 @@ public class ParkController implements Serializable {
                 reader.close();
             }
         }
+    }
+    
+    public String selectByMarker() {
+        getItems();
+        String name = parkMarkers.getMarker().getTitle() + " National Park";
+        for (int i = 0; i < items.size(); i++) {
+            if( items.get(i).getFullName().equalsIgnoreCase(name) ) {
+                selected  = items.get(i);
+                return "/nationalParks/View?faces-redirect=true";
+            }
+        }
+        return "index?faces-redirect=true";
     }
 }
 
