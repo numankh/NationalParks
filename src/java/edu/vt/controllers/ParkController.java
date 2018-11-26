@@ -113,19 +113,24 @@ public class ParkController implements Serializable {
     public String selectedParkDescription() throws Exception {
         tool.disableCertificateValidation();
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
-//        try {
-//            String jsonData = readUrlContent(apiUrl);
-//            JSONObject data = new JSONObject(jsonData);
-//            parkDescription = data.optString("data", "");
-//        } catch (IOException ex) {
-//            Methods.showMessage("Fatal Error", "Error in processing JSON data returned from API", "See: " + ex.getMessage());
-//        }
         String jsonData = readUrlContent(apiUrl);
         JSONObject data = new JSONObject(jsonData);
         JSONArray params = data.getJSONArray("data");
         JSONObject param1 = params.getJSONObject(0);
         String parkDescription = param1.optString("description", "");
         return parkDescription;
+    }
+    
+    public String selectedParkLatLong() throws Exception {
+        String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
+        String jsonData = readUrlContent(apiUrl);
+        JSONObject data = new JSONObject(jsonData);
+        JSONArray params = data.getJSONArray("data");
+        JSONObject param1 = params.getJSONObject(0);
+        String parkLatLong = param1.optString("latLong", "");
+        parkLatLong = parkLatLong.replace("lat:", "");
+        parkLatLong = parkLatLong.replace(" long:", "");
+        return parkLatLong;
     }
     
     public String readUrlContent(String webServiceURL) throws Exception {
