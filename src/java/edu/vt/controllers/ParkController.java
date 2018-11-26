@@ -25,7 +25,11 @@ import org.primefaces.json.JSONObject;
 public class ParkController implements Serializable {
     
     private List<NationalParks> items = null;
+    private List<NationalParks> searchItems = null;
     private NationalParks selected;
+    
+    private String searchField;
+    private String searchString;
     
     @EJB
     private ParkFacade parkFacade;
@@ -38,12 +42,49 @@ public class ParkController implements Serializable {
         
     }
     
+    public String getSearchField() {
+        return searchField;
+    }
+
+    public void setSearchField(String searchField) {
+        this.searchField = searchField;
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
     
     public List<NationalParks> getItems() {
         if (items == null) {
             items = getParkFacade().findAll();
         }
         return items;
+    }
+    
+    public List<NationalParks> getSearchItems() {
+        if (searchItems == null) {
+            switch(searchField) {
+                case "Park Name":
+                    searchItems = getParkFacade().nameQuery(searchString);
+                    break;
+                case "State":
+                    searchItems = getParkFacade().stateQuery(searchString);
+                    break;
+                default:
+                    searchItems = getParkFacade().allQuery(searchString);
+            }
+        }
+        return searchItems;
+    }
+    
+    public String search() {
+        selected = null;
+        searchItems = null;
+        return "/search/SearchResults?faces-redirect=true";
     }
     
     public NationalParks getSelected() {

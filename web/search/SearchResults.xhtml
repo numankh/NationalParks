@@ -18,7 +18,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="List of National Parks"></h:outputText>
+            <h:outputText value="Search Results"></h:outputText>
         </ui:define>
 
         <!-- Create the content for this page below -->
@@ -27,10 +27,9 @@ Copyright © 2018 Osman Balci. All rights reserved.
             <div align="center" style="width:97%">
                 
                 <h:form id="ParkListForm">
-                    <p:panel header="List of National Parks">
-                        <p:dataTable id="datalist" value="#{parkController.items}" var="park"
+                    <p:panel header="Search Results">
+                        <p:dataTable id="datalist" value="#{parkController.getSearchItems()}" var="park"
                                      selectionMode="single" selection="#{parkController.selected}"
-                                     reflow="true"
                                      paginator="true"
                                      rowKey="#{park.id}"
                                      rows="5"

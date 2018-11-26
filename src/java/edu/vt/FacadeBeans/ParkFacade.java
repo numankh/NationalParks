@@ -24,4 +24,19 @@ public class ParkFacade extends AbstractFacade<NationalParks>{
     public ParkFacade() {
         super(NationalParks.class);
     }
+
+    public List<NationalParks> nameQuery(String searchString) {
+        searchString = "%" + searchString + "%";
+        return getEntityManager().createQuery("SELECT c FROM NationalParks c WHERE c.fullName LIKE :searchString").setParameter("searchString", searchString).getResultList();
+    }
+
+    public List<NationalParks> stateQuery(String searchString) {
+        searchString = "%" + searchString + "%";
+        return getEntityManager().createQuery("SELECT c FROM NationalParks c WHERE c.states LIKE :searchString").setParameter("searchString", searchString).getResultList();
+    }
+
+    public List<NationalParks> allQuery(String searchString) {
+        searchString = "%" + searchString + "%";
+        return getEntityManager().createQuery("SELECT c FROM NationalParks c WHERE c.fullName LIKE :searchString OR c.states LIKE :searchString").setParameter("searchString", searchString).getResultList();
+    }
 }
