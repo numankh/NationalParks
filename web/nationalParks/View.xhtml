@@ -26,18 +26,18 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     <div class="buildingInfo">
                         <h:outputLabel value="#{parkController.selected.fullName}" class="heading" />
                         <br/><br/>
-                        <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 75%; height:400px"/>
+                        <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 100%; height:400px"/>
                         <br/><br/>
                         <h:outputText value="Description:"/>
                         <br/>
-                        <h:outputText value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
+                        <h:outputText style="width:50%" value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
                         <br/><br/>
-                        <h:outputText value="Twitter Feed:"/>
+                        
                         <br/>
                         <a class="twitter-timeline" 
                            data-chrome="nofooter"
                            data-width="750"
-                           data-height="750"
+                           data-height="300"
                            href="https://twitter.com/#{parkController.selected.twitterHandle}?ref_src=twsrc%5Etfw">
                             Tweets by #{parkController.selected.twitterHandle}
                         </a> 
