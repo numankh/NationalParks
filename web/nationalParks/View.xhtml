@@ -21,53 +21,96 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
+
             <div align="center">
                 <h:form>
                     <div class="buildingInfo">
+                        <br/>
+                        <br/>
                         <h:outputLabel value="#{parkController.selected.fullName}" class="heading" />
                         <br/><br/>
+
+                        <div align ="center" class="topnav">
+                            <div style="margin-left:20%;
+                                 margin-right:20%;">
+
+                                <a href="#description">Description</a>
+                                <a href="#flickr">Flickr Images</a>
+                                <a href="#twitter">Twitter Updates</a>
+                                <a href="#twitter">Weather Information</a>
+                            </div>
+                        </div>
+
                         <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 100%; height:400px"/>
                         <br/><br/>
-                        <h:outputText value="Description:"/>
+                        <div   id = "description" width="80%" align="center" style="text-align: left; margin-left: 10%; margin-right: 10%">
+                            <h:outputText value="Description:"/>
+                            <br/>
+
+                            <h:outputText style="width:50%" value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
+                            <br/><br/>
+                        </div>
                         <br/>
-                        <h:outputText style="width:50%" value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
+
+
                         <br/><br/>
-                        
-                        <br/>
-                        <a class="twitter-timeline" 
-                           data-chrome="nofooter"
-                           data-width="750"
-                           data-height="300"
-                           href="https://twitter.com/#{parkController.selected.twitterHandle}?ref_src=twsrc%5Etfw">
-                            Tweets by #{parkController.selected.twitterHandle}
-                        </a> 
-                        <script async="async" 
-                                src="https://platform.twitter.com/widgets.js" 
-                                charset="utf-8">
-                        </script>
-                        <br/><br/>
-                        <h:outputText value="Flickr Images:"/>
+                        <div id="flickr"></div>
                         <br/>
                         <iframe style="position: relative; top: 0; left: 0; width: 1000px; height: 550px;"
-                            src="https://flickrembed.com/cms_embed.php?source=flickr&amp;layout=responsive&amp;input=#{parkController.selected.fullName}&amp;sort=0&amp;by=keywords&amp;theme=default_notextpanel&amp;scale=fit&amp;speed=3000&amp;limit=60&amp;skin=default-light&amp;autoplay=false" 
-                            scrolling="no" 
-                            frameborder="0" 
-                            allowFullScreen="true" 
-                            webkitallowfullscreen="true" 
-                            mozallowfullscreen="true">
+                                src="https://flickrembed.com/cms_embed.php?source=flickr&amp;layout=responsive&amp;input=#{parkController.selected.fullName}&amp;sort=0&amp;by=keywords&amp;theme=default_notextpanel&amp;scale=fit&amp;speed=3000&amp;limit=60&amp;skin=default-light&amp;autoplay=false" 
+                                scrolling="no" 
+                                frameborder="0" 
+                                allowFullScreen="true" 
+                                webkitallowfullscreen="true" 
+                                mozallowfullscreen="true">
                         </iframe>
                         <script type="text/javascript">function showpics() {
-                            var a=$("#box").val();$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+a+"&amp;tagmode=any&amp;format=json&amp;jsoncallback=?",function(a) {
-                                $("#images").hide().html(a).fadeIn("fast"),$.each(a.items,function(a,e) {
-                                    $("<img/>").attr("src",e.media.m).appendTo("#images");
+                                var a = $("#box").val();
+                                $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags=" + a + "&amp;tagmode=any&amp;format=json&amp;jsoncallback=?", function (a) {
+                                    $("#images").hide().html(a).fadeIn("fast"), $.each(a.items, function (a, e) {
+                                        $("<img/>").attr("src", e.media.m).appendTo("#images");
+                                    });
                                 });
-                            });
-                        }
+                            }
                         </script>
-                        <br/><br/>
-                        <script type='text/javascript' 
-                            src='https://darksky.net/widget/default/#{parkController.selectedParkLatLong()}/us12/en.js?width=100%&amp;height=305&amp;title=#{parkController.selected.fullName}&amp;textColor=333333&amp;bgColor=transparent&amp;transparency=true&amp;skyColor=undefined&amp;fontFamily=Default&amp;customFont=&amp;units=us&amp;htColor=333333&amp;ltColor=C7C7C7&amp;displaySum=yes&amp;displayHeader=yes'>
-                        </script>
+                        <table id="twitter" width="100%" height="200px" border="0" align="center" cellpadding="5" cellspacing="0">
+
+
+                            <tr>
+                                <td align="left" valign="middle" style="margin-left:40px" width="40%">
+
+
+                                    <a class="twitter-timeline" 
+                                       data-chrome="nofooter"
+                                       data-height="200"
+                                       margin-left="401px"
+
+                                       href="https://twitter.com/#{parkController.selected.twitterHandle}?ref_src=twsrc%5Etfw">
+                                        <div style="font-size:20px">Tweets by #{parkController.selected.twitterHandle}
+                                        </div>
+                                    </a> 
+                                    <script async="async" 
+                                            src="https://platform.twitter.com/widgets.js" 
+                                            charset="utf-8">
+                                    </script>
+                                </td>  
+
+
+
+
+
+                                <td align="right" valign="middle" height="">
+
+                                    <script type='text/javascript' 
+                                            src='https://darksky.net/widget/default/#{parkController.selectedParkLatLong()}/us12/en.js?width=100%&amp;height=305&amp;title=#{parkController.selected.fullName}&amp;textColor=333333&amp;bgColor=transparent&amp;transparency=true&amp;skyColor=undefined&amp;fontFamily=Default&amp;customFont=&amp;units=us&amp;htColor=333333&amp;ltColor=C7C7C7&amp;displaySum=yes&amp;displayHeader=yes'>
+                                    </script>   
+
+                                </td>
+
+                            </tr>
+                        </table>
+
+
                     </div>
                     <br/>
                     <p:button outcome="/nationalParks/List" value="Back" icon="fas fa-arrow-left"  />
