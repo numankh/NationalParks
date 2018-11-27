@@ -18,8 +18,19 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
+              <div id="sidebarR">
+   
+    </div>
+              <div id="sidebarL">
+ 
+    </div>
+            <div class="mainTitle" >
+                The National Parks of the United States
+            </div>
+            <hr></hr>
+            
             <h:form id="homeForm">
-                <div align="center">
+                <div align="center" style="width:100%">
                     <p:gmap center="37.09024, -95.712891" zoom="4" type="HYBRID" class="map"
                             model="#{parkMarkers.parkModel}" style="width:80%;height:500px">
                         <p:ajax event="overlaySelect" listener="#{parkMarkers.onMarkerSelect}" />

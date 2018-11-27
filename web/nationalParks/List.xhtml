@@ -24,17 +24,17 @@ Copyright © 2018 Osman Balci. All rights reserved.
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
 
-            <div align="center" style="width:97%">
+            <div align="center" style="width:100%; margin-left: 0">
                 
-                <h:form id="ParkListForm">
-                    <p:panel header="List of National Parks">
+                <h:form id="ParkListForm" style="z-index: 10">
+                    <p:panel header="List of National Parks" >
                         <p:dataTable id="datalist" value="#{parkController.items}" var="park"
                                      selectionMode="single" selection="#{parkController.selected}"
                                      reflow="true"
                                      paginator="true"
                                      rowKey="#{park.id}"
-                                     rows="5"
-                                     rowsPerPageTemplate="5,10,15,20,25,30,40,50"
+                                     rows="10"
+                                      scrollable="true" scrollHeight="1000"
                                      class="dataTable">
 
                             <p:ajax event="rowSelect" update="viewButton"/>
@@ -45,7 +45,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             National Park Images
                             =================
                             -->
-                            <p:column headerText="Image" style="width:210px;" class="standardText">
+                            <p:column headerText="Image" style="width:100px;" class="standardText">
                                 <div align="center">
                                     <h:graphicImage value="#{park.imageUrl}" class="parkImage"/>
                                 </div>
@@ -57,7 +57,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             ================
                             -->
                             <p:column sortBy="#{park.fullName}" headerText="National Park Name" 
-                                      style="text-align: center" class="standardText">
+                                      style="text-align: center; width:100px" class="standardText">
                                 <h:outputText value="#{park.fullName}"/>
                             </p:column>
                             
