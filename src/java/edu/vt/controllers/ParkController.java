@@ -187,9 +187,9 @@ public class ParkController implements Serializable {
     
     public String selectByMarker() {
         getItems();
-        String name = parkMarkers.getMarker().getTitle() + " National Park";
+        String parkName = parkMarkers.getMarker().getTitle();
         for (int i = 0; i < items.size(); i++) {
-            if( items.get(i).getFullName().equalsIgnoreCase(name) ) {
+            if( items.get(i).getFullName().equalsIgnoreCase(parkName) ) {
                 selected  = items.get(i);
                 return "/nationalParks/View?faces-redirect=true";
             }
