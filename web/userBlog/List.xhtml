@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Adam Wilborn on 2018.08.08
+Copyright © 2018 Adam Wilborn. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="#{userController.selected.firstName}'s Blog Posts"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:95%">
+
+                <h:form id="UserBlogListForm">                  
+
+                    <p:panel header="#{userController.selected.firstName}&nbsp;#{userController.selected.lastName}'s Blog Posts" >
+
+                        <p:dataTable id="datalist" value="#{userBlogController.items}" var="item"
+                                     selectionMode="single" selection="#{userBlogController.selected}"
+                                     reflow="true"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,20,30,40,50"
+                                     class="dataTable" >
+
+                            <p:ajax event="rowSelect" update="createButton shareButton"/>
+
+
+                            <p:ajax event="rowUnselect" update="createButton shareButton"/>
+                            
+                            <!--
+                            *******************
+                            *   park   *
+                            *******************
+                            -->
+                            <p:column sortBy="#{item.park}" headerText="Park" 
+                                      style="width:80px">
+                                <div align="center">
+                                    <h:outputText class="inputTextField" value="#{item.park}"/>
+                                </div>
+                            </p:column>
+                            
+                            <!--
+                            ********************
+                            *      Description      *
+                            ********************
+                            -->
+                            <p:column headerText="Description" 
+                                      style="width:250px;">
+                                <h:outputText class="inputTextField" value="#{item.description}"/>
+                            </p:column>
+
+                            <!--
+                            *******************
+                            *   category   *
+                            *******************
+                            -->
+                            <p:column sortBy="#{item.rating}" headerText="Rating" 
+                                      style="width:80px">
+                                <div align="center">
+                                    <h:outputText class="inputTextField" value="#{item.rating}"/>
+                                </div>
+                            </p:column>
+
+                            <!--
+                            The "header" and "footer" facets are defined for the p:dataTable.
+                            See their documentations in PrimeFaces User Guide.
+                            -->
+
+                            <f:facet name="footer">
+
+                                <p:commandButton id="createButton"  icon="fas fa-plus" value="Create" 
+                                                 actionListener="#{userBlogController.prepareCreate}" 
+                                                 update=":UserBlogCreateForm" oncomplete="PF('UserBlogCreateDialog').show()"/><!--
+                                
+                                <p:commandButton id="viewButton"    icon="fas fa-search" value="View" 
+                                                 update=":UserBlogViewForm" oncomplete="PF('UserBlogViewDialog').show()" 
+                                                 disabled="#{empty userBlogController.selected}"/>
+                                
+                                <p:commandButton id="editButton"    icon="fas fa-edit" value="Edit" 
+                                                 update=":UserBlogEditForm" oncomplete="PF('UserBlogEditDialog').show()" 
+                                                 disabled="#{empty userBlogController.selected}"/>
+                                 
+                                ***************************************************
+                                Display a Confirmation dialog for the DELETE button
+                                *************************************************** 
+                                
+
+                                
+                                ================================
+                                |      DELETE FILE Button      |
+                                ================================
+                                
+                                <p:commandButton id="deleteButton" icon="fas fa-trash-alt" value="Delete File" 
+                                                 actionListener="#{userBlogController.deleteSelectedUserBlog()}" 
+                                                 update=":UserBlogListForm" ajax="true"
+                                                 disabled="#{empty userBlogController.selected}">
+
+                                    <p:confirm header="File Deletion Confirmation"
+                                               message="Are you sure you want to permanently delete the selected file from the database?" 
+                                               icon="fas fa-exclamation-triangle fa-2x" />
+                                </p:commandButton>
+
+-->                                <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
+                                    <div align="center">
+                                        <p:commandButton value="No" type="button" 
+                                                         class="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                        &nbsp;
+                                        <p:commandButton value="Yes" type="button" 
+                                                         class="ui-confirmdialog-yes" icon="fas fa-check-square" />
+                                    </div>
+                                </p:confirmDialog><!--
+                                 
+                                ************************************************
+                                End of Display of the DELETE Confirmation dialog 
+                                ************************************************ 
+                                
+
+                                
+                                ================================
+                                |    PLAY VIDEO FILE Button    |
+                                ================================
+                                
+                                <p:commandButton id="playButton"    icon="fas fa-play" value="Play" 
+                                                 update=":UserBlogTrailerPlayForm" oncomplete="PF('UserBlogTrailerPlayDialog').show()" 
+                                                 disabled="#{empty userBlogController.selected}" />-->
+                                <p:commandButton id="shareButton" icon="fas fa-share" value="Share"
+                                                 actionListener="#{userBlogController.share}"
+                                                 update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                                 disabled="#{empty userBlogController.selected}">
+                                    <p:confirm header="Share Confirmation" 
+                                               message="Are you sure you want to add the selected blog post to the list of public blog posts?" 
+                                               icon="fas fa-exclamation-triangle fa-2x" />
+                                </p:commandButton>
+                            </f:facet>
+
+                        </p:dataTable>
+                    </p:panel>
+
+                </h:form>
+            </div>
+            
+<!--             Clicking the Create button displays the included Create.xhtml file in a dialog box on top of this page. -->
+            <ui:include src="/userBlog/Create.xhtml"/><!--
+            
+             Clicking the View button displays the included View.xhtml file in a dialog box on top of this page. 
+            <ui:include src="/userBlog/View.xhtml"/>
+            
+             Clicking the Edit button displays the included Edit.xhtml file in a dialog box on top of this page. 
+            <ui:include src="/userBlog/Edit.xhtml"/>-->
+
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

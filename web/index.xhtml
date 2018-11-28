@@ -18,8 +18,16 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
-            <h:form id="homeForm">
-                <div align="center">
+             
+            <div class="mainTitle" >
+                <div style="height:30px"/>
+                The National Parks of the United States
+                
+            </div>
+                <div style="width:100%; background-color:black; height:2px;margin-bottom:15px"/>
+            
+            <h:form id="homeForm" prependId="false">
+                <div align="center" style="width:100%">
                     <p:gmap center="37.09024, -95.712891" zoom="4" type="HYBRID" class="map"
                             model="#{parkMarkers.parkModel}" style="width:80%;height:500px">
                         <p:ajax event="overlaySelect" listener="#{parkMarkers.onMarkerSelect}" />
@@ -35,6 +43,18 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                 </div>
             </h:form>
+            
+            <h:form>
+            <div align="center" >
+           <p:commandButton id="searchButton" icon="fas fa-search" value="Search for a Park" 
+                                                 update=":ParkSearchForm" 
+                                                 oncomplete="PF('ParkSearchDialog').show()"
+                                                />
+           
+            </div>
+                 </h:form>
+            
+            <ui:include src="/search/Search.xhtml"/>
         </ui:define>
 
     </ui:composition>

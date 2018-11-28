@@ -18,26 +18,23 @@ Copyright © 2018 Osman Balci. All rights reserved.
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="List of National Parks"></h:outputText>
+            <h:outputText value="Search Results"></h:outputText>
         </ui:define>
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
 
-            <div align="center" style="width:100%; margin-left: 0">
+            <div align="center" style="width:97%">
                 
-                <h:form id="ParkListForm" style="z-index: 10">
-                    <p:panel header="List of National Parks" >
-                        <p:dataTable id="datalist" value="#{parkController.items}" var="park"
+                <h:form id="ParkListForm">
+                    <p:panel header="Search Results">
+                        <p:dataTable id="datalist" value="#{parkController.getSearchItems()}" var="park"
                                      selectionMode="single" selection="#{parkController.selected}"
-                                     reflow="true"
                                      paginator="true"
                                      rowKey="#{park.id}"
-                                     rows="10"
-                                     lazy="true"
-
-                                     class="dataTable"
-                                     styleClass="borderless">
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,15,20,25,30,40,50"
+                                     class="dataTable">
 
                             <p:ajax event="rowSelect" update="viewButton"/>
                             <p:ajax event="rowUnselect" update="viewButton"/>
@@ -47,7 +44,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             National Park Images
                             =================
                             -->
-                            <p:column headerText="Image" style="width:100px;" class="standardText">
+                            <p:column headerText="Image" style="width:210px;" class="standardText">
                                 <div align="center">
                                     <h:graphicImage value="#{park.imageUrl}" class="parkImage"/>
                                 </div>
@@ -59,7 +56,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             ================
                             -->
                             <p:column sortBy="#{park.fullName}" headerText="National Park Name" 
-                                      style="text-align: center; width:100px" class="standardText">
+                                      style="text-align: center" class="standardText">
                                 <h:outputText value="#{park.fullName}"/>
                             </p:column>
                             

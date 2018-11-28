@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS NationalParks, UserFile, UserPhoto, User;
+DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, User, UserTrip;
 
 CREATE TABLE NationalParks
 (
@@ -92,6 +92,25 @@ CREATE TABLE User
     PRIMARY KEY (id)
 );
 
+CREATE TABLE UserBlog
+(
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    park VARCHAR(44) NOT NULL,
+    description VARCHAR(8000) NOT NULL,
+    rating VARCHAR(7) NOT NULL,
+    user_id INT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE PublicBlog
+(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    park VARCHAR(44) NOT NULL,
+    description VARCHAR(8000) NOT NULL,
+    rating VARCHAR(7) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 /* The UserPhoto table contains attributes of interest of a user's photo. */
 CREATE TABLE UserPhoto
 (
@@ -108,4 +127,13 @@ CREATE TABLE UserFile
        filename VARCHAR(256) NOT NULL,
        user_id INT UNSIGNED,
        FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE UserTrip
+(
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    date_entered DATE NOT NULL,
+    trip MEDIUMTEXT NOT NULL,
+    user_id INT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );

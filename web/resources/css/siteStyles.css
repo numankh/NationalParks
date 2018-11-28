@@ -8,6 +8,9 @@
 |   Redefine Styles of Some Standard HTML Tags   |
 ==================================================
 */
+html{
+    scroll-behavior: smooth;
+}
 html, body {
     /*
     -----------------------------------------------------------------------
@@ -21,14 +24,15 @@ html, body {
     /* background-color: beige;         */
     /* background-color: gainsboro;     */
     /* background-color: ivory;         */
-    background-color: linen;
+    background-color: #99d2fb;
     /* background-color: oldlace;       */
     /* background-color: papayawhip;    */
     /* background-color: wheat;         */
     /* background-color: powderblue;    */
-
-    width: 100%;                    /* Set page width horizontally 100% */
+    margin: 0;
+    width: 100%;                     /* Set page width horizontally 100% */
     height: 100%;                   /* Set page height vertically 100% */
+
 }
 
 /* Style standard HTML tags body and paragraph p */
@@ -48,8 +52,9 @@ h1 {
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: maroon;
+    color: white;
 }
+
 
 /*
 =======================================
@@ -82,10 +87,11 @@ Style the div component whose unique id is "header" per reference
 <div id="header"> in siteTemplate
 */
 #header {
-    background-color: azure;
+    background-color: black;
     width: 100%;
     height: 84px;
     position: absolute;
+    color: white;
     left: 0px;
     top: 0px;
     right: 0px;
@@ -97,11 +103,11 @@ Style the div component whose unique id is "editableContent" per reference
 */
 #editableContent {
     /* height = 100% window height - (header height 84px + footer height 100px) */
-    height: calc(100% - 184px); 
+    height: calc(100% - 84px); 
     width: 100%;
     left: 0px;
     right: 0px;
-    margin-top: 100px;
+    margin-top: 84px;
     margin-bottom: 16px;
 }
 /* 
@@ -114,6 +120,7 @@ Style the div component whose unique id is "footer" per reference
     left: 0px;
     right: 0px;
     bottom: 0px;
+    
 }
 
 /*
@@ -184,6 +191,20 @@ the speed of the transition to change over time.
     transform:rotate(360deg);          /* Generic */
 }
 
+
+.mainTitle{
+    
+    text-align: center;
+    width:100%;
+    height:100px;
+    top:30px;
+    color:brown;
+    margin-top:0;
+    background-color: white;
+     font-family: "Bebas Neue",sans-serif ;
+    font-size: 40px;
+    font-weight: bold;
+}
 /*
 =============================================
 |   Drop-Down Menu in the Header on Right   |
@@ -194,7 +215,7 @@ Used in headerTemplate
 .menu { 
     position:relative; 
     display:inline-block; 
-    z-index:2; 
+    z-index:999 !important; 
     padding:0; 
     margin:0; 
     outline:0; 
@@ -227,7 +248,7 @@ Used in headerTemplate
     border-radius:6px;
     pointer-events: auto;
     position: absolute;
-    z-index: 1;
+    z-index: 999;
     opacity: 0;
     visibility: hidden;
     transition: visibility 1s;
@@ -318,13 +339,14 @@ Used in Profile
     white-space: nowrap;        /* Disallow line break */
 }
 
+
 /* Style heading text */
 .heading {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14pt;
+    font-size: 20pt;
     font-style: normal;
-    font-weight: normal;
-    color: darkgreen;
+    font-weight: bold;
+    color: brown;
 }
 
 /* Style the hello text used in headerTemplate */
@@ -333,7 +355,7 @@ Used in Profile
     font-size: 12pt;
     font-style: normal;
     font-weight: normal;
-    color: darkmagenta;
+    color: white;
 }
 
 /* Style standard text and input text field text */
@@ -553,18 +575,38 @@ Position the confirmation dialog box on the center of the screen per
 
 /* Leave 5px padding to left and right of p:dataTable */
 .dataTable {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.ui-panel-titlebar
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16pt;
+    font-style: normal;
+    font-weight: bold;
+    background-color: #99ccff;
+    outline:none;
+    
+}
+
+.ui-column-title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+    font-style: normal;
+    font-weight: normal;
+    
+    
 }
 
 /* Override PrimeFaces style definitions for the Data Table component */
-.ui-datatable-data, .ui-column-title, .ui-panel-titlebar, .ui-paginator, 
+.ui-datatable-data,   .ui-paginator, 
 .ui-dialog-content, .ui-confirm-dialog-message, .ui-widget-content {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
+    
 }
 
 /* Override PrimeFaces style definitions for the Data Grid component */
@@ -575,7 +617,7 @@ Position the confirmation dialog box on the center of the screen per
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    background-color: oldlace; 
+    background-color:white; 
 }
 
 /* Override PrimeFaces style definitions for the Panel component */
@@ -585,12 +627,18 @@ Position the confirmation dialog box on the center of the screen per
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    background-color: oldlace;
+}
+
+.ui-datatable.borderless thead th,
+.ui-datatable.borderless tbody,
+.ui-datatable.borderless tbody tr,
+.ui-datatable.borderless tbody td {
+    border-style: none;
 }
 
 /* Override PrimeFaces style definitions for the Dialog component */
 .ui-dialog, .ui-dialog-content, .ui-dialog-buttonpane {
-    color: maroon;
+    color: white;
     background-color: oldlace;
 }
 
@@ -654,4 +702,30 @@ if content overflows an element's box.
 .parkImage {
     height: auto;
     width: 200px;
+}
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
 }
