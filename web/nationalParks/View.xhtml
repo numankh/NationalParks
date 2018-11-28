@@ -15,6 +15,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
     <!-- This page is constructed based on the siteTemplate -->
     <ui:composition template="/template/siteTemplate.xhtml">
+        
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <ui:define name="title">
             <!-- Set the page title -->
             <h:outputText value="Park Info"></h:outputText>
@@ -45,16 +47,15 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 100%; height:400px"/>
                         <br/><br/>
                         <div   id = "description" width="80%" align="center" style="text-align: left; margin-left: 10%; margin-right: 10%">
-                            <h:outputText value="Description:"/>
-                            <br/>
-
+                           
+                            
                             <h:outputText style="width:50%" value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
                             <br/><br/>
                         </div>
                         <br/>
 
 
-                        <br/><br/>
+                        
                         <div id="flickr"></div>
                         <br/>
                         <iframe style="position: relative; top: 0; left: 0; width: 1000px; height: 550px;"
@@ -78,7 +79,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
 
                             <tr>
-                                <td align="left" valign="middle" style="margin-left:40px" width="40%">
+                                <td align="left" valign="middle"  width="40%">
 
 
                                     <a class="twitter-timeline" 
@@ -87,7 +88,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                        margin-left="401px"
 
                                        href="https://twitter.com/#{parkController.selected.twitterHandle}?ref_src=twsrc%5Etfw">
-                                        <div style="font-size:20px">Tweets by #{parkController.selected.twitterHandle}
+                                        <div style="font-size:20px; margin-left:40px">Tweets by #{parkController.selected.twitterHandle}
                                         </div>
                                     </a> 
                                     <script async="async" 

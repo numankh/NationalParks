@@ -47,8 +47,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 2 (Center): Welcome User
                     *******************************
                     -->
-                    <td  >
-                    <div style="margin-left:30%; margin-right: 30%">
+                    <td align="middle" valign="middle" >
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{userController.isLoggedIn() == true}">
                             <div class="helloText">Hello, #{userController.selected.firstName}</div>
@@ -56,7 +55,6 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <c:if test="#{userController.isLoggedIn() == false}">
                             <h1>Hello, Guest</h1>
                         </c:if>
-                    </div>
                         
                     </td>
                         
