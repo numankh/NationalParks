@@ -33,7 +33,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 1 (Left): Cloud Drive Logo Image
                     ***************************************
                     -->
-                    <td align="left" valign="middle" style="width:230px;">
+                    <td align="left" valign="middle" width="210px">
 
                         <!-- Use EL to reference the image file since it will be accessed from all UI pages -->
                         <h:link outcome="/index">
@@ -47,8 +47,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 2 (Center): Welcome User
                     *******************************
                     -->
-                    <td  >
-                    <div style="margin-left:30%; margin-right: 30%">
+                    <td align="middle" valign="middle" >
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{userController.isLoggedIn() == true}">
                             <div class="helloText">Hello, #{userController.selected.firstName}</div>
@@ -56,7 +55,6 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <c:if test="#{userController.isLoggedIn() == false}">
                             <h1>Hello, Guest</h1>
                         </c:if>
-                    </div>
                         
                     </td>
                         
@@ -66,7 +64,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 3 (Right): Hamburger Menu Button
                     ***************************************
                     -->
-                    <td align="right" valign="middle" style="width:100px;">
+                    <td align="right" valign="middle" style="width:210px;">
 
                         <!--
                         tabindex="0" enables the menu element to be focusable and to trigger interaction. 

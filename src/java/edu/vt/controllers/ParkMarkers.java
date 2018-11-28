@@ -62,7 +62,26 @@ public class ParkMarkers implements Serializable{
             for(int j = 0; j < params.length(); j++) {
                 JSONObject param = params.getJSONObject(j);
                 String latLong = param.optString("latLong", "");
-                String name = param.optString("name", "");
+                String parkName = param.optString("name", "");
+                String name = "";
+                if (parkName.equals("Denali") || parkName.equals("Gates Of The Arctic") ||
+                        parkName.equals("Glacier Bay") || parkName.equals("Great Sand Dunes") ||
+                        parkName.equals("Katmai") || parkName.equals("Lake Clark") ||
+                        parkName.equals("Wrangell - St Elias")){
+                    name = parkName + " National Park & Preserve";
+                }
+                else if(parkName.equals("Redwood")){
+                    name = parkName + " National and State Parks";
+                }
+                else if(parkName.equals("Sequoia & Kings Canyon")){
+                    name = parkName + " National Parks";
+                }
+                else if(parkName.equals("National Park of American Samoa")) {
+                    name = parkName;
+                }
+                else {
+                    name = parkName + " National Park";
+                }
                 String[] splits = latLong.split("[:,]");
                 
                 Double lat = Double.parseDouble(splits[1]);
