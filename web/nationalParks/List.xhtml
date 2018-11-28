@@ -34,8 +34,10 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                      paginator="true"
                                      rowKey="#{park.id}"
                                      rows="10"
-                                      scrollable="true" scrollHeight="1000"
-                                     class="dataTable">
+                                     lazy="true"
+
+                                     class="dataTable"
+                                     styleClass="borderless">
 
                             <p:ajax event="rowSelect" update="viewButton"/>
                             <p:ajax event="rowUnselect" update="viewButton"/>

@@ -40,14 +40,15 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             <img src="#{resource['images:nationalParksLogo.jpg']}"
                                  class="scalableImage" alt="Company Logo" />
                         </h:link>
-
-                    </td>
+ </td>
+                   
                     <!--
                     *******************************
                     Column 2 (Center): Welcome User
                     *******************************
                     -->
-                    <td align="center" valign="middle">
+                    <td  >
+                    <div style="margin-left:30%; margin-right: 30%">
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{userController.isLoggedIn() == true}">
                             <div class="helloText">Hello, #{userController.selected.firstName}</div>
@@ -55,7 +56,11 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <c:if test="#{userController.isLoggedIn() == false}">
                             <h1>Hello, Guest</h1>
                         </c:if>
+                    </div>
+                        
                     </td>
+                        
+                    
                     <!--
                     ***************************************
                     Column 3 (Right): Hamburger Menu Button
