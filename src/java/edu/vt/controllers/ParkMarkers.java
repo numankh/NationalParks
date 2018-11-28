@@ -70,6 +70,12 @@ public class ParkMarkers implements Serializable{
                         parkName.equals("Wrangell - St Elias")){
                     name = parkName + " National Park & Preserve";
                 }
+                else if(parkName.equals("Redwood")){
+                    name = parkName + " National and State Parks";
+                }
+                else if(parkName.equals("Sequoia & Kings Canyon")){
+                    name = parkName + " National Parks";
+                }
                 else if(parkName.equals("National Park of American Samoa")) {
                     name = parkName;
                 }
