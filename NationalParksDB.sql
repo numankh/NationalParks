@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, User;
+DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, User, UserTrip;
 
 CREATE TABLE NationalParks
 (
@@ -127,4 +127,13 @@ CREATE TABLE UserFile
        filename VARCHAR(256) NOT NULL,
        user_id INT UNSIGNED,
        FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE UserTrip
+(
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    date_entered DATE NOT NULL,
+    trip MEDIUMTEXT NOT NULL,
+    user_id INT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
