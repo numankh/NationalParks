@@ -9,7 +9,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -34,13 +35,14 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <br/><br/>
 
                         <div align ="center" class="topnav">
-                            <div style="margin-left:20%;
-                                 margin-right:20%;">
+                            <div style="display:inline-block">
 
                                 <a href="#description">Description</a>
                                 <a href="#flickr">Flickr Images</a>
                                 <a href="#twitter">Twitter Updates</a>
                                 <a href="#twitter">Weather Information</a>
+                                <a href="#blog"> Park Blog</a>
+                                
                             </div>
                         </div>
 
@@ -111,7 +113,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                             </tr>
                         </table>
-                        <div align="center" style="width:95%">
+                        <div id="blog" align="center" style="width:95%">
 
                             <h:form id="PublicBlogListForm">                  
 
@@ -184,6 +186,15 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                     </div>
                     <br/>
+                    
+                    
+                    <c:if test="#{publicBlogController.getItems().size() == 0}">
+                            <div >There are no ratings for this park yet</div>
+                        </c:if>
+                       
+                     <c:if test="#{publicBlogController.getItems().size() != 0}">
+                            <p:chart type="metergauge" model="#{chartController.getMeterGauge(publicBlogController.items)}" style="height:400px; aligh:center;width:100%" />
+                        </c:if>
                     <p:button outcome="/nationalParks/List" value="Back" icon="fas fa-arrow-left"  />
                     &nbsp;&nbsp;
                 </h:form>
