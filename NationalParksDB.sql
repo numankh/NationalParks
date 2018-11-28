@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS NationalParks, UserFile, UserPhoto, User;
+DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, User;
 
 CREATE TABLE NationalParks
 (
@@ -89,6 +89,25 @@ CREATE TABLE User
     security_question_number INT NOT NULL,   /* Refers to the number of the selected security question */
     security_answer VARCHAR(128) NOT NULL,
     email VARCHAR(128) NOT NULL,      
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE UserBlog
+(
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    park VARCHAR(44) NOT NULL,
+    description VARCHAR(8000) NOT NULL,
+    rating VARCHAR(7) NOT NULL,
+    user_id INT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE PublicBlog
+(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    park VARCHAR(44) NOT NULL,
+    description VARCHAR(8000) NOT NULL,
+    rating VARCHAR(7) NOT NULL,
     PRIMARY KEY (id)
 );
 

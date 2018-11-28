@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Adam Wilborn on 2018.06.20
+Copyright © 2018 Adam Wilborn. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <!-- 
+        ============================================================
+        |  Clicking the CREATE button displays this Dialog window  |
+        |  for the user to enter the data to create a new video.   |
+        ============================================================
+        -->
+        <p:dialog id="UserBlogCreateDlg" widgetVar="UserBlogCreateDialog" modal="true" 
+                  resizable="false" appendTo="@(body)" header="Create Blog Post">
+
+            <h:form id="UserBlogCreateForm" class="ui-datatable-data">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" 
+                                 rendered="#{userBlogController.selected != null}">                       
+
+                        <h:outputLabel value="Park:" for="park" />
+                        <p:selectOneMenu id="park" value="#{userBlogController.selected.park}" 
+                                         required="true" requiredMessage="The park field is required.">
+                            <f:selectItem itemLabel="Select Park"  itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Acadia National Park"  itemValue="Acadia National Park" />
+                            <f:selectItem itemLabel="Arches National Park"  itemValue="Arches National Park" />
+                            <f:selectItem itemLabel="Badlands National Park"        itemValue="Badlands National Park" />
+                            <f:selectItem itemLabel="Big Bend National Park"        itemValue="Big Bend National Park" />
+                            <f:selectItem itemLabel="Biscayne National Park"        itemValue="Biscayne National Park" />
+                            <f:selectItem itemLabel="Black Canyon Of The Gunnison National Park"    itemValue="Black Canyon Of The Gunnison National Park" />
+                            <f:selectItem itemLabel="Bryce Canyon National Park"    itemValue="Bryce Canyon National Park" />
+                            <f:selectItem itemLabel="Canyonlands National Park"     itemValue="Canyonlands National Park" />
+                            <f:selectItem itemLabel="Capitol Reef National Park"    itemValue="Capitol Reef National Park" />
+                            <f:selectItem itemLabel="Carlsbad Caverns National Park"        itemValue="Carlsbad Caverns National Park" />
+                            <f:selectItem itemLabel="Channel Islands National Park" itemValue="Channel Islands National Park" />
+                            <f:selectItem itemLabel="Congaree National Park"        itemValue="Congaree National Park" />
+                            <f:selectItem itemLabel="Crater Lake National Park"     itemValue="Crater Lake National Park" />
+                            <f:selectItem itemLabel="Cuyahoga Valley National Park" itemValue="Cuyahoga Valley National Park" />
+                            <f:selectItem itemLabel="Death Valley National Park"    itemValue="Death Valley National Park" />
+                            <f:selectItem itemLabel="Denali National Park &amp; Preserve"       itemValue="Denali National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Dry Tortugas National Park"    itemValue="Dry Tortugas National Park" />
+                            <f:selectItem itemLabel="Everglades National Park"      itemValue="Everglades National Park" />
+                            <f:selectItem itemLabel="Gates Of The Arctic National Park &amp; Preserve"  itemValue="Gates Of The Arctic National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Gateway Arch National Park"    itemValue="Gateway Arch National Park" />
+                            <f:selectItem itemLabel="Glacier Bay National Park &amp; Preserve"  itemValue="Glacier Bay National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Glacier National Park" itemValue="Glacier National Park" />
+                            <f:selectItem itemLabel="Grand Canyon National Park"    itemValue="Grand Canyon National Park" />
+                            <f:selectItem itemLabel="Grand Teton National Park"     itemValue="Grand Teton National Park" />
+                            <f:selectItem itemLabel="Great Basin National Park"     itemValue="Great Basin National Park" />
+                            <f:selectItem itemLabel="Great Sand Dunes National Park &amp; Preserve"     itemValue="Great Sand Dunes National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Great Smoky Mountains National Park"   itemValue="Great Smoky Mountains National Park" />
+                            <f:selectItem itemLabel="Guadalupe Mountains National Park"     itemValue="Guadalupe Mountains National Park" />
+                            <f:selectItem itemLabel="HaleakalÃ¡ National Park"      itemValue="HaleakalÃ¡ National Park" />
+                            <f:selectItem itemLabel="Hawai'i Volcanoes National Park"       itemValue="Hawai'i Volcanoes National Park" />
+                            <f:selectItem itemLabel="Hot Springs National Park"     itemValue="Hot Springs National Park" />
+                            <f:selectItem itemLabel="Isle Royale National Park"     itemValue="Isle Royale National Park" />
+                            <f:selectItem itemLabel="Joshua Tree National Park"     itemValue="Joshua Tree National Park" />
+                            <f:selectItem itemLabel="Katmai National Park &amp; Preserve"       itemValue="Katmai National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Kenai Fjords National Park"    itemValue="Kenai Fjords National Park" />
+                            <f:selectItem itemLabel="Kobuk Valley National Park"    itemValue="Kobuk Valley National Park" />
+                            <f:selectItem itemLabel="Lake Clark National Park &amp; Preserve"   itemValue="Lake Clark National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Lassen Volcanic National Park" itemValue="Lassen Volcanic National Park" />
+                            <f:selectItem itemLabel="Mammoth Cave National Park"    itemValue="Mammoth Cave National Park" />
+                            <f:selectItem itemLabel="Mesa Verde National Park"      itemValue="Mesa Verde National Park" />
+                            <f:selectItem itemLabel="Mount Rainier National Park"   itemValue="Mount Rainier National Park" />
+                            <f:selectItem itemLabel="National Park of American Samoa"       itemValue="National Park of American Samoa" />
+                            <f:selectItem itemLabel="North Cascades National Park"  itemValue="North Cascades National Park" />
+                            <f:selectItem itemLabel="Olympic National Park" itemValue="Olympic National Park" />
+                            <f:selectItem itemLabel="Petrified Forest National Park"        itemValue="Petrified Forest National Park" />
+                            <f:selectItem itemLabel="Pinnacles National Park"       itemValue="Pinnacles National Park" />
+                            <f:selectItem itemLabel="Redwood National and State Parks"      itemValue="Redwood National and State Parks" />
+                            <f:selectItem itemLabel="Rocky Mountain National Park"  itemValue="Rocky Mountain National Park" />
+                            <f:selectItem itemLabel="Saguaro National Park" itemValue="Saguaro National Park" />
+                            <f:selectItem itemLabel="Sequoia &amp; Kings Canyon National Parks" itemValue="Sequoia &amp; Kings Canyon National Parks" />
+                            <f:selectItem itemLabel="Shenandoah National Park"      itemValue="Shenandoah National Park" />
+                            <f:selectItem itemLabel="Theodore Roosevelt National Park"      itemValue="Theodore Roosevelt National Park" />
+                            <f:selectItem itemLabel="Virgin Islands National Park"  itemValue="Virgin Islands National Park" />
+                            <f:selectItem itemLabel="Voyageurs National Park"       itemValue="Voyageurs National Park" />
+                            <f:selectItem itemLabel="Wind Cave National Park"       itemValue="Wind Cave National Park" />
+                            <f:selectItem itemLabel="Wrangell - St Elias National Park &amp; Preserve"  itemValue="Wrangell - St Elias National Park &amp; Preserve" />
+                            <f:selectItem itemLabel="Yellowstone National Park"     itemValue="Yellowstone National Park" />
+                            <f:selectItem itemLabel="Yosemite National Park"        itemValue="Yosemite National Park" />
+                            <f:selectItem itemLabel="Zion National Park"    itemValue="Zion National Park" />
+                        </p:selectOneMenu>
+                        
+                        <h:outputLabel value="Description:" for="description" />
+                        <p:inputText id="description" class="inputTextField" value="#{userBlogController.selected.description}" 
+                                     required="true" requiredMessage="The description field is required."/>
+
+                        <h:outputLabel value="Rating:" for="rating" />
+                        <p:selectOneMenu id="rating" value="#{userBlogController.selected.rating}" 
+                                         required="true" requiredMessage="The rating field is required.">
+                            <f:selectItem itemLabel="Select Rating"  itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="5 stars"          itemValue="5 stars" />
+                            <f:selectItem itemLabel="4 stars"          itemValue="4 stars" />
+                            <f:selectItem itemLabel="3 stars"          itemValue="3 stars" />
+                            <f:selectItem itemLabel="2 stars"          itemValue="2 stars" />
+                            <f:selectItem itemLabel="1 star"          itemValue="1 star" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <br />
+                    <div align="center">
+                        <!-- SAVE button -->
+                        <p:commandButton actionListener="#{userBlogController.create}" value="Create" 
+                                         icon="fas fa-plus" ajax="false"
+                                         update="display,:UserBlogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage" 
+                                         oncomplete="handleSubmit(args,'UserBlogCreateDialog');" />
+                        &nbsp;
+                        <!-- CANCEL button -->
+                        <p:commandButton value="#{bundle.Cancel}" onclick="PF('UserBlogCreateDialog').hide()" 
+                                         icon="fas fa-ban" immediate="true" />
+                    </div>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+    </ui:composition>
+</html>

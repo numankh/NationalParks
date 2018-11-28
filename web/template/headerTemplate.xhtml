@@ -88,6 +88,10 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
                                     
+                                    <h:link outcome="/userBlog/List" class="standardText" >
+                                        <i class="fas fa-file-alt"></i>&nbsp;My Personal Blog
+                                    </h:link>
+                                    
                                     <!-- Clicking "My Account" displays the Profile.xhtml file -->
                                     <h:link outcome="/userAccount/Profile" class="standardText">
                                         <!-- 
