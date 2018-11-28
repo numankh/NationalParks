@@ -49,6 +49,14 @@ public class PublicBlogFacade extends AbstractFacade<PublicBlog> {
         // PublicBlog.class, which is the object reference of the PublicBlog class.
     }
     
+    public List<PublicBlog> findPublicBlogsByName(String name)
+    {
+        List<PublicBlog> publicBlogs = entityManager.createNamedQuery("PublicBlog.findByPark")
+                .setParameter("park", name)
+                .getResultList();
+        return publicBlogs;
+    }
+    
     /*
     See https://docs.oracle.com/javaee/7/api/ for documentation of Java EE 7 API packages, classes, and methods.
     

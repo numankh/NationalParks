@@ -8,7 +8,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -109,6 +110,75 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                             </tr>
                         </table>
+                        <div align="center" style="width:95%">
+
+                            <h:form id="PublicBlogListForm">                  
+
+                                <p:panel header="#{parkController.selected.fullName} Blog Posts" >
+
+                                    <p:dataTable id="datalist" value="#{publicBlogController.items}" var="item"
+                                                 selectionMode="single" selection="#{publicBlogController.selected}"
+                                                 reflow="true"
+                                                 paginator="true"
+                                                 rowKey="#{item.id}"
+                                                 rows="5"
+                                                 rowsPerPageTemplate="5,10,20,30,40,50"
+                                                 class="dataTable" >
+
+                                        <p:ajax event="rowSelect" update=""/>
+
+
+                                        <p:ajax event="rowUnselect" update=""/>
+
+                                        <!--
+                                        *******************
+                                        *   park   *
+                                        *******************
+                                        -->
+                                        <p:column sortBy="#{item.park}" headerText="Park" 
+                                                  style="width:80px">
+                                            <div align="center">
+                                                <h:outputText class="inputTextField" value="#{item.park}"/>
+                                            </div>
+                                        </p:column>
+
+                                        <!--
+                                        ********************
+                                        *      Description      *
+                                        ********************
+                                        -->
+                                        <p:column headerText="Description" 
+                                                  style="width:250px;">
+                                            <h:outputText class="inputTextField" value="#{item.description}"/>
+                                        </p:column>
+
+                                        <!--
+                                        *******************
+                                        *   category   *
+                                        *******************
+                                        -->
+                                        <p:column sortBy="#{item.rating}" headerText="Rating" 
+                                                  style="width:80px">
+                                            <div align="center">
+                                                <h:outputText class="inputTextField" value="#{item.rating}"/>
+                                            </div>
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </p:panel>
+
+                            </h:form>
+                        </div>
+
+            <!--             Clicking the Create button displays the included Create.xhtml file in a dialog box on top of this page. 
+                        <ui:include src="/userBlog/Create.xhtml"/>--><!--
+
+                         Clicking the View button displays the included View.xhtml file in a dialog box on top of this page. 
+                        <ui:include src="/userBlog/View.xhtml"/>
+
+                         Clicking the Edit button displays the included Edit.xhtml file in a dialog box on top of this page. 
+                        <ui:include src="/userBlog/Edit.xhtml"/>-->
+
 
 
                     </div>

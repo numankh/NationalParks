@@ -34,6 +34,8 @@ public class PublicBlogController implements Serializable {
     
     @Inject
     private UserBlogController userBlogController;
+    @Inject
+    private ParkController parkController;
     
     public PublicBlogController() {
         
@@ -45,6 +47,14 @@ public class PublicBlogController implements Serializable {
     
     public void setUserBlogController(UserBlogController userBlogController) {
         this.userBlogController = userBlogController;
+    }
+    
+    public ParkController getParkController() {
+        return parkController;
+    }
+    
+    public void setParkController(ParkController parkController) {
+        this.parkController = parkController;
     }
     
     private PublicBlogFacade getPublicBlogFacade() {
@@ -80,8 +90,10 @@ public class PublicBlogController implements Serializable {
     }
     
     public List<PublicBlog> getItems() {
+        items = null;
         if (items == null) {
-            items = getFacade().findAll();
+            String name = parkController.getSelected().getFullName();
+            items = getFacade().findPublicBlogsByName(name);
         }
         return items;
     }
