@@ -358,6 +358,24 @@ Used in Profile
     color: white;
 }
 
+/* Style the hello text used in headerTemplate */
+.profileName {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 15pt;
+    font-style: normal;
+    font-weight: normal;
+    color: black;
+}
+
+/* Style the hello text used in headerTemplate */
+.profileText {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    color: black;
+}
+
 /* Style standard text and input text field text */
 .standardText, .inputTextField {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;

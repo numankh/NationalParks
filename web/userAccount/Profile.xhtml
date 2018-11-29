@@ -142,7 +142,7 @@ Copyright © 2018 Numan Khan All rights reserved.
                         -->
                         <td align="center" valign="top">
 
-                            <h1> #{userController.selected.firstName}&nbsp;#{userController.selected.lastName}'s Account Profile </h1>
+                            <p class="profileName">#{userController.selected.firstName}&nbsp;#{userController.selected.lastName}'s Account Profile</p>
 
                             <!-- 
                             USER'S PROFILE PHOTO: Display the user's account profile photo in a circle. 
@@ -153,35 +153,35 @@ Copyright © 2018 Numan Khan All rights reserved.
                             <br />
                             <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >
 
-                                <h:outputText value="First Name:"/>
-                                <h:outputText value="#{userController.selected.firstName}" />
+                                <h:outputText value="First Name:" class="profileText"/>
+                                <h:outputText value="#{userController.selected.firstName}"  class="profileText"/>
 
-                                <h:outputText value="Middle Name:"/>
-                                <h:outputText value="#{userController.selected.middleName}" />
+                                <h:outputText value="Middle Name:" class="profileText"/>
+                                <h:outputText value="#{userController.selected.middleName}"  class="profileText"/>
 
-                                <h:outputText value="Last Name:"/>
-                                <h:outputText value="#{userController.selected.lastName}" />
+                                <h:outputText value="Last Name:" class="profileText"/>
+                                <h:outputText value="#{userController.selected.lastName}" class="profileText"/>
 
-                                <h:outputText value="Address 1:"/>
-                                <h:outputText value="#{userController.selected.address1}" />
+                                <h:outputText value="Address 1:" class="profileText"/>
+                                <h:outputText value="#{userController.selected.address1}" class="profileText"/>
 
-                                <h:outputText value="Address 2:"/>
-                                <h:outputText value="#{userController.selected.address2}" />
+                                <h:outputText value="Address 2:" class="profileText"/>
+                                <h:outputText value="#{userController.selected.address2}" class="profileText"/>
 
-                                <h:outputText value="#{bundle.ViewUserLabel_city}"/>
-                                <h:outputText value="#{userController.selected.city}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_city}" class="profileText"/>
+                                <h:outputText value="#{userController.selected.city}" class="profileText"/>
 
-                                <h:outputText value="#{bundle.ViewUserLabel_state}"/>
-                                <h:outputText value="#{userController.selected.state}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_state}" class="profileText"/>
+                                <h:outputText value="#{userController.selected.state}" class="profileText"/>
 
-                                <h:outputText value="#{bundle.ViewUserLabel_zipcode}"/>
-                                <h:outputText value="#{userController.selected.zipcode}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_zipcode}" class="profileText"/>
+                                <h:outputText value="#{userController.selected.zipcode}" class="profileText"/>
 
-                                <h:outputText value="#{bundle.ViewUserLabel_email}"/>
-                                <h:outputText value="#{userController.selected.email}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_email}" class="profileText"/>
+                                <h:outputText value="#{userController.selected.email}" class="profileText"/>
 
-                                <h:outputText value="#{bundle.ViewUserLabel_username}"/>
-                                <h:outputText value="#{userController.selected.username}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_username}" class="profileText"/>
+                                <h:outputText value="#{userController.selected.username}"  class="profileText"/>
 
                             </p:panelGrid>
 
