@@ -21,23 +21,23 @@ Copyright © 2018 Nick Eda. All rights reserved.
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
             
-                <!-- 
+<!--                 
                 Style the Google Map with id="map" using the 'map' style class defined in
                 siteStyles.css. This style definition is accessed in map.js in creating the map.
-                -->
+                
                 <div id="map" class="map"></div>
 
-                <!-- Name, Latitude, and Longitude of the selected VT building are accessed in map.js -->
+                 Name, Latitude, and Longitude of the selected VT building are accessed in map.js 
                 <h:inputHidden id="buildingName" value="#{buildingController.selected.name}" />
                 <h:inputHidden id="buildingLat" value="#{buildingController.selected.latitude}" />
                 <h:inputHidden id="buildingLong" value="#{buildingController.selected.longitude}" />
 
-                <!-- JSON data for VT buildings in a given category are parsed and used in map.js -->
+                 JSON data for VT buildings in a given category are parsed and used in map.js 
                 <h:inputHidden id="jsonCategoryResult" value="#{buildingController.jsonCategoryData}" />
 
-                <!-- startName and destinationName are accessed in map.js for displaying directions on map -->
+                 startName and destinationName are accessed in map.js for displaying directions on map 
                 <h:inputHidden id="startName" value="#{buildingController.startingBuildingName}" />
-                <h:inputHidden id="destinationName" value="#{buildingController.destinationBuildingName}" />
+                <h:inputHidden id="destinationName" value="#{buildingController.destinationBuildingName}" />-->
                 
             <div align="center" style="width:100%">
 
