@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Nick Eda on 2018.10.20
+Copyright © 2018 Nick Eda. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Plan Trip"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+
+                <h1>Plan a Trip</h1>
+                <br />
+                <h:form id="tripForm">
+                    <!-- 
+                    NOTE that the Growl message statements are included above in siteTemplate.
+                    -->
+                    <!-- Warn the user after 5 minutes (5 mins x 60 x 1000 = 300,000 milliseconds) of inactivity. -->
+                    <p:idleMonitor timeout="300000">
+                        <p:ajax event="idle" listener="#{tripManager.onIdle}" update="growlWarningMessage" />
+                        <p:ajax event="active" listener="#{tripManager.onActive}" update="growlWarningMessage" />
+                    </p:idleMonitor>
+
+                    <p:accordionPanel id="accordionPanel" multiple="true">
+                        <!--
+                        *******************************
+                        *     TRIP QUESTION 1     *
+                        *******************************
+                        -->
+                         <p:tab title="Question 1: Which of the following parks would you like to plan a trip to?">
+                            <p:panel id="Q1" class=".ui-panel" >
+                                <h:panelGrid columns="1" style="text-align: center">
+                                    <p:selectOneMenu id="question1" required="true" requiredMessage="Please Answer Question 1!"
+                                                     value="#{tripManager.question1}" style="width:164px;" >
+
+                                        <f:selectItem itemLabel="Select a National Park"          itemValue="" noSelectionOption="true"/>
+                                        <f:selectItem itemLabel="Acadia National Park"                         itemValue="Acadia National Park"/>
+                                        <f:selectItem itemLabel="Arches National Park"             itemValue="Arches National Park"/>
+                                        <f:selectItem itemLabel="Badlands National Park"                          itemValue="Badlands National Park"/>
+                                        <f:selectItem itemLabel="Big Bend National Park"    itemValue="Big Bend National Park"/>
+                                        <f:selectItem itemLabel="Biscayne National Park"            itemValue="Biscayne National Park"/>
+                                        <f:selectItem itemLabel="Black Canyon Of The Gunnison National Park"             itemValue="Black Canyon Of The Gunnison National Park"/>
+                                        <f:selectItem itemLabel="Bryce Canyon National Park"                  itemValue="Bryce Canyon National Park"/>
+                                        <f:selectItem itemLabel="Canyonlands National Park"                         itemValue="Canyonlands National Park"/>
+                                        <f:selectItem itemLabel="Capitol Reef National Park"             itemValue="Capitol Reef National Park"/>
+                                        <f:selectItem itemLabel="Carlsbad Caverns National Park"                          itemValue="Carlsbad Caverns National Park"/>
+                                        <f:selectItem itemLabel="Channel Islands National Park"    itemValue="Channel Islands National Park"/>
+                                        <f:selectItem itemLabel="Congaree National Park"            itemValue="Congaree National Park"/>
+                                        <f:selectItem itemLabel="Crater Lake National Park"             itemValue="Crater Lake National Park"/>
+                                        <f:selectItem itemLabel="Cuyahoga Valley National Park"                  itemValue="Cuyahoga Valley National Park"/>
+                                        <f:selectItem itemLabel="Death Valley National Park"                         itemValue="Death Valley National Park"/>
+                                        <f:selectItem itemLabel="Denali National Park &amp; Preserve"             itemValue="Denali National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Dry Tortugas National Park"                          itemValue="Hobbies"/>
+                                        <f:selectItem itemLabel="Everglades National Park"    itemValue="Everglades National Park"/>
+                                        <f:selectItem itemLabel="Gates Of The Arctic National Park &amp; Preserve"            itemValue="Gates Of The Arctic National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Gateway Arch National Park"             itemValue="Gateway Arch National Park"/>
+                                        <f:selectItem itemLabel="Glacier Bay National Park &amp; Preserve"                  itemValue="Glacier Bay National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Glacier National Park"                         itemValue="Glacier National Park"/>
+                                        <f:selectItem itemLabel="Grand Canyon National Park"             itemValue="Grand Canyon National Park"/>
+                                        <f:selectItem itemLabel="Grand Teton National Park"                          itemValue="Grand Teton National Park"/>
+                                        <f:selectItem itemLabel="Great Basin National Park"    itemValue="Great Basin National Park"/>
+                                        <f:selectItem itemLabel="Great Sand Dunes National Park &amp; Preserve"            itemValue="Great Sand Dunes National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Great Smoky Mountains National Park"             itemValue="Great Smoky Mountains National Park"/>
+                                        <f:selectItem itemLabel="Guadalupe Mountains National Park"                  itemValue="Guadalupe Mountains National Park"/>
+                                        <f:selectItem itemLabel="Haleakalá National Park"                         itemValue="Haleakalá National Park"/>
+                                        <f:selectItem itemLabel="Hawai'i Volcanoes National Park"             itemValue="Hawai'i Volcanoes National Park"/>
+                                        <f:selectItem itemLabel="Hot Springs National Park"                          itemValue="Hot Springs National Park"/>
+                                        <f:selectItem itemLabel="Isle Royale National Park"    itemValue="Isle Royale National Park"/>
+                                        <f:selectItem itemLabel="Joshua Tree National Park"            itemValue="Joshua Tree National Park"/>
+                                        <f:selectItem itemLabel="Katmai National Park &amp; Preserve"             itemValue="Katmai National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Kenai Fjords National Park"                  itemValue="Kenai Fjords National Park"/>
+                                        <f:selectItem itemLabel="Kobuk Valley National Park"                         itemValue="Kobuk Valley National Park"/>
+                                        <f:selectItem itemLabel="Lake Clark National Park &amp; Preserve"             itemValue="Lake Clark National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Lassen Volcanic National Park"                          itemValue="Lassen Volcanic National Park"/>
+                                        <f:selectItem itemLabel="Mammoth Cave National Park"    itemValue="Mammoth Cave National Park"/>
+                                        <f:selectItem itemLabel="Mesa Verde National Park"            itemValue="Mesa Verde National Park"/>
+                                        <f:selectItem itemLabel="Mount Rainier National Park"             itemValue="Mount Rainier National Park"/>
+                                        <f:selectItem itemLabel="National Park of American Samoa"                  itemValue="National Park of American Samoa"/>
+                                        <f:selectItem itemLabel="North Cascades National Park"                         itemValue="North Cascades National Park"/>
+                                        <f:selectItem itemLabel="Olympic National Park"             itemValue="Olympic National Park"/>
+                                        <f:selectItem itemLabel="Petrified Forest National Park"                          itemValue="Petrified Forest National Park"/>
+                                        <f:selectItem itemLabel="Pinnacles National Park"    itemValue="Pinnacles National Park"/>
+                                        <f:selectItem itemLabel="Redwood National and State Parks"            itemValue="Redwood National and State Parks"/>
+                                        <f:selectItem itemLabel="Rocky Mountain National Park"             itemValue="Rocky Mountain National Park"/>
+                                        <f:selectItem itemLabel="Saguaro National Park"                  itemValue="Saguaro National Park"/>
+                                        <f:selectItem itemLabel="Sequoia &amp; Kings Canyon National Parks"                         itemValue="Sequoia &smp; Kings Canyon National Parks"/>
+                                        <f:selectItem itemLabel="Shenandoah National Park"             itemValue="Shenandoah National Park"/>
+                                        <f:selectItem itemLabel="Theodore Roosevelt National Park"                          itemValue="Theodore Roosevelt National Park"/>
+                                        <f:selectItem itemLabel="Virgin Islands National Park"    itemValue="Virgin Islands National Park"/>
+                                        <f:selectItem itemLabel="Voyageurs National Park"            itemValue="Voyageurs National Park"/>
+                                        <f:selectItem itemLabel="Wind Cave National Park"             itemValue="Wind Cave National Park"/>
+                                        <f:selectItem itemLabel="Wrangell - St Elias National Park &amp; Preserve"                  itemValue="Wrangell - St Elias National Park &amp; Preserve"/>
+                                        <f:selectItem itemLabel="Yellowstone National Park"                         itemValue="Yellowstone National Park"/>
+                                        <f:selectItem itemLabel="Yosemite National Park"             itemValue="Yosemite National Park"/>
+                                        <f:selectItem itemLabel="Zion National Park"                          itemValue="Zion National Park"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <!--
+                        *******************************
+                        *     TRIP QUESTION 2     *
+                        *******************************
+                        -->
+                        <p:tab title="Question 2: When do you want to leave?">
+                            <br />
+                            <p:calendar id="leaveDate" pattern="MM/dd/yyyy" class="inputTextField" mask="true"
+                            value="#{tripManager.question2}" 
+                            required="true" requiredMessage="Please Answer Question 2!" />
+                              
+                        </p:tab>
+
+                        <!--
+                        *******************************
+                        *     TRIP QUESTION 3     *
+                        *******************************
+                        -->
+                        <p:tab title="Question 3: When do you want to return?">
+                            <br />
+                            <p:calendar id="returnDate" pattern="MM/dd/yyyy" class="inputTextField" mask="true"
+                            value="#{tripManager.question3}" 
+                            required="true" requiredMessage="Please Answer Question 3!" />
+                              
+                        </p:tab>
+                    </p:accordionPanel>
+                    
+                    &nbsp;
+                    <p:commandButton value="Submit" update=":growlInfoMessage" icon="fas fa-arrow-up" ajax="false" 
+                                     action="#{tripManager.processTrip()}"  />
+                    &nbsp;
+                    <p:commandButton value="Clear All" update=":growlInfoMessage" icon="fas fa-undo" ajax="false"
+                                     actionListener="#{tripManager.clearTrip(true)}" immediate="true" >
+
+                        <p:resetInput target="tripForm" />
+                    </p:commandButton>
+                </h:form>
+                <br/><br/>
+            </div>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

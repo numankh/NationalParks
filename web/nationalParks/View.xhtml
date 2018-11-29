@@ -9,15 +9,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
     <!-- This page is constructed based on the siteTemplate -->
     <ui:composition template="/template/siteTemplate.xhtml">
-        
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <ui:define name="title">
             <!-- Set the page title -->
             <h:outputText value="Park Info"></h:outputText>
@@ -35,28 +32,28 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <br/><br/>
 
                         <div align ="center" class="topnav">
-                            <div style="display:inline-block">
+                            <div style="display:inline-block ">
 
-                                <a href="#description">Description</a>
-                                <a href="#flickr">Flickr Images</a>
-                                <a href="#twitter">Twitter Updates</a>
-                                <a href="#twitter">Weather Information</a>
-                                <a href="#blog"> Park Blog</a>
-                                
+                                <a href="#description" class="standardText">Description</a>
+                                <a href="#flickr" class="standardText">Flickr Images</a>
+                                <a href="#twitter" class="standardText">Twitter Updates</a>
+                                <a href="#twitter" class="standardText">Weather Information</a>
+                                <a href="#blog" class="standardText">Park Blog</a>
                             </div>
                         </div>
 
                         <h:graphicImage url="#{parkController.selected.imageUrl}" style="width: 100%; height:400px"/>
                         <br/><br/>
                         <div   id = "description" width="80%" align="center" style="text-align: left; margin-left: 10%; margin-right: 10%">
-                           
                             
-                            <h:outputText style="width:50%" value="#{parkController.selectedParkDescription()}" class="scrollableOutputText" />
+                            <br/><br/>
+
+                            <h:outputText style="width:50%" value="#{parkController.selectedParkDescription()}" class="standardText" />
                             <br/><br/>
                         </div>
                         <br/>
 
-
+                        
                         
                         <div id="flickr"></div>
                         <br/>
@@ -81,7 +78,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
 
                             <tr>
-                                <td align="left" valign="middle"  width="40%">
+                                <td align="left" valign="middle" style="margin-left:40px" width="40%">
 
 
                                     <a class="twitter-timeline" 
@@ -90,7 +87,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                        margin-left="401px"
 
                                        href="https://twitter.com/#{parkController.selected.twitterHandle}?ref_src=twsrc%5Etfw">
-                                        <div style="font-size:20px; margin-left:40px">Tweets by #{parkController.selected.twitterHandle}
+                                        <div style="font-size:20px">Tweets by #{parkController.selected.twitterHandle}
                                         </div>
                                     </a> 
                                     <script async="async" 
@@ -103,7 +100,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
 
 
-                                <td align="right" valign="middle" height="">
+                                <td align="right" valign="middle" style="margin-left:40px" height="">
 
                                     <script type='text/javascript' 
                                             src='https://darksky.net/widget/default/#{parkController.selectedParkLatLong()}/us12/en.js?width=100%&amp;height=305&amp;title=#{parkController.selected.fullName}&amp;textColor=333333&amp;bgColor=transparent&amp;transparency=true&amp;skyColor=undefined&amp;fontFamily=Default&amp;customFont=&amp;units=us&amp;htColor=333333&amp;ltColor=C7C7C7&amp;displaySum=yes&amp;displayHeader=yes'>
@@ -113,7 +110,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                             </tr>
                         </table>
-                        <div id="blog" align="center" style="width:95%">
+                        <br/><br/><br/><br/>
+                        <div id="id" align="center" style="width:95%">
 
                             <h:form id="PublicBlogListForm">                  
 
@@ -186,15 +184,6 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                     </div>
                     <br/>
-                    
-                    
-                    <c:if test="#{publicBlogController.getItems().size() == 0}">
-                            <div >There are no ratings for this park yet</div>
-                        </c:if>
-                       
-                     <c:if test="#{publicBlogController.getItems().size() != 0}">
-                            <p:chart type="metergauge" model="#{chartController.getMeterGauge(publicBlogController.items)}" style="height:400px; aligh:center;width:100%" />
-                        </c:if>
                     <p:button outcome="/nationalParks/List" value="Back" icon="fas fa-arrow-left"  />
                     &nbsp;&nbsp;
                 </h:form>

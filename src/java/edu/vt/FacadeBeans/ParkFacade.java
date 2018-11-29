@@ -39,4 +39,9 @@ public class ParkFacade extends AbstractFacade<NationalParks>{
         searchString = "%" + searchString + "%";
         return getEntityManager().createQuery("SELECT c FROM NationalParks c WHERE c.fullName LIKE :searchString OR c.states LIKE :searchString").setParameter("searchString", searchString).getResultList();
     }
+    
+     public String findImageURLByFullName(String name){
+         NationalParks test = this.nameQuery(name).get(0);
+        return test.getImageUrl();
+    }
 }

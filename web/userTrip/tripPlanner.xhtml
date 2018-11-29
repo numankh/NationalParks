@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Nick Eda on 2018.10.14
+Copyright © 2018 Nick Eda. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Trip Planner"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center">
+                <h1>Trip Planner</h1>
+                <br />
+                <table width="90%" border="0" cellspacing="20" cellpadding="5">
+                    <tr>
+                        <td width="80%">
+                            <span class="heading">Plan a New Trip</span><br/>
+                            Interested in visiting a national park? Plan out the logistics of your trip: save directions, prices, and dates.
+                        </td>
+                    </tr>
+                        <tr>
+                        <td>
+                            <span class="heading">Saved Trips</span><br/>
+                            Revisit previously planned trips. View, modify, and share the details of the trip.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="heading">Public Trips</span><br/>
+                            Take a look at what trips other users have planned. Get trip inspiration and leave comments and questions for other users.
+                        </td>
+                    </tr>
+                    
+                </table>
+                <br/><br/><br/>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

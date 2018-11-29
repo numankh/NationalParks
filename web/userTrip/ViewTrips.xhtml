@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2018.06.10
+Copyright © 2018 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Planned Trips"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" style="width:95%">
+
+                <h1>Planned Trips</h1>
+
+                <h:form id="UserTripListForm">
+
+                    <p:panel header="Trips List">
+
+                        <p:dataTable id="datalist" value="#{userTripController.items}" var="item"
+                                     selectionMode="single" selection="#{userTripController.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,20,30,40,50"
+                                     class="dataTable">
+
+                            <p:ajax event="rowSelect"   update="viewButton deleteButton"/>
+                            <p:ajax event="rowUnselect" update="viewButton deleteButton"/>
+
+                            <!--
+                            ********************************
+                            *    DB Primary Key column     *
+                            ********************************
+                            -->
+                            <p:column headerText="ID" style="text-align:center; width:50px;">
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                            <!--
+                            ********************************
+                            *      Date Taken column       *
+                            ********************************
+                            -->
+                            <p:column sortBy="#{item.dateEntered}" headerText="Date Taken" style="text-align:center; width:100px;">
+                                <h:outputText value="#{item.dateEntered}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <!--
+                            ********************************
+                            *       User Photo column      *
+                            ********************************
+                            -->
+                            <p:column headerText="User Photo" style="text-align:center; width:80px;">
+                                <!-- 
+                                Display the user's photo in a small circle. The cache="false" option
+                                enables immediate display of a newly uploaded photo without using cache.
+                                -->
+                                <p:graphicImage cache="false" class="smallProfilePhoto" value="#{userController.userPhoto()}" />
+                            </p:column>
+
+                            <!--
+                            ********************************
+                            *           Footer             *
+                            ********************************
+                            -->
+                            <f:facet name="footer">
+                                <!-- 
+                                ===========
+                                VIEW Button
+                                ===========
+                                -->
+                                <p:commandButton id="viewButton" icon="fas fa-eye" value="View Details" 
+                                                 action="/userTrip/TripDetails?faces-redirect=true" 
+                                                 disabled="#{empty userTripController.selected}"/>
+                                &nbsp;
+                                <!-- 
+                                ===========================
+                                DELETE Trip Button
+                                ===========================
+                                -->
+                                <!-- 
+                                ***************************************************
+                                Display a Confirmation dialog for the DELETE button
+                                *************************************************** 
+                                -->
+                                <p:commandButton id="deleteButton" icon="fas fa-trash-alt"  value="Delete"
+                                                 disabled="#{empty userTripController.selected}"
+                                                 oncomplete="PF('SecurityQuestionDialog').show()">
+
+                                    <p:confirm header="Trip Deletion Confirmation" 
+                                               message="Are you sure you want to permanently delete the selected Trip from the database?" 
+                                               icon="fas fa-exclamation-triangle fa-2x" />
+                                </p:commandButton>
+
+                                <p:confirmDialog id="confirmDialogBox" global="true" showEffect="slide" hideEffect="fade">
+                                    <div align="center">
+                                        <!-- The value of the first button listed below will be 
+                                        shown as highlighted (default action) when displayed -->
+                                        <p:commandButton value="No" type="button" 
+                                                         class="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                        &nbsp;
+                                        <p:commandButton value="Yes" type="button" 
+                                                         class="ui-confirmdialog-yes" icon="fas fa-check-square" />
+                                    </div>
+                                </p:confirmDialog>
+                                <!-- 
+                                ************************************************
+                                End of Display of the DELETE Confirmation dialog 
+                                ************************************************ 
+                                -->
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </div>
+
+            <!-- 
+            ==================================================================
+            Dialog for Security Question and Answer for Trip Deletion
+            ==================================================================
+            -->
+            <p:dialog position="center center" id="SecurityQuestionDialog" widgetVar="SecurityQuestionDialog" 
+                      modal="true" resizable="false" appendTo="@(body)" header="Security Question" 
+                      showEffect="blind" hideEffect="fade" >
+                <!--
+                Various effect options are available when displaying and closing p:dialog or p:confirmDialog.
+                You can apply a showEffect and a hideEffect option listed below: 
+                ******************************************************************
+                |   blind, bounce, clip, drop, explode, fade, fold, highlight,   |
+                |   puff, pulsate, scale, shake, size, slide, and transfer.      |
+                ******************************************************************
+                -->
+
+                <h:form id="securityQuestionForm">
+                    <fieldset>
+                        <div style="margin-bottom:20px">
+                            <h:outputLabel for="answer" value="#{userController.getSelectedSecurityQuestion()}"/>
+                        </div>
+
+                        <div style="margin-bottom:10px">
+                            <p:inputText id="answer" value="#{userTripController.answerToSecurityQuestion}" 
+                                         required="true" requiredMessage="Please enter your answer!" 
+                                         class="inputTextField" />
+                        </div>
+
+                        <br/>   
+                        <div align="center">
+                            <!--
+                            ================================
+                            |         SUBMIT Button        |
+                            ================================
+                            -->
+                            <p:commandButton id="Submit" value="Submit" ajax="false" icon="fas fa-arrow-up"
+                                             actionListener="#{userTripController.securityAnswerSubmit()}"
+                                             update=":UserTripListForm" oncomplete="PF('SecurityQuestionDialog').hide()"/>
+                            &nbsp;
+                            <!--
+                            ================================
+                            |         CANCEL Button        |
+                            ================================
+                            -->
+                            <p:button outcome="/userTrip/ViewTrips.xhtml" value="Cancel" icon="fas fa-ban"  />
+                        </div>
+                        <br />
+                    </fieldset>
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

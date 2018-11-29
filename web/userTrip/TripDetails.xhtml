@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Nick Eda on 2018.10.14
+Copyright © 2018 Nick Eda. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Trip Details"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            
+                <!-- 
+                Style the Google Map with id="map" using the 'map' style class defined in
+                siteStyles.css. This style definition is accessed in map.js in creating the map.
+                -->
+                <div id="map" class="map"></div>
+
+                <!-- Name, Latitude, and Longitude of the selected VT building are accessed in map.js -->
+                <h:inputHidden id="buildingName" value="#{buildingController.selected.name}" />
+                <h:inputHidden id="buildingLat" value="#{buildingController.selected.latitude}" />
+                <h:inputHidden id="buildingLong" value="#{buildingController.selected.longitude}" />
+
+                <!-- JSON data for VT buildings in a given category are parsed and used in map.js -->
+                <h:inputHidden id="jsonCategoryResult" value="#{buildingController.jsonCategoryData}" />
+
+                <!-- startName and destinationName are accessed in map.js for displaying directions on map -->
+                <h:inputHidden id="startName" value="#{buildingController.startingBuildingName}" />
+                <h:inputHidden id="destinationName" value="#{buildingController.destinationBuildingName}" />
+                
+            <div align="center" style="width:100%">
+
+                <h1><br/>Details of the Trip Planned on </h1>
+                <h1>
+                    <h:outputText value="#{userTripController.selected.getDateEntered()}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </h1>
+                <br />
+                <h:form id="resultsForm">
+
+                    <p:dataTable id="datalist" value="#{userTripController.tripItems}" var="item"
+                                 paginator="false"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,15,20"
+                                 class="dataTable" >
+
+                        <!-- 
+                        ***********************
+                        *   Category Number   *
+                        ***********************
+                        Category Number 16 is the last row showing the total values. Therefore,
+                        we do not show the values of some columns if it is the last totals row.
+                        -->
+                        <p:column  style="text-align:center;">
+                                 <!-- Render the row value of this column if it is not the last totals row  -->
+                                <p:row>
+                                    <br/>
+                                    <h:outputText class="standardText" value="You are planning on visiting #{item.destination}."/><br/><br/><br/>
+                                    <h:graphicImage url="#{parkController.getParkFacade().findImageURLByFullName(item.destination)}" style="width: 70%; height:400px"/>
+                                </p:row>
+                                <p:row>
+                                    <br/><br/>
+                                    <h:outputText class="standardText" value="You want to leave from #{userController.selected.address1} on #{item.leaveDate}."/>
+                                </p:row>
+                                 
+                                 
+                                 <p:row>
+                                     <br/><br/>
+                                     <h:outputText class="standardText" value="To get there, you can:"/>
+                                     <br/><br/>
+                                 </p:row>
+                                 
+                                 <p:row>
+                                     <br/><br/>
+                                     <h:outputText class="standardText" value="To get back by #{item.returnDate}."/>
+                                 </p:row>
+                                 
+                                 <p:row>
+                                     <br/><br/>
+                                     <h:outputText class="standardText" value="Listed below are some tools to help decide on transportation, hotels, and local events:"/>
+                                 </p:row>
+                        </p:column>
+                      
+
+                        <!-- 
+                        ****************************************
+                        *** FOOTER Section of the Data Table ***
+                        ****************************************
+                        -->
+                        <f:facet name="footer">
+
+                            <p:commandButton value="Export as PDF" icon="fas fa-file-pdf" ajax="false">
+                                <!-- 
+                                PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                                itext-2.1.7.jar must be added to the Libraries folder. 
+                                Pre-process the PDF file to be in Landscape orientation on Letter size paper.
+                                -->
+                                <p:dataExporter type="pdf" target="datalist" fileName="HealthTrip" preProcessor="#{tripManager.preProcessPDF}"/>
+                            </p:commandButton>
+                            &nbsp;
+                            <p:commandButton value="Export as Excel" icon="fas fa-file-excel" ajax="false">
+                                <!-- 
+                                PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                poi-3.15.jar must be added to the Libraries folder. 
+                                -->
+                                <p:dataExporter type="xls" target="datalist" fileName="HealthTrip" />
+                            </p:commandButton>
+                            &nbsp;
+                            <p:commandButton value="Export as CSV" icon="fas fa-file" ajax="false">
+                                <!-- 
+                                PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                poi-3.15.jar must be added to the Libraries folder. 
+                                -->
+                                <p:dataExporter type="csv" target="datalist" fileName="HealthTrip" />
+                            </p:commandButton>
+                            &nbsp;
+                            <!-- Clicking the Cancel button shows the Profile page -->
+                             <p:button outcome="/userTrip/ViewTrips" value="Trips Taken" icon="fas fa-arrow-left"  />
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:form>
+
+            </div>
+            <br/>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

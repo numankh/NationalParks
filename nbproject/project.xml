@@ -11,6 +11,12 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${file.reference.itext-2.1.7.jar}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.poi-3.15.jar}</file>
+                </library>
+                <library dirs="200">
                     <file>${file.reference.primefaces-6.2.7.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
