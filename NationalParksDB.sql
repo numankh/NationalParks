@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, User, UserTrip;
+DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, UserTrip, User;
 
 CREATE TABLE NationalParks
 (

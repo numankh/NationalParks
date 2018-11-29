@@ -57,7 +57,7 @@ public class UserBlogController implements Serializable {
     private UserBlogFacade getFacade() {
         return userBlogFacade;
     }
-
+    
     public UserBlog prepareCreate() {
         selected = new UserBlog();
         User signedInUser = (User) Methods.sessionMap().get("user");
