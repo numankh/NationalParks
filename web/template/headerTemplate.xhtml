@@ -33,7 +33,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 1 (Left): Cloud Drive Logo Image
                     ***************************************
                     -->
-                    <td align="left" valign="middle" width="210px">
+                    <td align="left" valign="middle" style="width:230px;">
 
                         <!-- Use EL to reference the image file since it will be accessed from all UI pages -->
                         <h:link outcome="/index">
@@ -47,14 +47,16 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 2 (Center): Welcome User
                     *******************************
                     -->
-                    <td align="middle" valign="middle" >
+                    <td  >
+                    <div style="margin-left:40%; margin-right: 30%">
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{userController.isLoggedIn() == true}">
                             <div class="helloText">Hello, #{userController.selected.firstName}</div>
                         </c:if>
                         <c:if test="#{userController.isLoggedIn() == false}">
-                            <h1>Hello, Guest</h1>
+                            <p class="helloText">Hello, Guest</p>
                         </c:if>
+                    </div>
                         
                     </td>
                         
@@ -64,7 +66,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Column 3 (Right): Hamburger Menu Button
                     ***************************************
                     -->
-                    <td align="right" valign="middle" style="width:210px;">
+                    <td align="right" valign="middle" style="width:100px;">
 
                         <!--
                         tabindex="0" enables the menu element to be focusable and to trigger interaction. 
@@ -78,7 +80,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                         <div tabindex="0" class="menu" style="float:right;padding-right:20px;">
                             <div class="menu-dropdown" style="right:0;">
 
-                                <h:link outcome="/index" class="standardText">
+                                <h:link outcome="/index" class="hamburgerText">
                                     <i class="fas fa-home"></i>&nbsp;Home
                                 </h:link>
                                 
@@ -91,12 +93,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
                                     
-                                    <h:link outcome="/userBlog/List" class="standardText" >
+                                    <h:link outcome="/userBlog/List" class="hamburgerText" >
                                         <i class="fas fa-file-alt"></i>&nbsp;My Personal Blog
                                     </h:link>
                                     
                                     <!-- Clicking "My Account" displays the Profile.xhtml file -->
-                                    <h:link outcome="/userAccount/Profile" class="standardText">
+                                    <h:link outcome="/userAccount/Profile" class="hamburgerText">
                                         <!-- 
                                         Display the user's photo in a small circle. The cache="false" option
                                         enables immediate display of a newly uploaded photo without using cache.
@@ -106,7 +108,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                     </h:link>
                                     
                                     <!-- Clicking "Sign Out" invokes userController's logout() method -->
-                                    <h:commandLink action="#{userController.logout()}" class="standardText" >
+                                    <h:commandLink action="#{userController.logout()}" class="hamburgerText" >
                                         <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
                                     </h:commandLink>
                                     
@@ -119,12 +121,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == false}">
                                     <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
-                                    <h:link outcome="/SignIn" class="standardText">
+                                    <h:link outcome="/SignIn" class="hamburgerText">
                                         <i class="fas fa-sign-in-alt"></i>&nbsp;Sign In
                                     </h:link>
 
                                     <!-- Clicking "Create an Account" displays the CreateAccount.xhtml file -->
-                                    <h:link outcome="/userAccount/CreateAccount" class="standardText">
+                                    <h:link outcome="/userAccount/CreateAccount" class="hamburgerText">
                                         <i class="fas fa-user-plus"></i>&nbsp;Create an Account
                                     </h:link>
                                 </c:if>
@@ -136,15 +138,15 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 -->
                                 
                                 
-                                <h:link outcome="/nationalParks/List" class="standardText">
+                                <h:link outcome="/nationalParks/List" class="hamburgerText">
                                     <i class="fas fa-list"></i>&nbsp;National Parks
                                 </h:link>
                                 
-                                <h:link outcome="/nationalParks/List" class="standardText">
+                                <h:link outcome="/nationalParks/List" class="hamburgerText">
                                     <i class="fas fa-map-marked-alt"></i>&nbsp;Trip Planner
                                 </h:link>
                                 
-                                <h:link outcome="/About" class="standardText">
+                                <h:link outcome="/About" class="hamburgerText">
                                     <i class="fas fa-info-circle"></i>&nbsp;About
                                 </h:link>
 
