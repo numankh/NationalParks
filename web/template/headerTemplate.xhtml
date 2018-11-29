@@ -92,16 +92,19 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 ===========================================
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
-                                   
+                                    
                                                                     
-                                    <h:link outcome="/userTrip/tripPlanner" class="standardText">
+                                    <h:link outcome="/userTrip/PlanTrip" class="hamburgerText">
                                      <i class="fas fa-map-marked-alt"></i>&nbsp;Trip Planner
+                                    </h:link>
+                                    
+                                    <h:link outcome="/userTrip/ViewTrips" class="hamburgerText">
+                                     <i class="fas fa-map-marked-alt"></i>&nbsp;My Trips
                                     </h:link>
                                     
                                     <h:link outcome="/userBlog/List" class="hamburgerText" >
                                         <i class="fas fa-file-alt"></i>&nbsp;My Personal Blog
                                     </h:link>
-                                    
                                     
                                     <!-- Clicking "My Account" displays the Profile.xhtml file -->
                                     <h:link outcome="/userAccount/Profile" class="hamburgerText">
@@ -148,15 +151,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                     <i class="fas fa-list"></i>&nbsp;National Parks
                                 </h:link>
                                 
-<<<<<<< HEAD
-                                <h:link outcome="/About" class="standardText">
-=======
-                                <h:link outcome="/nationalParks/List" class="hamburgerText">
-                                    <i class="fas fa-map-marked-alt"></i>&nbsp;Trip Planner
-                                </h:link>
-                                
                                 <h:link outcome="/About" class="hamburgerText">
->>>>>>> 9600e0d761dfdcfe5a254ff76265159010006772
                                     <i class="fas fa-info-circle"></i>&nbsp;About
                                 </h:link>
 
