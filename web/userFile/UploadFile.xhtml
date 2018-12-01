@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Osman Balci on 2018.06.16
+Copyright © 2018 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Upload File(s)"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- 
+            The enctype attribute sets the content type of the data to be submitted to the server.  
+            enctype="multipart/form-data" is required when the form used has a file upload control.
+            -->
+            <h:form id="parkSelectForm">
+                <div align="center">
+                    <div class="arialTen">
+                        Select Park where photos were taken.
+                    </div>
+                    <br/>
+                    <p:selectOneMenu id="parkCodeField" value="#{userFileController.parkCode}"
+                                         required="true" requiredMessage="Please select a category!" >
+                        <p:ajax event="change" listener="#{userFileController.parkChange}"/>
+                        <f:selectItem itemLabel="Select Park"  itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Acadia National Park"  itemValue="acad" />
+                        <f:selectItem itemLabel="Arches National Park"  itemValue="arch" />
+                        <f:selectItem itemLabel="Badlands National Park"        itemValue="badl" />
+                        <f:selectItem itemLabel="Big Bend National Park"        itemValue="bibe" />
+                        <f:selectItem itemLabel="Biscayne National Park"        itemValue="bisc" />
+                        <f:selectItem itemLabel="Black Canyon Of The Gunnison National Park"    itemValue="blcs" />
+                        <f:selectItem itemLabel="Bryce Canyon National Park"    itemValue="brca" />
+                        <f:selectItem itemLabel="Canyonlands National Park"     itemValue="cany" />
+                        <f:selectItem itemLabel="Capitol Reef National Park"    itemValue="care" />
+                        <f:selectItem itemLabel="Carlsbad Caverns National Park"        itemValue="cave" />
+                        <f:selectItem itemLabel="Channel Islands National Park" itemValue="chis" />
+                        <f:selectItem itemLabel="Congaree National Park"        itemValue="cong" />
+                        <f:selectItem itemLabel="Crater Lake National Park"     itemValue="crla" />
+                        <f:selectItem itemLabel="Cuyahoga Valley National Park" itemValue="cuva" />
+                        <f:selectItem itemLabel="Death Valley National Park"    itemValue="deva" />
+                        <f:selectItem itemLabel="Denali National Park &amp; Preserve"       itemValue="dena" />
+                        <f:selectItem itemLabel="Dry Tortugas National Park"    itemValue="drto" />
+                        <f:selectItem itemLabel="Everglades National Park"      itemValue="ever" />
+                        <f:selectItem itemLabel="Gates Of The Arctic National Park &amp; Preserve"  itemValue="gaar" />
+                        <f:selectItem itemLabel="Gateway Arch National Park"    itemValue="jeff" />
+                        <f:selectItem itemLabel="Glacier Bay National Park &amp; Preserve"  itemValue="glba" />
+                        <f:selectItem itemLabel="Glacier National Park" itemValue="glac" />
+                        <f:selectItem itemLabel="Grand Canyon National Park"    itemValue="grca" />
+                        <f:selectItem itemLabel="Grand Teton National Park"     itemValue="grte" />
+                        <f:selectItem itemLabel="Great Basin National Park"     itemValue="grba" />
+                        <f:selectItem itemLabel="Great Sand Dunes National Park &amp; Preserve"     itemValue="grsa" />
+                        <f:selectItem itemLabel="Great Smoky Mountains National Park"   itemValue="grsm" />
+                        <f:selectItem itemLabel="Guadalupe Mountains National Park"     itemValue="gumo" />
+                        <f:selectItem itemLabel="HaleakalÃ¡ National Park"      itemValue="hale" />
+                        <f:selectItem itemLabel="Hawai'i Volcanoes National Park"       itemValue="havo" />
+                        <f:selectItem itemLabel="Hot Springs National Park"     itemValue="hosp" />
+                        <f:selectItem itemLabel="Isle Royale National Park"     itemValue="isro" />
+                        <f:selectItem itemLabel="Joshua Tree National Park"     itemValue="jotr" />
+                        <f:selectItem itemLabel="Katmai National Park &amp; Preserve"       itemValue="katm" />
+                        <f:selectItem itemLabel="Kenai Fjords National Park"    itemValue="kefj" />
+                        <f:selectItem itemLabel="Kobuk Valley National Park"    itemValue="kova" />
+                        <f:selectItem itemLabel="Lake Clark National Park &amp; Preserve"   itemValue="lacl" />
+                        <f:selectItem itemLabel="Lassen Volcanic National Park" itemValue="lavo" />
+                        <f:selectItem itemLabel="Mammoth Cave National Park"    itemValue="maca" />
+                        <f:selectItem itemLabel="Mesa Verde National Park"      itemValue="meve" />
+                        <f:selectItem itemLabel="Mount Rainier National Park"   itemValue="mora" />
+                        <f:selectItem itemLabel="National Park of American Samoa"       itemValue="npsa" />
+                        <f:selectItem itemLabel="North Cascades National Park"  itemValue="noca" />
+                        <f:selectItem itemLabel="Olympic National Park" itemValue="olym" />
+                        <f:selectItem itemLabel="Petrified Forest National Park"        itemValue="pefo" />
+                        <f:selectItem itemLabel="Pinnacles National Park"       itemValue="pinn" />
+                        <f:selectItem itemLabel="Redwood National and State Parks"      itemValue="redw" />
+                        <f:selectItem itemLabel="Rocky Mountain National Park"  itemValue="romo" />
+                        <f:selectItem itemLabel="Saguaro National Park" itemValue="sagu" />
+                        <f:selectItem itemLabel="Sequoia &amp; Kings Canyon National Parks" itemValue="seki" />
+                        <f:selectItem itemLabel="Shenandoah National Park"      itemValue="shen" />
+                        <f:selectItem itemLabel="Theodore Roosevelt National Park"      itemValue="thro" />
+                        <f:selectItem itemLabel="Virgin Islands National Park"  itemValue="viis" />
+                        <f:selectItem itemLabel="Voyageurs National Park"       itemValue="voya" />
+                        <f:selectItem itemLabel="Wind Cave National Park"       itemValue="wica" />
+                        <f:selectItem itemLabel="Wrangell - St Elias National Park &amp; Preserve"  itemValue="wrst" />
+                        <f:selectItem itemLabel="Yellowstone National Park"     itemValue="yell" />
+                        <f:selectItem itemLabel="Yosemite National Park"        itemValue="yose" />
+                        <f:selectItem itemLabel="Zion National Park"    itemValue="zion" />
+                    </p:selectOneMenu>
+                </div>
+            </h:form>
+            <h:form id="uploadFileForm" enctype="multipart/form-data">
+
+                <div align="center">
+                    
+                    
+
+                    <h1>Upload One or More Files</h1>
+
+                    <div class="arialTen">
+                        Click Choose to select one or more files or drag one or more files and drop on the white area.
+                    </div>
+                    <br/>
+                    
+                    
+
+                    <!--
+                    *******************************************
+                    *   Drag-and-Drop Multiple Files Upload   *
+                    *******************************************
+                    The user either selects multiple files to upload or 
+                    drags and drops them within the upload box to upload them.
+                    Maximum 30MB file size and no more than 5 files to upload at the same time.
+                    -->
+
+                    <p:fileUpload fileUploadListener="#{fileUploadManager.handleFileUpload}" 
+                                  mode="advanced" dragDropSupport="true" update="growlInfoMessage" 
+                                  sizeLimit="30000000" multiple="true" fileLimit="5" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <br/>
+                    <!--
+                    =============================
+                    |         DONE Button       |
+                    =============================
+                    -->
+                    <p:button outcome="/userFile/ListUserFiles" value="Done" icon="fas fa-check-circle"  />
+                    <br/><br/>
+                </div>
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

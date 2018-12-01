@@ -196,6 +196,16 @@ public class ParkController implements Serializable {
         }
         return "index?faces-redirect=true";
     }
+    
+    public String getNameByCode(String code) {
+        getItems();
+        for (int i = 0; i < items.size(); i++) {
+            if( items.get(i).getParkCode().equalsIgnoreCase(code) ) {
+                return items.get(i).getFullName();
+            }
+        }
+        return code;
+    }
 }
 
 

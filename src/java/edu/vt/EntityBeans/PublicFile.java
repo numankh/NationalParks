@@ -26,16 +26,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Brannon
  */
 @Entity
-@Table(name = "UserFile")
+@Table(name = "PublicFile")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserFile.findAll", query = "SELECT u FROM UserFile u")
-    , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
-    , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
-    , @NamedQuery(name = "UserFile.findByParkCode", query = "SELECT u FROM UserFile u WHERE u.parkCode = :parkCode")
-    , @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
-})
-public class UserFile implements Serializable {
+    @NamedQuery(name = "PublicFile.findAll", query = "SELECT p FROM PublicFile p")
+    , @NamedQuery(name = "PublicFile.findById", query = "SELECT p FROM PublicFile p WHERE p.id = :id")
+    , @NamedQuery(name = "PublicFile.findByFilename", query = "SELECT p FROM PublicFile p WHERE p.filename = :filename")
+    , @NamedQuery(name = "PublicFile.findByParkCode", query = "SELECT p FROM PublicFile p WHERE p.parkCode = :parkCode")})
+public class PublicFile implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,22 +55,16 @@ public class UserFile implements Serializable {
     @ManyToOne
     private User userId;
 
-    public UserFile() {
+    public PublicFile() {
     }
 
-    public UserFile(Integer id) {
+    public PublicFile(Integer id) {
         this.id = id;
     }
 
-    public UserFile(Integer id, String filename, String parkCode) {
+    public PublicFile(Integer id, String filename, String parkCode) {
         this.id = id;
         this.filename = filename;
-        this.parkCode = parkCode;
-    }
-    
-    public UserFile(String filename, User id, String parkCode) {
-        this.filename = filename;
-        userId = id;
         this.parkCode = parkCode;
     }
 
@@ -118,10 +110,10 @@ public class UserFile implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserFile)) {
+        if (!(object instanceof PublicFile)) {
             return false;
         }
-        UserFile other = (UserFile) object;
+        PublicFile other = (PublicFile) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -130,10 +122,10 @@ public class UserFile implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.vt.EntityBeans.UserFile[ id=" + id + " ]";
+        return "edu.vt.EntityBeans.PublicFile[ id=" + id + " ]";
     }
     
-     /*
+    /*
     ===================================================
     The following method is added to the generated code
     ===================================================

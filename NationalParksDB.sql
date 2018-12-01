@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, UserPhoto, UserTrip, User;
+DROP TABLE IF EXISTS NationalParks, UserBlog, PublicBlog, UserFile, PublicFile, UserPhoto, UserTrip, User;
 
 CREATE TABLE NationalParks
 (
@@ -98,6 +98,7 @@ CREATE TABLE UserBlog
     park VARCHAR(44) NOT NULL,
     description VARCHAR(8000) NOT NULL,
     rating VARCHAR(7) NOT NULL,
+    filename VARCHAR(256) NOT NULL,
     user_id INT UNSIGNED,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
@@ -108,6 +109,8 @@ CREATE TABLE PublicBlog
     park VARCHAR(44) NOT NULL,
     description VARCHAR(8000) NOT NULL,
     rating VARCHAR(7) NOT NULL,
+    filename VARCHAR(256) NOT NULL,
+    user_id INT UNSIGNED,
     PRIMARY KEY (id)
 );
 
@@ -126,6 +129,16 @@ CREATE TABLE UserFile
        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
        filename VARCHAR(256) NOT NULL,
        user_id INT UNSIGNED,
+       parkCode VARCHAR(4) NOT NULL,
+       FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE PublicFile
+(
+       id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+       filename VARCHAR(256) NOT NULL,
+       user_id INT UNSIGNED,
+       parkCode VARCHAR(4) NOT NULL,
        FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 

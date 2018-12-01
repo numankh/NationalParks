@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2018.06.16
- * Copyright © 2018 Osman Balci. All rights reserved.
+ * Created by Brannon Angers on 2018.12.01  * 
+ * Copyright © 2018 Brannon Angers. All rights reserved. * 
  */
 package edu.vt.FacadeBeans;
 
@@ -13,38 +13,22 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserFileFacade extends AbstractFacade<UserFile> {
 
-    /*
-    Annotating 'private EntityManager em;' with '@PersistenceContext(unitName = "CloudDrive-BalciPU")' implies that
-    the EntityManager instance pointed to by 'em' is associated with the 'CloudDrive-BalciPU' persistence context. 
-    
-    Here, Entity is the UserFile object. The persistence context is a set of entity (UserFile) instances in which
-    for any persistent entity identity, there is a unique entity instance. 
-    
-    Within the persistence context, the entity instances and their life cycles are managed. The EntityManager API is used
-    to create and remove persistent entity instances, to find entities by their primary key, and to query over entities.
-     */
     @PersistenceContext(unitName = "NationalParksPU")
-    private EntityManager em;  // 'em' holds the object reference of the instantiated EntityManager object.
+    private EntityManager em;
 
-    // @Override annotation indicates that the super class AbstractFacade's getEntityManager() method is overridden.
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    /*
-     This constructor method invokes the parent abstract class AbstractFacade.java's 
-     constructor method, which in turn initializes its entityClass instance variable
-     with the UserFile class object reference returned by the UserFile.class. 
-     */
     public UserFileFacade() {
         super(UserFile.class);
     }
-
+    
     public UserFile getUserFile(int id) {
         return em.find(UserFile.class, id);
     }
-
+    
     /*
     ======================================================
     The following methods are added to the generated code.
@@ -65,10 +49,9 @@ public class UserFileFacade extends AbstractFacade<UserFile> {
         List<UserFile> userFiles = em.createNamedQuery("UserFile.findUserFilesByUserId")
                 .setParameter("userId", primaryKey)
                 .getResultList();
-
         return userFiles;
     }
-
+    
     /**
      *
      * @param file_name
@@ -84,8 +67,7 @@ public class UserFileFacade extends AbstractFacade<UserFile> {
         List<UserFile> files = em.createNamedQuery("UserFile.findByFilename")
                 .setParameter("filename", file_name)
                 .getResultList();
-
         return files;
     }
-
+    
 }
