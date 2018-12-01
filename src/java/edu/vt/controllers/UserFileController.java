@@ -6,6 +6,7 @@ package edu.vt.controllers;
 
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserFile;
+import edu.vt.EntityBeans.PublicFile;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
@@ -32,6 +33,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.component.UIOutput;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 
 @Named("userFileController")
 @SessionScoped
@@ -75,6 +77,9 @@ public class UserFileController implements Serializable {
     private String selectedRowNumber = "0";
     
     String parkCode;
+    
+    @Inject
+    private PublicFileController publicFileController;
 
     /*
     ==================
@@ -361,6 +366,7 @@ public class UserFileController implements Serializable {
                 Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
 
                 // Delete the user file record from the database
+                publicFileController.deleteByFileName(userFileToDelete.getFilename());
                 getUserFileFacade().remove(userFileToDelete);
                 // UserFileFacade inherits the remove() method from AbstractFacade
 
@@ -566,6 +572,15 @@ public class UserFileController implements Serializable {
     public void parkChange(AjaxBehaviorEvent vce) {
         String code = (String) ((UIOutput) vce.getSource()).getValue();
         this.parkCode = code;
+    }
+    
+    public void share() {
+        PublicFile publicFile = new PublicFile();
+        publicFile.setFilename(selected.getFilename());
+        publicFile.setParkCode(selected.getParkCode());
+        publicFile.setUserId(selected.getUserId());
+        publicFileController.setSelected(publicFile);
+        publicFileController.create();
     }
     
     

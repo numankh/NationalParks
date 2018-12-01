@@ -39,7 +39,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                      rowsPerPageTemplate="5,10,20,30,40,50"
                                      class="dataTable" >
 
-                            <p:ajax event="rowSelect" update="uploadButton deleteButton downloadButton displayButton">
+                            <p:ajax event="rowSelect" update="uploadButton deleteButton downloadButton displayButton shareButton">
                                 #{userFileController.setSelectedRowNumber(rowNumber)};
                             </p:ajax>
 
@@ -61,7 +61,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                     getter and setter methods for it in UserFileController.java.
                             -->
 
-                            <p:ajax event="rowUnselect" update="uploadButton deleteButton downloadButton displayButton"/>
+                            <p:ajax event="rowUnselect" update="uploadButton deleteButton downloadButton displayButton shareButton"/>
 
                             <!--
                             ********************************
@@ -195,6 +195,11 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 <p:commandButton id="displayButton" value="Display File" 
                                                  action="/userFile/DisplayFile?faces-redirect=true" 
                                                  ajax="false" icon="fas fa-file-alt"  
+                                                 disabled="#{empty userFileController.selected}" />
+                                
+                                <p:commandButton id="shareButton" icon="fas fa-share" value="Share"
+                                                 actionListener="#{userFileController.share}"
+                                                 update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                                  disabled="#{empty userFileController.selected}" />
 
                             </f:facet>

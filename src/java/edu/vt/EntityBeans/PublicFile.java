@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PublicFile.findAll", query = "SELECT p FROM PublicFile p")
     , @NamedQuery(name = "PublicFile.findById", query = "SELECT p FROM PublicFile p WHERE p.id = :id")
     , @NamedQuery(name = "PublicFile.findByFilename", query = "SELECT p FROM PublicFile p WHERE p.filename = :filename")
-    , @NamedQuery(name = "PublicFile.findByParkCode", query = "SELECT p FROM PublicFile p WHERE p.parkCode = :parkCode")})
+    , @NamedQuery(name = "PublicFile.findByParkCode", query = "SELECT p FROM PublicFile p WHERE p.parkCode = :parkCode")
+    , @NamedQuery(name = "PublicFile.findPublicFilesByUserId", query = "SELECT p FROM PublicFile p WHERE p.userId.id = :userId")
+})
 public class PublicFile implements Serializable {
 
     private static final long serialVersionUID = 1L;

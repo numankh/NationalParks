@@ -1,11 +1,16 @@
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.PublicFile;
+import edu.vt.EntityBeans.User;
+import edu.vt.EntityBeans.UserFile;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.PublicFileFacade;
+import edu.vt.globals.Constants;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +23,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("publicFileController")
 @SessionScoped
@@ -26,7 +32,21 @@ public class PublicFileController implements Serializable {
     @EJB
     private edu.vt.FacadeBeans.PublicFileFacade ejbFacade;
     private List<PublicFile> items = null;
+    private List<PublicFile> parkItems = null;
     private PublicFile selected;
+    
+    @Inject
+    UserFileController userFileController;
+    
+    @Inject
+    ParkController parkController;
+    
+    /*
+    cleanedFileNameHashMap<KEY, VALUE>
+        KEY   = Integer fileId
+        VALUE = String cleanedFileNameForSelected
+     */
+    HashMap<Integer, String> cleanedFileNameHashMap = null;
 
     public PublicFileController() {
     }
@@ -77,6 +97,30 @@ public class PublicFileController implements Serializable {
     public List<PublicFile> getItems() {
         if (items == null) {
             items = getFacade().findAll();
+            
+            // Instantiate a new hash map object
+            cleanedFileNameHashMap = new HashMap<>();
+
+            /*
+            cleanedFileNameHashMap<KEY, VALUE>
+                KEY   = Integer fileId
+                VALUE = String cleanedFileNameForSelected
+             */
+            // Java 8 looping over a list with lambda
+            items.forEach(userFile -> {
+
+                // Obtain the filename stored in CloudStorage/FileStorage as 'userId_filename'
+                String storedFileName = userFile.getFilename();
+
+                // Remove the "userId_" (e.g., "4_") prefix in the stored filename
+                String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+
+                // Obtain the file database Primary Key id
+                Integer fileId = userFile.getId();
+
+                // Create an entry in the hash map as a key-value pair
+                cleanedFileNameHashMap.put(fileId, cleanedFileName);
+            });
         }
         return items;
     }
@@ -160,6 +204,86 @@ public class PublicFileController implements Serializable {
             }
         }
 
+    }
+    
+    /*
+    =====================================
+    Return Cleaned Filename given File Id
+    =====================================
+     */
+    public String cleanedFilenameForFileId(Integer fileId) {
+        /*
+        cleanedFileNameHashMap<KEY, VALUE>
+            KEY   = Integer fileId
+            VALUE = String cleanedFileNameForSelected
+         */
+
+        // Obtain the cleaned filename for the given fileId
+        String cleanedFileName = cleanedFileNameHashMap.get(fileId);
+
+        return cleanedFileName;
+    }
+    
+    public List<PublicFile> getFilesForPark() {
+        parkItems = getFacade().findByParkCode(parkController.getSelected().getParkCode());
+        return parkItems;
+    }
+    
+    /**
+     *
+     * @param fileId database primary key value for a user file
+     * @return the file if it is an image file; otherwise return a blank image
+     */
+    public String imageFile(Integer fileId) {
+
+        // Obtain the object reference of the UserFile whose primary key = fileId
+        PublicFile publicFile = getFacade().getPublicFile(fileId);
+
+        // Obtain the userFile's filename as it is stored in the CloudDrive DB database
+        String imageFileName = publicFile.getFilename();
+
+        // Extract the file extension from the filename
+        String fileExtension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
+
+        // Convert file extension to uppercase
+        String fileExtensionInCaps = fileExtension.toUpperCase();
+
+        switch (fileExtensionInCaps) {
+            case "JPG":
+            case "JPEG":
+            case "PNG":
+            case "GIF":
+                // File is an acceptable image type. Return the image file's relative path.
+                return Constants.FILES_RELATIVE_PATH + imageFileName;
+            case "MP4":
+            case "MOV":
+            case "OGG":
+            case "WEBM":
+                return "/resources/images/videoFile.png";
+            default:
+                return "/resources/images/viewFile.png";
+        }
+    }
+    
+    public void deleteByFileName(String fileName) {
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        User signedInUser = (User) Methods.sessionMap().get("user");
+
+        // Obtain the database primary key of the signedInUser object
+        Integer primaryKey = signedInUser.getId();
+
+        // Obtain only those files from the database that belong to the signed-in user
+        List<PublicFile> filesToDelete = getFacade().findPublicFilesByUserPrimaryKey(primaryKey);
+        
+        for(int i = 0; i < filesToDelete.size(); i++) {
+            if (filesToDelete.get(i).getFilename().equals(fileName)) {
+                getFacade().remove(filesToDelete.get(i));
+            }
+        }
+        
     }
 
 }
