@@ -98,7 +98,6 @@ CREATE TABLE UserBlog
     park VARCHAR(44) NOT NULL,
     description VARCHAR(8000) NOT NULL,
     rating VARCHAR(7) NOT NULL,
-    filename VARCHAR(256) NOT NULL,
     user_id INT UNSIGNED,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
@@ -109,8 +108,6 @@ CREATE TABLE PublicBlog
     park VARCHAR(44) NOT NULL,
     description VARCHAR(8000) NOT NULL,
     rating VARCHAR(7) NOT NULL,
-    filename VARCHAR(256) NOT NULL,
-    user_id INT UNSIGNED,
     PRIMARY KEY (id)
 );
 
