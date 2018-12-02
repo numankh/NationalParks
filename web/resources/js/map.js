@@ -73,31 +73,32 @@ function display() {
      document.getElementById("destinationName").value --> Obtains the name of the destination 
      VT building from the hidden input element with id="destinationName" in ShowOnMap.xhtml 
      */
-    if (document.getElementById("destinationName").value !== '') {
+    if (document.getElementById("photoLocation") !== null && document.getElementById("photoLocation").value !== '') {
         /*
          If destinationName has a value, the user asked for directions.
          Show directions on the VT campus map created in the initializeMap() function.
          */
-        drawRoute();
-    }
-    /*
-     document.getElementById("buildingName").value --> Obtains the name of the selected 
-     VT building from the hidden input element with id="buildingName" in ShowOnMap.xhtml 
-     */
-    else if (document.getElementById("buildingName").value !== '') {
-        /*
-         If buildingName has a value, the user asked for the location of a single VT building.
-         Show the location of the VT building on the VT campus map created in the initializeMap() function.
-         */
-        displaySingleBuilding();
-    } else {
-        /*
-         Show the locations of VT buildings in a given building category on
-         the VT campus map created in the initializeMap() function.
-         */
-        displayBuildingsByCategory();
+        displayPhotoLocation();
     }
 
+}
+
+function displayPhotoLocation() {
+    console.log('Here');
+    var latitude = document.getElementById('lat').innerHTML;
+    var longitude = document.getElementById('lon').innerHTML;
+    
+    var latLong = new google.maps.LatLng(latitude, longitude);
+    
+    map.setCenter(latLong);
+    
+    currentMarker = new google.maps.Marker({
+        title: '',
+        position: latLong,
+        map: map
+    });
+    
+    currentMarker.setMap(map);
 }
 
 

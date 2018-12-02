@@ -9,7 +9,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -36,6 +37,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                                 <a href="#description" class="standardText">Description</a>
                                 <a href="#flickr" class="standardText">Flickr Images</a>
+                                <a href="#userPhotos" class="standardText">User Images</a>
                                 <a href="#twitter" class="standardText">Twitter Updates</a>
                                 <a href="#twitter" class="standardText">Weather Information</a>
                                 <a href="#blog" class="standardText">Park Blog</a>
@@ -74,9 +76,24 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 });
                             }
                         </script>
-                        <p:galleria value="#{publicFileController.filesForPark}" var="image" panelWidth="1000" panelHeight="550" showCaption="true">
-                            <h:graphicImage value="#{publicFileController.imageFile(image.id)}" alt="#{image.userId.username}" title=""/>
+                        <div id="userPhotos"></div>
+                        <c:if test="#{publicFileController.filesForParkExist() == true}">
+                        <p:galleria value="#{publicFileController.filesForPark}" var="image" panelWidth="1000" panelHeight="700" showCaption="true">
+                            <p:commandButton id="showLocationButton" value="Find Location of Photo"
+                                             process="@this"
+                                             action="#{photoLocationController.showLocationOfPhoto}">
+                                <f:param name="pic_id" value="#{image.id}"/>
+                            </p:commandButton>
+                            <br/>
+                            <h:graphicImage value="#{publicFileController.imageFile(image.id)}" alt="#{image.userId.username}" title="" style="height: 600px; width: auto"/>
                         </p:galleria>
+                        </c:if>
+                        <c:if test="#{publicFileController.filesForParkExist() == false}">
+                            <br/>
+                            <h:outputText class="standardText" value="No User Photos for this Park!" style="text-align: right; top: 0; left: 0; width: 1000px; height: 550px;"/>
+                            <br/>
+                        </c:if>
+                        
                         <table id="twitter" width="100%" height="200px" border="0" align="center" cellpadding="5" cellspacing="0">
 
 

@@ -229,6 +229,11 @@ public class PublicFileController implements Serializable {
         return parkItems;
     }
     
+    public boolean filesForParkExist() {
+        List<PublicFile> tempList = getFacade().findByParkCode(parkController.getSelected().getParkCode());
+        return (tempList.size() > 0);
+    }
+    
     /**
      *
      * @param fileId database primary key value for a user file

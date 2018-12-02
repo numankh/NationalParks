@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2018.08.08
+Copyright © 2018 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Photo's Location on map"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center">
+                <h:outputText id="photoLocation" value="This is photo location" style="visibility: hidden;"/>
+                <h:outputText id ="lat" value="#{photoLocationController.latitude}" style="visibility: hidden;"/>
+                <h:outputText id ="lon" value="#{photoLocationController.longitude}" style="visibility: hidden;"/>
+                <br/>
+                
+                <c:if test="#{photoLocationController.locationExists == false}">
+                    <h:outputText class="standardText" value="This Photo has no Geolocation Associated with it!"/>
+                </c:if>
+                <c:if test="#{photoLocationController.locationExists == true}">
+                    <div id="map" class="map"></div>
+                    <script type="text/javascript">
+                        initializeMap();  // Initialize and display a Google Map of VT campus
+                    </script>
+                </c:if>
+                
+                <br/>
+                <p:button outcome="/nationalParks/View" value="Back" icon="fas fa-arrow-left"  />
+            </div>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

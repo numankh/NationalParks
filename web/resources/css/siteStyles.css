@@ -760,3 +760,10 @@ if content overflows an element's box.
 font-family: Calibri;
 font-size: 20px;
 }
+
+/* Style the Google map display */
+.map {
+    margin-left: 10px;
+    margin-right: 40px;
+    height:600px;
+}

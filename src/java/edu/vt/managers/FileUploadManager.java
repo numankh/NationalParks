@@ -181,6 +181,8 @@ public class FileUploadManager implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
             getUserFileController().refreshFileList();
+            
+            getUserFileController().setParkCode("");
 
             FacesMessage infoMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Success!", "File(s) Uploaded Successfully!");
