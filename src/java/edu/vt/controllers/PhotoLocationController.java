@@ -32,6 +32,9 @@ public class PhotoLocationController implements Serializable {
     
     public PhotoLocationController() {}
 
+    /***********************
+     * Getters and Setters *
+     **********************/
     public double getLongitude() {
         return longitude;
     }
@@ -72,14 +75,21 @@ public class PhotoLocationController implements Serializable {
         this.locationExists = locationExists;
     }
     
-    
-    
+    /**
+     * Get the geolocation of a photo and displays them.
+     * @return redirects to the page for displaying location
+     */
     public String showLocationOfPhoto() {
+        // Get id of selected photo
         String id_string = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("pic_id");
+        // Turn id into int
         int id = Integer.parseInt(id_string);
+        //Get PublicFile object from database with given id
         photo = getPublicFileFacade().getPublicFile(id);
+        //Get filepath to photo file
         String filePath = photo.getFilePath();
         try {
+            //From javaxt library
             Image image = new Image(filePath);
             double[] gps = image.getGPSCoordinate();
             this.longitude = gps[0];

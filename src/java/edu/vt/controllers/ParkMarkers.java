@@ -27,24 +27,47 @@ import org.primefaces.model.map.Marker;
 
 @Named("parkMarkers")
 @SessionScoped
+/**
+ * Class for displaying markers of all of the parks on the home page
+ */
 public class ParkMarkers implements Serializable{
     private List<NationalParks> items = null;
     
+    /**
+     * Allows us to get list of parks from the database
+     */
     @EJB
     private ParkFacade parkFacade;
+    /**
+     * Used to disable restrictions so park api works
+     */
     private SSLTool tool = new SSLTool();
     
+    /**
+     * PrimeFaces object for displaying a map
+     */
     private MapModel parkModel = null;
   
+    /**
+     * Marker that has been selected by clicking on a marker from the map
+     */
     private Marker marker;
     
+    /**
+     * Basic constructor
+     */
     public ParkMarkers() {}
     
+    /**
+     * Constructs the map model with all of the markers
+     */
     @PostConstruct
     public void init() {
         tool.disableCertificateValidation();
-        parkModel = new DefaultMapModel();
-        getItems();
+        parkModel = new DefaultMapModel(); // Create map model for park
+        getItems(); // Initialize list of parks
+        
+        /***************Construct request for data from NPS API ***************/
         String apiUrl = "https://developer.nps.gov/api/v1/parks?";
         apiUrl += "parkCode=";
         apiUrl += items.get(0).getParkCode();
@@ -53,16 +76,25 @@ public class ParkMarkers implements Serializable{
             apiUrl += items.get(i).getParkCode();
         }
         apiUrl += "&api_key=7Rm7J7uafcu5ov3oZxLNnUybQNYjxRkAXWXuMemx";
+        /**********************************************************************/
         
+        /*********Try to make request to api and parse data********************/
         try {
+            // Get response from api in JSON format
             String jsonData = readUrlContent(apiUrl);
             JSONObject data = new JSONObject(jsonData);
+            // Get the array of all park information
             JSONArray params = data.getJSONArray("data");
             
+            // Iterate through list of park data
             for(int j = 0; j < params.length(); j++) {
+                // Get specific park data
                 JSONObject param = params.getJSONObject(j);
+                // Get string containg latitude and longitude
                 String latLong = param.optString("latLong", "");
+                // Get Name of park
                 String parkName = param.optString("name", "");
+                // Convert shortened park name from api to full park name
                 String name = "";
                 if (parkName.equals("Denali") || parkName.equals("Gates Of The Arctic") ||
                         parkName.equals("Glacier Bay") || parkName.equals("Great Sand Dunes") ||
@@ -82,11 +114,13 @@ public class ParkMarkers implements Serializable{
                 else {
                     name = parkName + " National Park";
                 }
-                String[] splits = latLong.split("[:,]");
                 
+                // Parse out latitude and longitide
+                String[] splits = latLong.split("[:,]");
                 Double lat = Double.parseDouble(splits[1]);
                 Double lon = Double.parseDouble(splits[3]);
                 LatLng coord = new LatLng(lat, lon);
+                // Add marker to map model
                 parkModel.addOverlay(new Marker(coord, name, ""));
             }
         }
@@ -96,6 +130,10 @@ public class ParkMarkers implements Serializable{
         }
     }
     
+    /**
+     * Get list of parks from Database
+     * @return list of NationParks object
+     */
     public List<NationalParks> getItems() {
         if (items == null) {
             items = getParkFacade().findAll();
@@ -103,14 +141,26 @@ public class ParkMarkers implements Serializable{
         return items;
     }
     
+    /**
+     * Get National Park Facade
+     * @return national park facade
+     */
     public ParkFacade getParkFacade() {
         return parkFacade;
     }
     
+    /**
+     * Set park facade
+     * @param parkFacade - new park facade
+     */
     public void setParkFacade(ParkFacade parkFacade) {
         this.parkFacade = parkFacade;
     }
 
+    /**
+     * The map model for the parks
+     * @return Map Model with markers for all parks
+     */
     public MapModel getParkModel() {
         if (parkModel == null) {
             init();
@@ -118,22 +168,44 @@ public class ParkMarkers implements Serializable{
         return parkModel;
     }
 
+    /**
+     * Set new map model
+     * @param parkModel new map model
+     */
     public void setParkModel(MapModel parkModel) {
         this.parkModel = parkModel;
     }
 
+    /**
+     * Marker that was selected
+     * @return last marker to be clicked on
+     */
     public Marker getMarker() {
         return marker;
     }
 
+    /**
+     * Set new current marker
+     * @param marker new marker
+     */
     public void setMarker(Marker marker) {
         this.marker = marker;
     }
     
+    /**
+     * Function runs when marker is clicked on map
+     * @param event marker that was clicked
+     */
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
     }
     
+    /**
+     * Parse response form api into JSON
+     * @param webServiceURL
+     * @return string representation of api data in JSON format
+     * @throws Exception 
+     */
     public String readUrlContent(String webServiceURL) throws Exception {
         /*
         reader is an object reference pointing to an object instantiated from the BufferedReader class.

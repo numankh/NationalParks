@@ -28,12 +28,15 @@ Copyright © 2018 Osman Balci. All rights reserved.
             
             <h:form id="homeForm" prependId="false">
                 <div align="center" style="width:100%"> 
+                    <!-- Google map with markers for all parks -->
                     <p:gmap center="37.09024, -95.712891" zoom="4" type="HYBRID" class="map"
                             model="#{parkMarkers.parkModel}" style="width:80%;height:500px">
+                        <!-- Event for when marker is selected -->
                         <p:ajax event="overlaySelect" listener="#{parkMarkers.onMarkerSelect}" />
+                        <!-- Template for info window that pops up when marker is selected -->
                         <p:gmapInfoWindow id="infoWindow">
                             <p:outputPanel style="text-align: center; display: block; margin: auto">
-
+                                <!-- Add event that links to park page when name of park is clicked -->
                                 <p:commandLink id="markerNav" action="#{parkController.selectByMarker()}" ajax="false">
                                     <h:outputText value="#{parkMarkers.marker.title}" />
                                 </p:commandLink>

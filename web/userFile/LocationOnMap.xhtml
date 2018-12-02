@@ -23,18 +23,23 @@ Copyright © 2018 Osman Balci. All rights reserved.
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
             <div align="center">
+                <!-- For map.js to see what function needs to be called -->
                 <h:outputText id="photoLocation" value="This is photo location" style="visibility: hidden;"/>
+                <!-- Latitude of the selected photo -->
                 <h:outputText id ="lat" value="#{photoLocationController.latitude}" style="visibility: hidden;"/>
+                <!-- Longitude of the selected photo -->
                 <h:outputText id ="lon" value="#{photoLocationController.longitude}" style="visibility: hidden;"/>
                 <br/>
                 
+                <!-- Test that the photo actually had a geolocation -->
                 <c:if test="#{photoLocationController.locationExists == false}">
                     <h:outputText class="standardText" value="This Photo has no Geolocation Associated with it!"/>
                 </c:if>
                 <c:if test="#{photoLocationController.locationExists == true}">
+                    <!-- Show map -->
                     <div id="map" class="map"></div>
                     <script type="text/javascript">
-                        initializeMap();  // Initialize and display a Google Map of VT campus
+                        initializeMap();  // Initialize and display a Google Map of photo location
                     </script>
                 </c:if>
                 
