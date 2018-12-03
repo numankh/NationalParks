@@ -13,6 +13,7 @@ import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
+import java.io.BufferedReader;
 
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -23,10 +24,16 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONObject;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.Marker;
 
 /*
 ---------------------------------------------------------------------------
@@ -88,6 +95,9 @@ public class UserController implements Serializable {
     private Map<String, Object> security_questions;
 
     private User selected;
+    
+    private String latitude;
+    private String longitude;
 
     /*
     The instance variable 'userFacade' is annotated with the @EJB annotation.
@@ -748,6 +758,120 @@ public class UserController implements Serializable {
                 }
 
             });
+        }
+    }
+    
+    public String getLatitude(){
+        User signedInUser = (User) Methods.sessionMap().get("user");
+        String formatedAddress = signedInUser.getAddress1() + ", " + signedInUser.getCity() + ", " + signedInUser.getState() + ", " + signedInUser.getZipcode();
+        formatedAddress = formatedAddress.replace(" ", "+");
+        String apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?";
+        apiUrl += "address=";
+        apiUrl += formatedAddress;
+        apiUrl += "&key=AIzaSyDrAs769VQJZWTj_3Kg3iZMRneX_LPPzLo";
+        
+        try {
+            String jsonData = readUrlContent(apiUrl);
+            JSONObject results = new JSONObject(jsonData);
+            JSONArray resultsA = results.getJSONArray("results");
+            JSONObject obj = resultsA.getJSONObject(0);
+            JSONObject geometry = obj.getJSONObject("geometry");
+            JSONObject location = geometry.getJSONObject("location");
+            
+            this.latitude = location.optString("lat", "");
+            this.longitude = location.optString("lng", "");
+        }
+        catch (Exception ex) {
+            Methods.showMessage("Error", "Cannot load Park information",
+                    "See: " + ex.getMessage());
+        }
+        return this.latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+    
+    public String airportCode() throws Exception{
+              String apiUrl = "http://aviation-edge.com/v2/public/nearby?";
+              apiUrl += "key=";
+              apiUrl += Constants.AEKEY;
+              apiUrl += "&lat=";
+              apiUrl += this.getLatitude();
+              apiUrl += "&lng=";
+              apiUrl += this.getLongitude();
+              apiUrl += "&distance=200";
+              System.out.println("url = " + apiUrl);
+              String jsonData = readUrlContent(apiUrl);
+              JSONArray data = new JSONArray(jsonData);
+              String aCode = "Brannon Sucks";
+              if (data.length() > 0){
+                  JSONObject code = data.getJSONObject(0);
+                  aCode = code.optString("codeIataAirport");
+              }         
+              System.out.println(aCode);
+              return aCode;
+          
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+       
+    public String readUrlContent(String webServiceURL) throws Exception {
+        /*
+        reader is an object reference pointing to an object instantiated from the BufferedReader class.
+        Currently, it is "null" pointing to nothing.
+         */
+        BufferedReader reader = null;
+
+        try {
+            // Create a URL object from the webServiceURL given
+            URL url = new URL(webServiceURL);
+            
+            /*
+            The BufferedReader class reads text from a character-input stream, buffering characters
+            so as to provide for the efficient reading of characters, arrays, and lines.
+             */
+            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            
+            // Create a mutable sequence of characters and store its object reference into buffer
+            StringBuilder buffer = new StringBuilder();
+
+            // Create an array of characters of size 10240
+            char[] chars = new char[10240];
+
+            int numberOfCharactersRead;
+            /*
+            The read(chars) method of the reader object instantiated from the BufferedReader class
+            reads 10240 characters as defined by "chars" into a portion of a buffered array.
+
+            The read(chars) method attempts to read as many characters as possible by repeatedly
+            invoking the read method of the underlying stream. This iterated read continues until
+            one of the following conditions becomes true:
+
+                (1) The specified number of characters have been read, thus returning the number of characters read.
+                (2) The read method of the underlying stream returns -1, indicating end-of-file, or
+                (3) The ready method of the underlying stream returns false, indicating that further input requests would block.
+
+            If the first read on the underlying stream returns -1 to indicate end-of-file then the read(chars) method returns -1.
+            Otherwise the read(chars) method returns the number of characters actually read.
+             */
+            while ((numberOfCharactersRead = reader.read(chars)) != -1) {
+                buffer.append(chars, 0, numberOfCharactersRead);
+            }
+
+            // Return the String representation of the created buffer
+            return buffer.toString();
+
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
         }
     }
 

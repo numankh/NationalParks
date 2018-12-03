@@ -20,25 +20,10 @@ Copyright © 2018 Nick Eda. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
-            
-<!--                 
-                Style the Google Map with id="map" using the 'map' style class defined in
-                siteStyles.css. This style definition is accessed in map.js in creating the map.
-                
-                <div id="map" class="map"></div>
 
-                 Name, Latitude, and Longitude of the selected VT building are accessed in map.js 
-                <h:inputHidden id="buildingName" value="#{buildingController.selected.name}" />
-                <h:inputHidden id="buildingLat" value="#{buildingController.selected.latitude}" />
-                <h:inputHidden id="buildingLong" value="#{buildingController.selected.longitude}" />
+            <!--                 
+            -->
 
-                 JSON data for VT buildings in a given category are parsed and used in map.js 
-                <h:inputHidden id="jsonCategoryResult" value="#{buildingController.jsonCategoryData}" />
-
-                 startName and destinationName are accessed in map.js for displaying directions on map 
-                <h:inputHidden id="startName" value="#{buildingController.startingBuildingName}" />
-                <h:inputHidden id="destinationName" value="#{buildingController.destinationBuildingName}" />-->
-                
             <div align="center" style="width:100%">
 
                 <h1><br/>Details of the Trip Planned on </h1>
@@ -64,35 +49,66 @@ Copyright © 2018 Nick Eda. All rights reserved.
                         we do not show the values of some columns if it is the last totals row.
                         -->
                         <p:column  style="text-align:center;">
-                                 <!-- Render the row value of this column if it is not the last totals row  -->
-                                <p:row>
-                                    <br/>
-                                    <h:outputText class="standardText" value="You are planning on visiting #{item.destination}."/><br/><br/><br/>
-                                    <h:graphicImage url="#{parkController.getParkFacade().findImageURLByFullName(item.destination)}" style="width: 70%; height:400px"/>
-                                </p:row>
-                                <p:row>
-                                    <br/><br/>
-                                    <h:outputText class="standardText" value="You want to leave from #{userController.selected.address1} on #{item.leaveDate}."/>
-                                </p:row>
-                                 
-                                 
-                                 <p:row>
-                                     <br/><br/>
-                                     <h:outputText class="standardText" value="To get there, you can:"/>
-                                     <br/><br/>
-                                 </p:row>
-                                 
-                                 <p:row>
-                                     <br/><br/>
-                                     <h:outputText class="standardText" value="To get back by #{item.returnDate}."/>
-                                 </p:row>
-                                 
-                                 <p:row>
-                                     <br/><br/>
-                                     <h:outputText class="standardText" value="Listed below are some tools to help decide on transportation, hotels, and local events:"/>
-                                 </p:row>
+                            <!-- Render the row value of this column if it is not the last totals row  -->
+                            <p:row>
+                                <br/>
+                                <h:outputText class="standardText" value="You are planning on visiting #{item.destination}."/><br/><br/><br/>
+                                <h:graphicImage url="#{parkController.getParkFacade().findImageURLByFullName(item.destination)}" style="width: 70%; height:400px"/>
+                            </p:row>
+                            <p:row>
+                                <br/><br/>
+                                <h:outputText class="standardText" value="You want to leave from #{userController.selected.address1} on #{item.leaveDate} and back by #{item.returnDate}."/>
+                            </p:row>
+
+
+                            <p:row>
+                                <br/><br/>
+                                <h:outputText class="standardText" value="To get there, you can drive along the following path:"/>
+                                <br/><br/>
+
+                                <div id="map" class="map"></div>
+                                <h:inputHidden id="startName" value="Home" />
+                                <h:inputHidden id="destinationName" value="#{item.destination}" />
+                                <h:inputHidden id="destinationLat" value="#{parkController.givenParkLat(item.destination)}" />
+                                <h:inputHidden id="destinationLong" value="#{parkController.givenParkLong(item.destination)}" />
+                                <h:inputHidden id="startLat" value="#{userController.getLatitude()}" />
+                                <h:inputHidden id="startLong" value="#{userController.getLongitude()}" />
+
+                                <script type="text/javascript">
+                                    initializeMap();  // Initialize and display a Google Map of VT campus
+                                </script>
+                            </p:row>
+
+                            <p:row>
+                                <br/><br/>
+                                <h:outputText class="standardText" value="Listed below are some tools to help decide on transportation, hotels, and local events:"/>
+                            </p:row>
+
+                            <p:row>
+                                <br/><br/>
+                                <!--                                <div 
+                                                                    data-skyscanner-widget="LocationWidget" 
+                                                                    data-locale="en-US" 
+                                                                    data-params="colour:#29f;location:#{item.destination};locationId:#{parkController.airportCode(item.destination)}"
+                                                                    data-title="Let's go to {location} right now!">
+                                                                </div>
+                                                                <script src="https://widgets.skyscanner.net/widget-server/js/loader.js"></script>-->
+
+
+<!--                                <div data-skyscanner-widget="SearchWidget" data-destination-iata-code="'#{parkController.airportCode(item.destination)}'" data-origin-name="'#{userController.selected.city}'"
+     data-button-label="Find a flight near #{item.destination} right now!" data-responsive="false" data-depart-date="4 Dec 2018"></div>
+    <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async=""></script>
+<br/><br/>     <br/><br/>     <br/><br/>     <br/><br/>     <br/><br/>-->
+
+
+                                <!--     https://www.google.com/flights#flt=ROA.BHB.2018-12-19*BHB.ROA.2018-12-23;c:USD;e:1;sd:1;t:f-->
+                                <a href="https://www.google.com/flights#flt=#{userController.airportCode()}.#{parkController.airportCode(item.destination)}.#{item.leaveDate}*#{parkController.airportCode(item.destination)}.#{userController.airportCode()}.#{item.returnDate};c:USD;e:1;sd:1;t:f" target="_blank" class="text">
+                                    <i class="fas fa-plane"></i>&nbsp;Find a flight to #{item.destination} right now!</a>&nbsp;&nbsp;&nbsp;
+                                <br/><br/>  
+
+                            </p:row>
                         </p:column>
-                      
+
 
                         <!-- 
                         ****************************************
@@ -127,7 +143,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
                             </p:commandButton>
                             &nbsp;
                             <!-- Clicking the Cancel button shows the Profile page -->
-                             <p:button outcome="/userTrip/ViewTrips" value="Trips Taken" icon="fas fa-arrow-left"  />
+                            <p:button outcome="/userTrip/ViewTrips" value="Trips Taken" icon="fas fa-arrow-left"  />
                         </f:facet>
                     </p:dataTable>
 

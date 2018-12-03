@@ -57,6 +57,7 @@ public class UserTripController implements Serializable {
     private List<Category> tripItems = null;
     
     private List<Category> allTrips = null;
+    private SSLTool tool = new SSLTool();
 
     private String answerToSecurityQuestion;
 
@@ -133,8 +134,8 @@ public class UserTripController implements Serializable {
                 JSONObject jsonObject = (JSONObject) object;
 
                 String destination = jsonObject.getString("destination");
-                String leaveDate = jsonObject.getString("leaveDate");
-                String returnDate = jsonObject.getString("returnDate");
+                String leaveDate = this.convertDate(jsonObject.getString("leaveDate"));
+                String returnDate = this.convertDate(jsonObject.getString("returnDate"));
 
                 // Create a Category object using the attributes (Key-Value pairs) of the jsonObject
                 Category category = new Category(destination, leaveDate, returnDate);
@@ -144,6 +145,58 @@ public class UserTripController implements Serializable {
             });
         }
         return tripItems;
+    }
+    
+    public String convertDate(String date){
+        System.out.println("date = " + date);
+        String newDate = "";
+        //Sun Dec 09 00:00:00 EST 2018. 
+        //0123456789012345678901234567
+        //0000000000111111111222222222
+        newDate += date.substring(24);
+        newDate += "-";
+        newDate += this.toMonth(date.substring(4,7));
+        newDate += "-";
+        newDate += date.substring(8, 10);
+        return newDate;
+    }
+    
+    public String toMonth (String month){
+        System.out.println("month = " + month);
+        if (month.equals("Jan")){
+            return "01";
+        }
+        else if (month.equals("Feb")){
+            return "02";
+        }
+        else if (month.equals("Mar")){
+            return "03";
+        }
+        else if (month.equals("Apr")){
+            return "04";
+        }
+        else if (month.equals("May")){
+            return "05";
+        }
+        else if (month.equals("Jun")){
+            return "06";
+        }
+        else if (month.equals("Jul")){
+            return "07";
+        }
+        else if (month.equals("Aug")){
+            return "08";
+        }
+        else if (month.equals("Sep")){
+            return "09";
+        }
+        else if (month.equals("Oct")){
+            return "10";
+        }
+        else if (month.equals("Nov")){
+            return "11";
+        }
+        else return "12";
     }
 
     public List<Category> getAllTrips() {
@@ -407,4 +460,59 @@ public class UserTripController implements Serializable {
     public String convertDoubleToString(Double value) {
         return Double.toString(value);
     }
+    
+    public String getClosestAirport(String destination){
+        String test = destination;
+        return test;
+    }
+    
+//    public void getFlightInfo() {
+//        tool.disableCertificateValidation();
+//        getItems();
+//        String apiUrl = "https://aviation-edge.com/v2/public/flights?key=40ebc2-b3c00f";
+//        apiUrl += "&arrIata=";
+//        apiUrl += getClosestAirport(getTripItems().get(0).getDestination());
+//        for (int i = 1; i < items.size(); i++) {
+//            apiUrl += ",";
+//            apiUrl += items.get(i).getParkCode();
+//        }
+//        apiUrl += "&api_key=7Rm7J7uafcu5ov3oZxLNnUybQNYjxRkAXWXuMemx";
+//
+//        try {
+//            String jsonData = readUrlContent(apiUrl);
+//            JSONObject data = new JSONObject(jsonData);
+//            JSONArray params = data.getJSONArray("data");
+//
+//            for (int j = 0; j < params.length(); j++) {
+//                JSONObject param = params.getJSONObject(j);
+//                String latLong = param.optString("latLong", "");
+//                String parkName = param.optString("name", "");
+//                String name = "";
+//                if (parkName.equals("Denali") || parkName.equals("Gates Of The Arctic")
+//                        || parkName.equals("Glacier Bay") || parkName.equals("Great Sand Dunes")
+//                        || parkName.equals("Katmai") || parkName.equals("Lake Clark")
+//                        || parkName.equals("Wrangell - St Elias")) {
+//                    name = parkName + " National Park & Preserve";
+//                } else if (parkName.equals("Redwood")) {
+//                    name = parkName + " National and State Parks";
+//                } else if (parkName.equals("Sequoia & Kings Canyon")) {
+//                    name = parkName + " National Parks";
+//                } else if (parkName.equals("National Park of American Samoa")) {
+//                    name = parkName;
+//                } else {
+//                    name = parkName + " National Park";
+//                }
+//                String[] splits = latLong.split("[:,]");
+//
+//                Double lat = Double.parseDouble(splits[1]);
+//                Double lon = Double.parseDouble(splits[3]);
+//                LatLng coord = new LatLng(lat, lon);
+//                parkModel.addOverlay(new Marker(coord, name, ""));
+//            }
+//        } catch (Exception ex) {
+//            Methods.showMessage("Error", "Cannot load Park information",
+//                    "See: " + ex.getMessage());
+//        }
+//    }
+    
 }

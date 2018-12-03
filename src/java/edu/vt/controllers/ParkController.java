@@ -7,6 +7,7 @@ package edu.vt.controllers;
 import edu.vt.EntityBeans.NationalParks;
 import edu.vt.FacadeBeans.ParkFacade;
 import edu.vt.globals.Methods;
+import edu.vt.globals.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -133,6 +134,56 @@ public class ParkController implements Serializable {
         return parkLatLong;
     }
     
+     public String givenParkLat(String parkName) throws Exception {
+        String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
+        String jsonData = readUrlContent(apiUrl);
+        JSONObject data = new JSONObject(jsonData);
+        JSONArray params = data.getJSONArray("data");
+        JSONObject param1 = params.getJSONObject(0);
+        String parkLatLong = param1.optString("latLong", "");
+        parkLatLong = parkLatLong.replace("lat:", "");
+        int index = parkLatLong.indexOf("long:");
+        parkLatLong = parkLatLong.substring(0, index);
+        int secondIndex = parkLatLong.indexOf(",");
+        parkLatLong = parkLatLong.substring(0, secondIndex);
+        System.out.println(parkName + " is at " + parkLatLong);
+        return parkLatLong;
+    }
+     
+          public String givenParkLong(String parkName) throws Exception {
+        String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
+        String jsonData = readUrlContent(apiUrl);
+        JSONObject data = new JSONObject(jsonData);
+        JSONArray params = data.getJSONArray("data");
+        JSONObject param1 = params.getJSONObject(0);
+        String parkLatLong = param1.optString("latLong", "");
+        int index = parkLatLong.indexOf("long:");
+        parkLatLong = parkLatLong.substring(index);
+        parkLatLong = parkLatLong.replace("long:", "");
+        return parkLatLong;
+    }
+          
+          public String airportCode(String parkName) throws Exception {
+              String apiUrl = "http://aviation-edge.com/v2/public/nearby?";
+              apiUrl += "key=";
+              apiUrl += Constants.AEKEY;
+              apiUrl += "&lat=";
+              apiUrl += givenParkLat(parkName);
+              apiUrl += "&lng=";
+              apiUrl += givenParkLong(parkName);
+              apiUrl += "&distance=200";
+              String jsonData = readUrlContent(apiUrl);
+              System.out.println("apiURL= " + apiUrl);
+              JSONArray data = new JSONArray(jsonData);
+              String aCode = "Brannon Sucks";
+              if (data.length() > 0){
+                  JSONObject code = data.getJSONObject(0);
+                  aCode = code.optString("codeIataAirport");
+              }         
+              System.out.println(aCode);
+              return aCode;
+          }
+    
     public String readUrlContent(String webServiceURL) throws Exception {
         /*
         reader is an object reference pointing to an object instantiated from the BufferedReader class.
@@ -205,6 +256,17 @@ public class ParkController implements Serializable {
             }
         }
         return code;
+    }
+    
+     public String getCodebyName(String name) {
+        getItems();
+        for (int i = 0; i < items.size(); i++) {
+            if( items.get(i).getFullName().equalsIgnoreCase(name) ) {
+                System.out.println("didn't fuck up here! " + items.get(i).getParkCode());
+                return items.get(i).getParkCode();
+            }
+        }
+        return "failed";
     }
 }
 
