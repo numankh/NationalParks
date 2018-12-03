@@ -27,6 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
@@ -41,6 +42,10 @@ public class UserTripController implements Serializable {
     Instance Variables (Properties)
     ===============================
      */
+    
+    @Inject
+    private ParkController parkController;
+    
     @EJB
     private UserFacade userFacade;
 
@@ -552,12 +557,16 @@ public class UserTripController implements Serializable {
 
 
         });
+        
+        String imglink = parkController.getParkFacade().findImageURLByFullName(temp.get(0));        
+        
+        String img = "<img src=\"" + imglink + "\"" +  " style=\"width:100px;height:100px;\">";
 
         // Compose the email message content in HTML format
         String emailBodyText = "<div align=\"center\">"
-                + "<br /><br />The trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
-                + " to " + temp.get(2)
-                + "!<p>&nbsp;</p></div>";
+                + "<br /><br />Your trip is scheduled at " + temp.get(0) + "<br /> from " + temp.get(1)
+                + " to " + temp.get(2) + "<br/><br/> " + img
+                + "<p>&nbsp;</p></div>";
         
 
         // Set the HTML content to be the body of the email message
