@@ -231,6 +231,69 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                             </h:form>
                         </div>
+                        
+                        <br/><br/><br/><br/>
+                        <div id="blog" align="center" style="width:95%">
+
+                            <!--
+                            ================================
+                            |     Show all Public Blogs    |
+                            ================================
+                            -->
+                            <h:form id="EventForm">                  
+
+                                <p:panel header="#{parkController.selected.fullName} Events" >
+
+                                    <p:dataTable id="datalist" value="#{parkController.getEvents()}" var="item"
+                                                 selectionMode="single" 
+                                                 reflow="true"
+                                                 paginator="true"
+                                                 rowKey="#{item.id}"
+                                                 rows="5"
+                                                 rowsPerPageTemplate="5,10,20,30,40,50"
+                                                 class="dataTable" >
+
+                                        <p:ajax event="rowSelect" update=""/>
+
+
+                                        <p:ajax event="rowUnselect" update=""/>
+
+                                        <!--
+                                        *******************
+                                        *   park   *
+                                        *******************
+                                        -->
+                                        <p:column sortBy="#{item.date}" headerText="Date of Event" 
+                                                  style="width:80px">
+                                            <div align="center">
+                                                <h:outputText  class="inputTextField" value="#{item.dateString}"/>
+                                            </div>
+                                        </p:column>
+
+                                        <!--
+                                        ********************
+                                        *      Description      *
+                                        ********************
+                                        -->
+                                        <p:column headerText="Description" 
+                                                  style="width:250px;">
+                                            <h:outputText class="inputTextField" value="#{item.description}"/>
+                                        </p:column>
+                                        
+                                       
+
+                                      
+
+                                    </p:dataTable>
+                                </p:panel>
+
+                            </h:form>
+                        </div>
+                        
+                        
+                        
+                        
+                        
                         <div id="Rating" >
                             <br/>
                         <h:outputText style="font-size:30px" value="Park Rating:" />

@@ -8,11 +8,15 @@ import edu.vt.EntityBeans.NationalParks;
 import edu.vt.FacadeBeans.ParkFacade;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Constants;
+import edu.vt.pojo.Event;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -268,6 +272,60 @@ public class ParkController implements Serializable {
         }
         return "failed";
     }
+     
+     public List<Event> getEvents() throws Exception{
+         List<Event> list = new ArrayList<Event>();
+         
+          tool.disableCertificateValidation();
+        String apiUrl = "https://developer.nps.gov/api/v1/events?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
+        String jsonData = readUrlContent(apiUrl);
+        JSONObject data = new JSONObject(jsonData);
+        int total = data.getInt("total");
+        
+        JSONArray params = data.getJSONArray("data");
+        int y = 0;
+        for(int x = 0; x<=20&&y<total; x++)
+        {
+            
+        JSONObject param1 = params.getJSONObject(x);
+            
+        String description  = param1.optString("description","");
+        
+        String d = param1.optString("date", "");
+        Date date = null;
+       
+        String time = "N/A";
+        if(!d.equals(""))
+        {
+            
+            Calendar cal = Calendar.getInstance();
+cal.set(Calendar.YEAR, Integer.parseInt(d.substring(0,4)));
+cal.set(Calendar.MONTH,Integer.parseInt(d.substring(5,7)));
+cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d.substring(8,10)));
+            date = cal.getTime();
+            
+                    }
+        //"times":[{"timeStart":"06:45 AM","timeEnd":"04:30 PM","sunsetEnd":false,"sunriseStart":false}]
+        
+        JSONArray temp = param1.getJSONArray("times");
+        if(temp.length()!=0){
+        JSONObject param2 = temp.getJSONObject(0);
+        String start = param2.optString("timeStart","");
+        String end = param2.optString("timeEnd","");
+        time = param1.optString(start+"-"+end);
+        }
+          list.add(new Event(x,description, date,""+Integer.parseInt(d.substring(5,7))+'/'+Integer.parseInt(d.substring(8,10))+'/'+Integer.parseInt(d.substring(0,4)) , time));  
+            
+        
+       
+        y++;
+        }
+        
+         return list;
+         
+     }
+
+   
 }
 
 
