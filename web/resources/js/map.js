@@ -142,7 +142,7 @@ function drawRoute() {
     /********************************** Travel Mode Determination **********************************/
 
     // Obtain the selected Travel Mode from the hidden input element with id="travelMode" in ShowOnMap.xhtml
-    var selectedTravelMode = "DRIVING";
+    var selectedTravelMode = "WALKING";
 
     /***************************** Directions Request Object Creation ******************************/
 
