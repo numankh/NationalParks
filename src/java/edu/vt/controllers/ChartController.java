@@ -37,54 +37,41 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.MeterGaugeChartModel;
+import org.primefaces.model.chart.PieChartModel;
 
 @Named("chartController")
 @SessionScoped
 
 public class ChartController implements Serializable {
 
-   private MeterGaugeChartModel meterGaugeChart;
+   private PieChartModel pieChart;
     private PublicBlogFacade facade;
 
     
-    public MeterGaugeChartModel getMeterGauge(List<PublicBlog> list) {
+    public Integer getRate(List<PublicBlog> list) {
         
         if (list.isEmpty()) {
-            
+            return 0;
         }
 
-        facade = new PublicBlogFacade();
-        List<Number> intervals = new ArrayList<Number>() {
-            {
-                add(1);
-                add(2);
-                add(3);
-                add(4);
-                add(5);
-            }
-        };
+        int total = 0;
+       
+ 
+        
+ 
         
         
-        int sum = 0;
         for (int y = 0; y < list.size(); y++) {
             String star = list.get(y).getRating();
             
-        sum+=Integer.parseInt(star.substring(0,1));
+        int rate =Integer.parseInt(star.substring(0,1));
+        total+=rate;
+        
         
         
         }
-        double average  = ((double)sum)/list.size();
-meterGaugeChart = new MeterGaugeChartModel(1, intervals);
-     meterGaugeChart = new MeterGaugeChartModel(140, intervals);
-meterGaugeChart.setTitle("Custom Options");
-meterGaugeChart.setSeriesColors("66cc66,93b75f,E7E658,cc6666");
-meterGaugeChart.setGaugeLabel("km/h");
-meterGaugeChart.setGaugeLabelPosition("bottom");
- meterGaugeChart.setShowTickLabels(false);
-meterGaugeChart.setLabelHeightAdjust(110);
-meterGaugeChart.setIntervalOuterRadius(130);
-
-       return meterGaugeChart;
+       
+       return Integer.parseInt(""+Math.round(((double)total)/((double)list.size())));
     }
 
 

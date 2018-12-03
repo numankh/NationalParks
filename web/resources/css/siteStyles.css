@@ -767,3 +767,9 @@ font-size: 20px;
     margin-right: 40px;
     height:600px;
 }
+
+.ui-rating-star a, .ui-rating-cancel a {
+   display: block;
+    height: 16px;
+    width: 80px;
+}

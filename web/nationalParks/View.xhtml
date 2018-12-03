@@ -231,6 +231,13 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                             </h:form>
                         </div>
+                        <div id="Rating" >
+                            <br/>
+                        <h:outputText style="font-size:30px" value="Park Rating:" />
+                        <p:rating value="#{chartController.getRate(publicBlogController.items)}" readonly="true" />
+                            
+                        </div>
+                        
 
             <!--             Clicking the Create button displays the included Create.xhtml file in a dialog box on top of this page. 
                         <ui:include src="/userBlog/Create.xhtml"/>--><!--
