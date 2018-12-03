@@ -345,10 +345,12 @@ public class ParkController implements Serializable {
             if (!d.equals("")) {
 
                 Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.YEAR, Integer.parseInt(d.substring(0, 4)));
-                cal.set(Calendar.MONTH, Integer.parseInt(d.substring(5, 7)));
-                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d.substring(8, 10)));
-                date = cal.getTime();
+                
+             int   year = Integer.parseInt(d.substring(0, 4));
+        int month = Integer.parseInt(d.substring(5, 7))-1;
+        int day = Integer.parseInt(d.substring(8, 10));
+        cal.set(year, month, day, 0, 0, 0);  
+               date = cal.getTime();
 
             }
             //"times":[{"timeStart":"06:45 AM","timeEnd":"04:30 PM","sunsetEnd":false,"sunriseStart":false}]

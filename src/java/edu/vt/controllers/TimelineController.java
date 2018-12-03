@@ -3,15 +3,19 @@ package edu.vt.controllers;
 import edu.vt.EntityBeans.PublicBlog;
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserTrip;
+import edu.vt.FacadeBeans.ParkFacade;
 import edu.vt.FacadeBeans.PublicBlogFacade;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Methods;
+import edu.vt.pojo.Event;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -38,9 +42,11 @@ public class TimelineController implements Serializable {
     
     @Inject
     private UserTripController userTripController;
+    @Inject
+    private ParkController parkController;
    
     @PostConstruct 
-    public void initialize() {  
+    protected void initialize()  {  
         model = new TimelineModel();  
         Calendar cal = Calendar.getInstance();   
         
@@ -48,10 +54,9 @@ public class TimelineController implements Serializable {
         String date = userTripController.getSelected().getDateEntered().toString();
         int year = Integer.parseInt(date.substring(24));
         int month = this.monthToInt(date.substring(4,7));
-        int day = Integer.parseInt(date.substring(8, 10));
-                
+        int day = Integer.parseInt(date.substring(8, 10));  
         cal.set(year, month, day, 0, 0, 0);  
-        model.add(new TimelineEvent("Event Planned", cal.getTime()));  
+        model.add(new TimelineEvent("Trip Planned", cal.getTime()));  
         
         // add leave date
         String trip = userTripController.getSelected().getTrip();
@@ -63,16 +68,41 @@ public class TimelineController implements Serializable {
         month = this.monthToInt(date.substring(4,7));
         day = Integer.parseInt(date.substring(8, 10));
         cal.set(year, month, day, 0, 0, 0);  
-        model.add(new TimelineEvent("Leave for " + destination, cal.getTime()));  
+        model.add(new TimelineEvent("Leave for " + destination, cal.getTime())); 
+        Date leaveDate = cal.getTime();
          
+        
+        
         //add return date
         date=obj.optString("returnDate");
         year = Integer.parseInt(date.substring(24));
         month = this.monthToInt(date.substring(4,7));
         day = Integer.parseInt(date.substring(8, 10));
         cal.set(year, month, day, 0, 0, 0);  
-        model.add(new TimelineEvent("Return from " + destination, cal.getTime()));  
-    }  
+        model.add(new TimelineEvent("Return from " + destination, cal.getTime()));
+        Date returnDate = cal.getTime();
+        List<Event> list;
+        try{
+        list = parkController.getTripEvents(userTripController.getSelected().getDestination());
+        }
+        catch(Exception e){
+            list = new LinkedList<>();
+        }
+        for(int x = 0; x<list.size(); x++)
+        {
+            Event temp = list.get(x);
+            int y = x+1;
+                if(temp.getDate().before(returnDate)&&temp.getDate().after(leaveDate))
+                model.add(new TimelineEvent("Event " +y, temp.getDate()));
+                
+            
+            
+            
+            
+            
+        }
+        
+    }   
       
     public int monthToInt(String month){
         if (month.equals("Jan")){
