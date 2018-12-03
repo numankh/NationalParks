@@ -142,7 +142,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                 <div id="map" class="map"></div>
                                 <h:inputHidden id="startName" value="Home" />
                                 <h:inputHidden id="destinationName" value="#{item.destination}" />
-                                <h:outputText id="destinationLat" value="#{parkController.givenParkLat(item.destination)}" style="visibility:hidden" />
+                                <h:inputHidden id="destinationLat" value="#{parkController.givenParkLat(item.destination)}" />
                                 <h:inputHidden id="destinationLong" value="#{parkController.givenParkLong(item.destination)}" />
                                 <h:inputHidden id="startLat" value="#{userController.getLatitude()}" />
                                 <h:inputHidden id="startLong" value="#{userController.getLongitude()}" />
@@ -229,9 +229,9 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                                         </p:commandButton>-->
                             &nbsp;
                             <!-- Share trip plans via email -->
-                            <p:commandButton id="email" value="Share Trip Plans Via Email" 
-                                         action="#{userTripController.prepareEmailBody()}" 
-                                         ajax="false" icon="far fa-envelope" />
+                            <p:button value="Share Trip Plans Via Email" 
+                                         outcome="#{userTripController.prepareEmailBody()}" 
+                                         icon="far fa-envelope" />
  
                             <!-- Clicking the Cancel button shows the Profile page -->
                             <p:button outcome="/userTrip/ViewTrips" value="Trips Taken" icon="fas fa-arrow-left"  />
