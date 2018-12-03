@@ -63,7 +63,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
 
                             <p:row>
                                 <br/><br/>
-                                <h:outputText class="standardText" value="To get there, you can drive along the following path:"/>
+                                <h:outputText class="standardText" value="To get there, you can drive along the following path. (Note: If the park you are trying to visit is not reachable by car, the map will not load correctly!)"/>
                                 <br/><br/>
 
                                 <div id="map" class="map"></div>
@@ -107,7 +107,14 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                 <br/><br/>  
 
                             </p:row>
-                        </p:column>
+                              <p:row>                        
+                                <a href="https://www.kayak.com/hotels/#{parkController.airportCode(item.destination)}/#{item.leaveDate}/#{item.returnDate}" target="_blank" class="text">
+                                    <i class="fas fa-hotel"></i>&nbsp;Find a hotel to stay at!</a>&nbsp;&nbsp;&nbsp;
+                                <br/><br/>  
+
+                            </p:row>
+                            
+                        </p:column> 
 
 
                         <!-- 
@@ -116,31 +123,31 @@ Copyright © 2018 Nick Eda. All rights reserved.
                         ****************************************
                         -->
                         <f:facet name="footer">
-
+<!--
                             <p:commandButton value="Export as PDF" icon="fas fa-file-pdf" ajax="false">
-                                <!-- 
+                                 
                                 PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
                                 itext-2.1.7.jar must be added to the Libraries folder. 
                                 Pre-process the PDF file to be in Landscape orientation on Letter size paper.
-                                -->
+                                
                                 <p:dataExporter type="pdf" target="datalist" fileName="HealthTrip" preProcessor="#{tripManager.preProcessPDF}"/>
                             </p:commandButton>
                             &nbsp;
                             <p:commandButton value="Export as Excel" icon="fas fa-file-excel" ajax="false">
-                                <!-- 
+                                 
                                 PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
                                 poi-3.15.jar must be added to the Libraries folder. 
-                                -->
+                                
                                 <p:dataExporter type="xls" target="datalist" fileName="HealthTrip" />
                             </p:commandButton>
                             &nbsp;
                             <p:commandButton value="Export as CSV" icon="fas fa-file" ajax="false">
-                                <!-- 
+                                 
                                 PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
                                 poi-3.15.jar must be added to the Libraries folder. 
-                                -->
+                                
                                 <p:dataExporter type="csv" target="datalist" fileName="HealthTrip" />
-                            </p:commandButton>
+                            </p:commandButton>-->
                             &nbsp;
                             <!-- Clicking the Cancel button shows the Profile page -->
                             <p:button outcome="/userTrip/ViewTrips" value="Trips Taken" icon="fas fa-arrow-left"  />
