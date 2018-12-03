@@ -166,7 +166,6 @@ public class UserTripController implements Serializable {
     }
     
     public String toMonth (String month){
-        System.out.println("month = " + month);
         if (month.equals("Jan")){
             return "01";
         }
