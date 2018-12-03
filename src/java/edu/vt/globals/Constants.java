@@ -38,8 +38,8 @@ public final class Constants {
     
     macOS (Unix or Linux): Specify the absolute directory path as shown below.
      */
-    public static final String FILES_ABSOLUTE_PATH  = "C:/Users/Nick/Documents/NetBeansProjects/DocRoot/CloudStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Nick/Documents/NetBeansProjects/DocRoot/CloudStorage/UserPhotoStorage/";
+    public static final String FILES_ABSOLUTE_PATH  = "C:/Users/khann/DocRoot/CloudStorage/FileStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/khann/DocRoot/CloudStorage/UserPhotoStorage/";
 
     /*
     In glassfish-web.xml, we specified an alternate document root (DocRoot) with the statement below

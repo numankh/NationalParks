@@ -68,6 +68,8 @@ public class UserTripController implements Serializable {
     
     
     private String emailMessage;
+    
+    private String textMessage;
 
 
     /*
@@ -239,6 +241,14 @@ public class UserTripController implements Serializable {
 
     public void setEmailMessage(String givenEmailMessage) {
         this.emailMessage = givenEmailMessage;
+    }
+    
+    public String getTextMessage() {
+        return textMessage;
+    }
+
+    public void setTextMessage(String givenTextMessage) {
+        this.textMessage = givenTextMessage;
     }
     
     /*
@@ -574,6 +584,45 @@ public class UserTripController implements Serializable {
 
         // Redirect to show the Email.xhtml page
         return "/send/Email?faces-redirect=true";
+    }
+    
+     /**
+     * Composes the initial content of the Email message.
+     *
+     * @return Email.xhtml
+     */
+    public String prepareTextBody() {
+        
+        List<String> temp = new ArrayList<>();
+        
+        String trip = selected.getTrip();
+        JSONArray jsonArray = new JSONArray(trip);
+
+        jsonArray.forEach(object -> {
+            // Typecast the object as JSONObject
+            JSONObject jsonObject = (JSONObject) object;
+
+            String destination = jsonObject.getString("destination");
+            String leaveDate = this.convertDate(jsonObject.getString("leaveDate"));
+            String returnDate = this.convertDate(jsonObject.getString("returnDate"));
+            
+            temp.add(destination);
+            temp.add(leaveDate);
+            temp.add(returnDate);
+
+
+        });
+                
+        // Compose the email message content in HTML format
+        String textmessageBodyText = "Your trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
+                + " to " + temp.get(2);
+        
+
+        // Set the HTML content to be the body of the email message
+        setTextMessage(textmessageBodyText);
+
+        // Redirect to show the Email.xhtml page
+        return "/send/TextMessage?faces-redirect=true";
     }
     
     /*

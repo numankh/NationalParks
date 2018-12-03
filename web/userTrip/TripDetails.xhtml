@@ -233,6 +233,13 @@ Copyright © 2018 Nick Eda. All rights reserved.
                             <p:button value="Share Trip Plans Via Email" 
                                          outcome="#{userTripController.prepareEmailBody()}"
                                          icon="far fa-envelope" />
+                            &nbsp;
+                            
+                            <p:button value="Share Trip Plans Via Text" 
+                                         outcome="#{userTripController.prepareTextBody()}"
+                                         icon="far fa-envelope" />
+                            
+                            &nbsp;
  
                             <!-- Clicking the Cancel button shows the Profile page -->
                             <p:button outcome="/userTrip/ViewTrips" value="Trips Taken" icon="fas fa-arrow-left"  />

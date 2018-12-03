@@ -7,6 +7,7 @@ package edu.vt.controllers;
 import edu.vt.globals.Methods;
 import java.util.Properties;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -39,6 +40,9 @@ import javax.mail.internet.MimeMessage;
  * This class sends a Multimedia Messaging Service (MMS) Text Message to a cellular (mobile) phone.
  */
 public class TextMessageController {
+    
+    @Inject
+    private UserTripController userTripController;
 
     /*
     ==================
@@ -158,6 +162,10 @@ public class TextMessageController {
              Since some cell phones may not be able to process text messages in the HTML format,
              send the email message containing the text message in Plain Text format.
              */
+            
+            userTripController.prepareTextBody();
+            
+            mmsTextMessage = userTripController.getTextMessage();
             mimeEmailMessage.setContent(mmsTextMessage, "text/plain");
 
             // Create a transport object that implements the Simple Mail Transfer Protocol (SMTP)
