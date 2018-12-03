@@ -52,7 +52,7 @@ h1 {
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: white;
+    color: black;
 }
 
 
@@ -547,6 +547,7 @@ Therefore, remove the default ui-icon showing in the ui-confirm-dialog backgroun
 .ui-confirm-dialog .ui-icon {
     text-indent: 0px !important;
     background-image: none !important;
+    color: black;
 }
 
 /* Remove icon from the Choose, Upload and Cancel p:fileUpload buttons */
@@ -632,6 +633,7 @@ Position the confirmation dialog box on the center of the screen per
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
+    color: black;
     
 }
 
