@@ -159,22 +159,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
 
                             <p:row>
                                 <br/><br/>
-                                <!--                                <div 
-                                                                    data-skyscanner-widget="LocationWidget" 
-                                                                    data-locale="en-US" 
-                                                                    data-params="colour:#29f;location:#{item.destination};locationId:#{parkController.airportCode(item.destination)}"
-                                                                    data-title="Let's go to {location} right now!">
-                                                                </div>
-                                                                <script src="https://widgets.skyscanner.net/widget-server/js/loader.js"></script>-->
-
-
-<!--                                <div data-skyscanner-widget="SearchWidget" data-destination-iata-code="'#{parkController.airportCode(item.destination)}'" data-origin-name="'#{userController.selected.city}'"
-     data-button-label="Find a flight near #{item.destination} right now!" data-responsive="false" data-depart-date="4 Dec 2018"></div>
-    <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async=""></script>
-<br/><br/>     <br/><br/>     <br/><br/>     <br/><br/>     <br/><br/>-->
-
-
-                                <!--     https://www.google.com/flights#flt=ROA.BHB.2018-12-19*BHB.ROA.2018-12-23;c:USD;e:1;sd:1;t:f-->
+                                
                                 <a href="https://www.google.com/flights#flt=#{userController.airportCode()}.#{parkController.airportCode(item.destination)}.#{item.leaveDate}*#{parkController.airportCode(item.destination)}.#{userController.airportCode()}.#{item.returnDate};c:USD;e:1;sd:1;t:f" target="_blank" class="text">
                                     <i class="fas fa-plane"></i>&nbsp;Find a flight to #{item.destination} right now!</a>&nbsp;&nbsp;&nbsp;
                                 <br/><br/>  
@@ -188,7 +173,48 @@ Copyright © 2018 Nick Eda. All rights reserved.
                             </p:row>
 
                             
-                                                        
+                                        
+                            <p:row>
+                                
+                                <h1 style='color: black;font-size: xx-large'>Events happening at #{item.destination}</h1> <br/>
+
+                                <p:dataTable id="datalist" value="#{parkController.getTripEvents(item.destination)}" var="item"
+                                                 selectionMode="single" 
+                                                 reflow="true"
+                                                 rows="10"
+                                                 rowKey="#{item.id}"
+                                                 class="dataTable" >
+
+                                        <p:ajax event="rowSelect" update=""/>
+
+
+                                        <p:ajax event="rowUnselect" update=""/>
+
+                                        <!--
+                                        *******************
+                                        *   park   *
+                                        *******************
+                                        -->
+                                        <p:column sortBy="#{item.date}" headerText="Date of Event" 
+                                                  style="width:80px">
+                                            <div align="center">
+                                                <h:outputText  class="inputTextField" value="#{item.dateString}"/>
+                                            </div>
+                                        </p:column>
+
+                                        <!--
+                                        ********************
+                                        *      Description      *
+                                        ********************
+                                        -->
+                                        <p:column headerText="Description" 
+                                                  style="width:250px;">
+                                            <h:outputText class="inputTextField" value="#{item.description}"/>
+                                        </p:column>
+                                        
+                                       </p:dataTable>
+                                <br/><br/>
+                            </p:row>
                            
                             
                             
@@ -202,31 +228,6 @@ Copyright © 2018 Nick Eda. All rights reserved.
                         ****************************************
                         -->
                         <f:facet name="footer">
-                            <!--
-                                                        <p:commandButton value="Export as PDF" icon="fas fa-file-pdf" ajax="false">
-                                                             
-                                                            PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
-                                                            itext-2.1.7.jar must be added to the Libraries folder. 
-                                                            Pre-process the PDF file to be in Landscape orientation on Letter size paper.
-                                                            
-                                                            <p:dataExporter type="pdf" target="datalist" fileName="HealthTrip" preProcessor="#{tripManager.preProcessPDF}"/>
-                                                        </p:commandButton>
-                                                        &nbsp;
-                                                        <p:commandButton value="Export as Excel" icon="fas fa-file-excel" ajax="false">
-                                                             
-                                                            PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
-                                                            poi-3.15.jar must be added to the Libraries folder. 
-                                                            
-                                                            <p:dataExporter type="xls" target="datalist" fileName="HealthTrip" />
-                                                        </p:commandButton>
-                                                        &nbsp;
-                                                        <p:commandButton value="Export as CSV" icon="fas fa-file" ajax="false">
-                                                             
-                                                            PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
-                                                            poi-3.15.jar must be added to the Libraries folder. 
-                                                            
-                                                            <p:dataExporter type="csv" target="datalist" fileName="HealthTrip" />
-                                                        </p:commandButton>-->
                             &nbsp;
                             <!-- Share trip plans via email -->
                             <p:button value="Share Trip Plans Via Email" 

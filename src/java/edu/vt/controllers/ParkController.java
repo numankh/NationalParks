@@ -28,25 +28,25 @@ import org.primefaces.json.JSONObject;
 @Named("parkController")
 @SessionScoped
 public class ParkController implements Serializable {
-    
+
     private List<NationalParks> items = null;
     private List<NationalParks> searchItems = null;
     private NationalParks selected;
-    
+
     private String searchField;
     private String searchString;
-    
+
     @EJB
     private ParkFacade parkFacade;
     private SSLTool tool = new SSLTool();
-    
+
     @Inject
     private ParkMarkers parkMarkers;
-    
+
     public ParkController() {
-        
+
     }
-    
+
     public String getSearchField() {
         return searchField;
     }
@@ -62,17 +62,17 @@ public class ParkController implements Serializable {
     public void setSearchString(String searchString) {
         this.searchString = searchString;
     }
-    
+
     public List<NationalParks> getItems() {
         if (items == null) {
             items = getParkFacade().findAll();
         }
         return items;
     }
-    
+
     public List<NationalParks> getSearchItems() {
         if (searchItems == null) {
-            switch(searchField) {
+            switch (searchField) {
                 case "Park Name":
                     searchItems = getParkFacade().nameQuery(searchString);
                     break;
@@ -85,17 +85,17 @@ public class ParkController implements Serializable {
         }
         return searchItems;
     }
-    
+
     public String search() {
         selected = null;
         searchItems = null;
         return "/search/SearchResults?faces-redirect=true";
     }
-    
+
     public NationalParks getSelected() {
         return selected;
     }
-    
+
     public void setSelected(NationalParks selected) {
         this.selected = selected;
     }
@@ -103,18 +103,18 @@ public class ParkController implements Serializable {
     public ParkFacade getParkFacade() {
         return parkFacade;
     }
-    
+
     public void setParkFacade(ParkFacade parkFacade) {
         this.parkFacade = parkFacade;
     }
-    
+
     public String displayParkInformation() {
         if (selected == null) {
             return "";
         }
         return "/nationalParks/View?faces-redirect=true";
     }
-    
+
     public String selectedParkDescription() throws Exception {
         tool.disableCertificateValidation();
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
@@ -125,7 +125,7 @@ public class ParkController implements Serializable {
         String parkDescription = param1.optString("description", "");
         return parkDescription;
     }
-    
+
     public String selectedParkLatLong() throws Exception {
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
@@ -137,8 +137,8 @@ public class ParkController implements Serializable {
         parkLatLong = parkLatLong.replace(" long:", "");
         return parkLatLong;
     }
-    
-     public String givenParkLat(String parkName) throws Exception {
+
+    public String givenParkLat(String parkName) throws Exception {
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
         JSONObject data = new JSONObject(jsonData);
@@ -153,8 +153,8 @@ public class ParkController implements Serializable {
         System.out.println(parkName + " is at " + parkLatLong);
         return parkLatLong;
     }
-     
-          public String givenParkLong(String parkName) throws Exception {
+
+    public String givenParkLong(String parkName) throws Exception {
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
         JSONObject data = new JSONObject(jsonData);
@@ -166,28 +166,28 @@ public class ParkController implements Serializable {
         parkLatLong = parkLatLong.replace("long:", "");
         return parkLatLong;
     }
-          
-          public String airportCode(String parkName) throws Exception {
-              String apiUrl = "http://aviation-edge.com/v2/public/nearby?";
-              apiUrl += "key=";
-              apiUrl += Constants.AEKEY;
-              apiUrl += "&lat=";
-              apiUrl += givenParkLat(parkName);
-              apiUrl += "&lng=";
-              apiUrl += givenParkLong(parkName);
-              apiUrl += "&distance=200";
-              String jsonData = readUrlContent(apiUrl);
-              System.out.println("apiURL= " + apiUrl);
-              JSONArray data = new JSONArray(jsonData);
-              String aCode = "Brannon Sucks";
-              if (data.length() > 0){
-                  JSONObject code = data.getJSONObject(0);
-                  aCode = code.optString("codeIataAirport");
-              }         
-              System.out.println(aCode);
-              return aCode;
-          }
-    
+
+    public String airportCode(String parkName) throws Exception {
+        String apiUrl = "http://aviation-edge.com/v2/public/nearby?";
+        apiUrl += "key=";
+        apiUrl += Constants.AEKEY;
+        apiUrl += "&lat=";
+        apiUrl += givenParkLat(parkName);
+        apiUrl += "&lng=";
+        apiUrl += givenParkLong(parkName);
+        apiUrl += "&distance=200";
+        String jsonData = readUrlContent(apiUrl);
+        System.out.println("apiURL= " + apiUrl);
+        JSONArray data = new JSONArray(jsonData);
+        String aCode = "Brannon Sucks";
+        if (data.length() > 0) {
+            JSONObject code = data.getJSONObject(0);
+            aCode = code.optString("codeIataAirport");
+        }
+        System.out.println(aCode);
+        return aCode;
+    }
+
     public String readUrlContent(String webServiceURL) throws Exception {
         /*
         reader is an object reference pointing to an object instantiated from the BufferedReader class.
@@ -239,93 +239,134 @@ public class ParkController implements Serializable {
             }
         }
     }
-    
+
     public String selectByMarker() {
         getItems();
         String parkName = parkMarkers.getMarker().getTitle();
         for (int i = 0; i < items.size(); i++) {
-            if( items.get(i).getFullName().equalsIgnoreCase(parkName) ) {
-                selected  = items.get(i);
+            if (items.get(i).getFullName().equalsIgnoreCase(parkName)) {
+                selected = items.get(i);
                 return "/nationalParks/View?faces-redirect=true";
             }
         }
         return "index?faces-redirect=true";
     }
-    
+
     public String getNameByCode(String code) {
         getItems();
         for (int i = 0; i < items.size(); i++) {
-            if( items.get(i).getParkCode().equalsIgnoreCase(code) ) {
+            if (items.get(i).getParkCode().equalsIgnoreCase(code)) {
                 return items.get(i).getFullName();
             }
         }
         return code;
     }
-    
-     public String getCodebyName(String name) {
+
+    public String getCodebyName(String name) {
         getItems();
         for (int i = 0; i < items.size(); i++) {
-            if( items.get(i).getFullName().equalsIgnoreCase(name) ) {
+            if (items.get(i).getFullName().equalsIgnoreCase(name)) {
                 System.out.println("didn't fuck up here! " + items.get(i).getParkCode());
                 return items.get(i).getParkCode();
             }
         }
         return "failed";
     }
-     
-     public List<Event> getEvents() throws Exception{
-         List<Event> list = new ArrayList<Event>();
-         
-          tool.disableCertificateValidation();
+
+    public List<Event> getEvents() throws Exception {
+        List<Event> list = new ArrayList<Event>();
+
+        tool.disableCertificateValidation();
         String apiUrl = "https://developer.nps.gov/api/v1/events?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
         JSONObject data = new JSONObject(jsonData);
         int total = data.getInt("total");
-        
+
         JSONArray params = data.getJSONArray("data");
         int y = 0;
-        for(int x = 0; x<=20&&y<total; x++)
-        {
-            
-        JSONObject param1 = params.getJSONObject(x);
-            
-        String description  = param1.optString("description","");
-        
-        String d = param1.optString("date", "");
-        Date date = null;
-       
-        String time = "N/A";
-        if(!d.equals(""))
-        {
-            
-            Calendar cal = Calendar.getInstance();
-cal.set(Calendar.YEAR, Integer.parseInt(d.substring(0,4)));
-cal.set(Calendar.MONTH,Integer.parseInt(d.substring(5,7)));
-cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d.substring(8,10)));
-            date = cal.getTime();
-            
-                    }
-        //"times":[{"timeStart":"06:45 AM","timeEnd":"04:30 PM","sunsetEnd":false,"sunriseStart":false}]
-        
-        JSONArray temp = param1.getJSONArray("times");
-        if(temp.length()!=0){
-        JSONObject param2 = temp.getJSONObject(0);
-        String start = param2.optString("timeStart","");
-        String end = param2.optString("timeEnd","");
-        time = param1.optString(start+"-"+end);
-        }
-          list.add(new Event(x,description, date,""+Integer.parseInt(d.substring(5,7))+'/'+Integer.parseInt(d.substring(8,10))+'/'+Integer.parseInt(d.substring(0,4)) , time));  
-            
-        
-       
-        y++;
-        }
-        
-         return list;
-         
-     }
+        for (int x = 0; x <= 20 && y < total; x++) {
 
-   
+            JSONObject param1 = params.getJSONObject(x);
+
+            String description = param1.optString("description", "");
+
+            String d = param1.optString("date", "");
+            Date date = null;
+
+            String time = "N/A";
+            if (!d.equals("")) {
+
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, Integer.parseInt(d.substring(0, 4)));
+                cal.set(Calendar.MONTH, Integer.parseInt(d.substring(5, 7)));
+                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d.substring(8, 10)));
+                date = cal.getTime();
+
+            }
+            //"times":[{"timeStart":"06:45 AM","timeEnd":"04:30 PM","sunsetEnd":false,"sunriseStart":false}]
+
+            JSONArray temp = param1.getJSONArray("times");
+            if (temp.length() != 0) {
+                JSONObject param2 = temp.getJSONObject(0);
+                String start = param2.optString("timeStart", "");
+                String end = param2.optString("timeEnd", "");
+                time = param1.optString(start + "-" + end);
+            }
+            list.add(new Event(x, description, date, "" + Integer.parseInt(d.substring(5, 7)) + '/' + Integer.parseInt(d.substring(8, 10)) + '/' + Integer.parseInt(d.substring(0, 4)), time));
+
+            y++;
+        }
+
+        return list;
+
+    }
+
+    public List<Event> getTripEvents(String parkName) throws Exception {
+        List<Event> list = new ArrayList<Event>();
+
+        tool.disableCertificateValidation();
+        String apiUrl = "https://developer.nps.gov/api/v1/events?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
+        String jsonData = readUrlContent(apiUrl);
+        JSONObject data = new JSONObject(jsonData);
+        int total = data.getInt("total");
+
+        JSONArray params = data.getJSONArray("data");
+        int y = 0;
+        for (int x = 0; x <= 20 && y < total; x++) {
+
+            JSONObject param1 = params.getJSONObject(x);
+
+            String description = param1.optString("description", "");
+
+            String d = param1.optString("date", "");
+            Date date = null;
+
+            String time = "N/A";
+            if (!d.equals("")) {
+
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, Integer.parseInt(d.substring(0, 4)));
+                cal.set(Calendar.MONTH, Integer.parseInt(d.substring(5, 7)));
+                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d.substring(8, 10)));
+                date = cal.getTime();
+
+            }
+            //"times":[{"timeStart":"06:45 AM","timeEnd":"04:30 PM","sunsetEnd":false,"sunriseStart":false}]
+
+            JSONArray temp = param1.getJSONArray("times");
+            if (temp.length() != 0) {
+                JSONObject param2 = temp.getJSONObject(0);
+                String start = param2.optString("timeStart", "");
+                String end = param2.optString("timeEnd", "");
+                time = param1.optString(start + "-" + end);
+            }
+            list.add(new Event(x, description, date, "" + Integer.parseInt(d.substring(5, 7)) + '/' + Integer.parseInt(d.substring(8, 10)) + '/' + Integer.parseInt(d.substring(0, 4)), time));
+
+            y++;
+        }
+
+        return list;
+
+    }
+
 }
-
-
