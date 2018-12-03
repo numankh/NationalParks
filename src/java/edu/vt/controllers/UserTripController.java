@@ -60,6 +60,10 @@ public class UserTripController implements Serializable {
     private SSLTool tool = new SSLTool();
 
     private String answerToSecurityQuestion;
+    
+    
+    private String emailMessage;
+
 
     /*
     ==================
@@ -162,7 +166,6 @@ public class UserTripController implements Serializable {
     }
     
     public String toMonth (String month){
-        System.out.println("month = " + month);
         if (month.equals("Jan")){
             return "01";
         }
@@ -225,6 +228,14 @@ public class UserTripController implements Serializable {
         this.answerToSecurityQuestion = answerToSecurityQuestion;
     }
 
+    public String getEmailMessage() {
+        return emailMessage;
+    }
+
+    public void setEmailMessage(String givenEmailMessage) {
+        this.emailMessage = givenEmailMessage;
+    }
+    
     /*
     ================
     Instance Methods
@@ -514,5 +525,56 @@ public class UserTripController implements Serializable {
 //                    "See: " + ex.getMessage());
 //        }
 //    }
+    
+     /**
+     * Composes the initial content of the Email message.
+     *
+     * @return Email.xhtml
+     */
+    public String prepareEmailBody() {
+        
+        List<String> temp = new ArrayList<>();
+        
+        String trip = selected.getTrip();
+        JSONArray jsonArray = new JSONArray(trip);
+
+        jsonArray.forEach(object -> {
+            // Typecast the object as JSONObject
+            JSONObject jsonObject = (JSONObject) object;
+
+            String destination = jsonObject.getString("destination");
+            String leaveDate = this.convertDate(jsonObject.getString("leaveDate"));
+            String returnDate = this.convertDate(jsonObject.getString("returnDate"));
+            
+            temp.add(destination);
+            temp.add(leaveDate);
+            temp.add(returnDate);
+
+
+        });
+
+        // Compose the email message content in HTML format
+        String emailBodyText = "<div align=\"center\">"
+                + "<br /><br />The trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
+                + " to " + temp.get(2)
+                + "!<p>&nbsp;</p></div>";
+        
+
+        // Set the HTML content to be the body of the email message
+        setEmailMessage(emailBodyText);
+
+        // Redirect to show the Email.xhtml page
+        return "/send/Email?faces-redirect=true";
+    }
+    
+    /*
+    ===================
+    Clear Email Content
+    ===================
+     */
+    public void clearEmailContent() {
+
+        emailMessage = "";
+    }
     
 }

@@ -97,7 +97,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                             * Parks associated with photo  *
                             ********************************
                             -->
-                            <p:column sortBy="#{item.parkCode}" headerText="Park" >
+                            <p:column sortBy="#{parkController.getNameByCode(item.parkCode)}" headerText="Park" >
                                 <h:outputText value="#{parkController.getNameByCode(item.parkCode)}"/>
                             </p:column>
 
@@ -167,7 +167,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                                     <p:confirm header="File Deletion Confirmation"
                                                message="Are you sure you want to permanently delete the selected file from the database?" 
-                                               icon="fas fa-exclamation-triangle fa-2x" />
+                                               icon="fas fa-exclamation-triangle fa-2x" 
+                                               class="standardText"/>
                                 </p:commandButton>
 
                                 <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
