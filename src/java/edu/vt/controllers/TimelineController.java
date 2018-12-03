@@ -40,7 +40,7 @@ public class TimelineController implements Serializable {
     private UserTripController userTripController;
    
     @PostConstruct 
-    protected void initialize() {  
+    public void initialize() {  
         model = new TimelineModel();  
         Calendar cal = Calendar.getInstance();   
         
