@@ -533,17 +533,32 @@ public class UserTripController implements Serializable {
      */
     public String prepareEmailBody() {
         
-        List<Category> tripDetails = getTripItems();
+        List<String> temp = new ArrayList<>();
         
-        System.out.println("output: " + tripDetails.size());
+        String trip = selected.getTrip();
+        JSONArray jsonArray = new JSONArray(trip);
+
+        jsonArray.forEach(object -> {
+            // Typecast the object as JSONObject
+            JSONObject jsonObject = (JSONObject) object;
+
+            String destination = jsonObject.getString("destination");
+            String leaveDate = this.convertDate(jsonObject.getString("leaveDate"));
+            String returnDate = this.convertDate(jsonObject.getString("returnDate"));
+            
+            temp.add(destination);
+            temp.add(leaveDate);
+            temp.add(returnDate);
+
+
+        });
 
         // Compose the email message content in HTML format
-        /*String emailBodyText = "<div align=\"center\">"
-                + "<br /><br />The trip is scheduled at " + getTripItems().get(0) + " from " + getTripItems().get(1)
-                + " to " + getTripItems().get(2)
-                + "!<p>&nbsp;</p></div>";*/
+        String emailBodyText = "<div align=\"center\">"
+                + "<br /><br />The trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
+                + " to " + temp.get(2)
+                + "!<p>&nbsp;</p></div>";
         
-        String emailBodyText= "";
 
         // Set the HTML content to be the body of the email message
         setEmailMessage(emailBodyText);
