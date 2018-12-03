@@ -60,6 +60,10 @@ public class UserTripController implements Serializable {
     private SSLTool tool = new SSLTool();
 
     private String answerToSecurityQuestion;
+    
+    
+    private String emailMessage;
+
 
     /*
     ==================
@@ -225,6 +229,14 @@ public class UserTripController implements Serializable {
         this.answerToSecurityQuestion = answerToSecurityQuestion;
     }
 
+    public String getEmailMessage() {
+        return emailMessage;
+    }
+
+    public void setEmailMessage(String givenEmailMessage) {
+        this.emailMessage = givenEmailMessage;
+    }
+    
     /*
     ================
     Instance Methods
@@ -514,5 +526,41 @@ public class UserTripController implements Serializable {
 //                    "See: " + ex.getMessage());
 //        }
 //    }
+    
+     /**
+     * Composes the initial content of the Email message.
+     *
+     * @return Email.xhtml
+     */
+    public String prepareEmailBody() {
+        
+        List<Category> tripDetails = getTripItems();
+        
+        System.out.println("output: " + tripDetails.size());
+
+        // Compose the email message content in HTML format
+        /*String emailBodyText = "<div align=\"center\">"
+                + "<br /><br />The trip is scheduled at " + getTripItems().get(0) + " from " + getTripItems().get(1)
+                + " to " + getTripItems().get(2)
+                + "!<p>&nbsp;</p></div>";*/
+        
+        String emailBodyText= "";
+
+        // Set the HTML content to be the body of the email message
+        setEmailMessage(emailBodyText);
+
+        // Redirect to show the Email.xhtml page
+        return "/send/Email?faces-redirect=true";
+    }
+    
+    /*
+    ===================
+    Clear Email Content
+    ===================
+     */
+    public void clearEmailContent() {
+
+        emailMessage = "";
+    }
     
 }
