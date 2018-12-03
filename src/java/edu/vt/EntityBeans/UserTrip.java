@@ -23,6 +23,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONObject;
 
 /**
  *
@@ -130,5 +132,11 @@ public class UserTrip implements Serializable {
         this.userId = userId;
     }
     
+    
+    public String getDestination() {
+        JSONArray arr = new JSONArray(this.trip);
+        JSONObject obj = arr.getJSONObject(0);
+        return obj.optString("destination");
+    }
     
 }

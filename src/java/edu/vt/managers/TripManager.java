@@ -202,7 +202,7 @@ public class TripManager implements Serializable {
         //-----------------------------------------------------------
         clearTrip(false);
 
-        return "/index?faces-redirect=true";
+        return "/userTrip/ViewTrips?faces-redirect=true";
     }
     
     /*
