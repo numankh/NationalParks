@@ -22,7 +22,7 @@ var google;
 // Object reference 'map' to point to a Google Map object
 var map;
 
-// Object reference 'currentMarker' to point to a VT building location on map
+// Object reference 'currentMarker' to point to a park location on map
 var currentMarker = null;
 
 /*
@@ -44,7 +44,7 @@ function initializeMap() {
     /*
      Instantiate a new Virginia Tech campus map object and set its properties.
      document.getElementById('map') --> Obtains the Google Map style definition
-     from the div element with id="map" in ShowOnMap.xhtml 
+     from the div element with id="map" in TripDetails.xhtml 
      */
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
@@ -65,23 +65,22 @@ function initializeMap() {
 /*
  The Virginia Tech campus map created in the initializeMap() function above is used to show:
  (1) directions from one building to another on campus,
- (2) the location of a single VT building, or
- (3) locations of VT buildings in a given building category.
+ (2) the location of a single park, or
+ (3) locations of parks in a given building category.
  */
 function display() {
     /*
      document.getElementById("destinationName").value --> Obtains the name of the destination 
-     VT building from the hidden input element with id="destinationName" in ShowOnMap.xhtml 
+     park from the hidden input element with id="destinationName" in TripDetails.xhtml 
      */
     if (document.getElementById("photoLocation") !== null && document.getElementById("photoLocation").value !== '') {
         /*
          If destinationName has a value, the user asked for directions.
-         Show directions on the VT campus map created in the initializeMap() function.
          */
         displayPhotoLocation();
     }
     else{
-        console.log("got here");
+        // show route from addresss to park
         drawRoute();
     }
 
@@ -105,7 +104,7 @@ function displayPhotoLocation() {
 }
 
 
-// Draws the route on map showing directions to go from one VT building to another
+// Draws the route on map showing directions to go from one park to another
 function drawRoute() {
 
     // Identify the VT campus map as the Map to display Directions on
@@ -115,33 +114,29 @@ function drawRoute() {
 
     /******************************* Start Geolocation Determination *******************************/
 
-    // Obtain the starting Latitude as String from the hidden input element with id="startLat" in ShowOnMap.xhtml
+    // Obtain the starting Latitude as String from the hidden input element with id="startLat" in TripDetails.xhtml
     var startingLatitudeAsString = document.getElementById("resultsForm:datalist:0:startLat").value.toString();
 
-    // Obtain the starting Longitude as String from the hidden input element with id="startLong" in ShowOnMap.xhtml
+    // Obtain the starting Longitude as String from the hidden input element with id="startLong" in TripDetails.xhtml
     var startingLongitudeAsString = document.getElementById("resultsForm:datalist:0:startLong").value.toString();
 
     // Instantiate the starting geolocation object for obtaining directions FROM
     var startGeolocation = new google.maps.LatLng(startingLatitudeAsString, startingLongitudeAsString);
-    console.log(startGeolocation.toString());
 
     /**************************** Destination Geolocation Determination ****************************/
 
-    // Obtain the destination Latitude as String from the hidden input element with id="destinationLat" in ShowOnMap.xhtml
+    // Obtain the destination Latitude as String from the hidden input element with id="destinationLat" in TripDetails.xhtml
     var destinationLatitudeAsString = document.getElementById("resultsForm:datalist:0:destinationLat").value.toString();
-    console.log(destinationLatitudeAsString);
 
-    // Obtain the destination Longitude as String from the hidden input element with id="destinationLong" in ShowOnMap.xhtml      
+    // Obtain the destination Longitude as String from the hidden input element with id="destinationLong" in TripDetails.xhtml      
     var destinationLongitudeAsString = document.getElementById("resultsForm:datalist:0:destinationLong").value.toString();
-    console.log(destinationLongitudeAsString);
 
     // Instantiate the ending geolocation object for obtaining directions TO
     var endGeolocation = new google.maps.LatLng(destinationLatitudeAsString, destinationLongitudeAsString);
-    console.log(endGeolocation.toString());
 
     /********************************** Travel Mode Determination **********************************/
 
-    // Obtain the selected Travel Mode from the hidden input element with id="travelMode" in ShowOnMap.xhtml
+    // Obtain the selected Travel Mode from the hidden input element with id="travelMode" in TripDetails.xhtml
     var selectedTravelMode = "WALKING";
 
     /***************************** Directions Request Object Creation ******************************/
@@ -153,7 +148,6 @@ function drawRoute() {
         travelMode: google.maps.TravelMode[selectedTravelMode]
     };
 
-    console.log(request);
     /***************************** Obtaining and Displaying Directions *****************************/
 
     /*
