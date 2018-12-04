@@ -33,6 +33,23 @@ Copyright © 2018 Nick Eda. All rights reserved.
                     </h:outputText>
                 </h1>
                 <br />
+                 <br/><br/>
+
+                        <!--
+                        ================================
+                        | For navigating to individual |
+                        | sections of the page         |
+                        ================================
+                        -->
+                        <div align ="center" class="topnav">
+                            <div style="display:inline-block ">
+
+                                <a href="#timeline" class="standardText">Timeline of Trip</a>
+                                <a href="#map" class="standardText">Travel Details</a>
+                                <a href="#events" class="standardText">Events at #{item.destination}</a>
+                             
+                            </div>
+                        </div>
                 <h:form id="resultsForm">
 
                     <p:dataTable id="datalist" value="#{userTripController.tripItems}" var="item"
