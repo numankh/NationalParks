@@ -48,13 +48,23 @@ public class TimelineController implements Serializable {
     @PostConstruct 
     public void initialize()  {  
         model = new TimelineModel();  
-        Calendar cal = Calendar.getInstance();   
+        Calendar cal = Calendar.getInstance(); 
+        int year = 0;
+        int month = 0;
+        int day = 0;
         
         // add created date.
         String date = userTripController.getSelected().getDateEntered().toString();
-        int year = Integer.parseInt(date.substring(24));
-        int month = this.monthToInt(date.substring(4,7));
-        int day = Integer.parseInt(date.substring(8, 10));  
+        if(date.length() > 20) {
+            year = Integer.parseInt(date.substring(24));
+            month = this.monthToInt(date.substring(4,7));
+            day = Integer.parseInt(date.substring(8, 10));  
+        }
+        else {
+            year = Integer.parseInt(date.substring(0, 4));
+            month = Integer.parseInt(date.substring(5, 7));
+            day = Integer.parseInt(date.substring(8));
+        }
         cal.set(year, month, day, 0, 0, 0);  
         model.add(new TimelineEvent("Trip Planned", cal.getTime()));  
         
