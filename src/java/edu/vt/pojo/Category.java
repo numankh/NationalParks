@@ -12,9 +12,9 @@ public class Category {
     Instance Variables (Properties)
     ===============================
      */
-    private String destination;
-    private String leaveDate;
-    private String returnDate;
+    private String destination; // name of the park
+    private String leaveDate; // date to leave from home to go to the park
+    private String returnDate; // date to leave from the park and return home
 
     public Category(String destination, String leaveDate, String returnDate) {
         this.destination = destination;
