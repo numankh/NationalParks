@@ -76,6 +76,8 @@ Copyright © 2018 Osman Balci. All rights reserved.
                                 <p:commandButton id="searchButton" icon="fas fa-search" value="Search" 
                                                  update=":ParkSearchForm" 
                                                  oncomplete="PF('ParkSearchDialog').show()"/>
+                                <!-- Clicking the Cancel button shows the Profile page -->
+                                <p:button outcome="/nationalParks/List" value="Return to National Parks List" icon="fas fa-arrow-left"  />
                             </f:facet>
 
                         </p:dataTable>
