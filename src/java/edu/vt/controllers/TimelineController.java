@@ -46,7 +46,7 @@ public class TimelineController implements Serializable {
     private ParkController parkController;
    
     @PostConstruct 
-    protected void initialize()  {  
+    public void initialize()  {  
         model = new TimelineModel();  
         Calendar cal = Calendar.getInstance();   
         
