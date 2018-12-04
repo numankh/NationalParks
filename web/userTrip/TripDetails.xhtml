@@ -58,21 +58,16 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                  rowsPerPageTemplate="5,10,15,20"
                                  class="dataTable" >
 
-                        <!-- 
-                        ***********************
-                        *   Category Number   *
-                        ***********************
-                        Category Number 16 is the last row showing the total values. Therefore,
-                        we do not show the values of some columns if it is the last totals row.
-                        -->
                         <p:column  style="text-align:center;">
-                            <!-- Render the row value of this column if it is not the last totals row  -->
                             <p:row>
                                 <br/>
                                 <h1 style='color: black;font-size: xx-large'>#{userController.selected.firstName}'s Trip to #{item.destination}</h1> <br/>
                                 <h:graphicImage url="#{parkController.getParkFacade().findImageURLByFullName(item.destination)}" style="width: 70%; height:400px"/>
+                            
                             </p:row>
                             <div id="timelinetitle"/> 
+                            
+                            <!--Trip Timeline-->
                             <p:row style="align-content: center;">
                                 <br/><br/><br/><br/>
                                 <h1 style='color: black;font-size: xx-large'>Trip Timeline</h1>
@@ -152,6 +147,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
 
                             <div id="maptitle"/>  
 
+                            <!--Travel Info-->
                             <p:row>
                                 <br/><br/>
                                 <h1 style='color: black;font-size: xx-large'>Getting to #{item.destination}</h1> <br/>
@@ -171,6 +167,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                 </script>
                             </p:row>
 
+                            <!--Transportation Links-->
                             <p:row>
                                 <br/><br/>
                                 <h:outputText class="standardText" value="Listed below are some tools to help decide on transportation and hotels:"/>
@@ -184,6 +181,7 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                 <br/><br/>  
 
                             </p:row>
+                            
                             <p:row>                        
                                 <a href="https://www.kayak.com/hotels/#{parkController.airportCode(item.destination)}/#{item.leaveDate}/#{item.returnDate}" target="_blank" class="text">
                                     <i class="fas fa-hotel"></i>&nbsp;Find a hotel to stay at!</a>&nbsp;&nbsp;&nbsp;
@@ -192,7 +190,8 @@ Copyright © 2018 Nick Eda. All rights reserved.
                             </p:row>
 
                             
-                                  <div id="events"/>      
+                            <div id="events"/>      
+                            <!--Events-->
                             <p:row>
                                 
                                 <h1 style='color: black;font-size: xx-large'>Events happening at #{item.destination}</h1> <br/>
@@ -235,9 +234,6 @@ Copyright © 2018 Nick Eda. All rights reserved.
                                 <br/><br/>
                             </p:row>
                            
-                            
-                            
-
                         </p:column> 
                         
 

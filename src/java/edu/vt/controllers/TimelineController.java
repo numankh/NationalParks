@@ -1,16 +1,6 @@
 package edu.vt.controllers;
 
-import edu.vt.EntityBeans.PublicBlog;
-import edu.vt.EntityBeans.User;
-import edu.vt.EntityBeans.UserTrip;
-import edu.vt.FacadeBeans.ParkFacade;
-import edu.vt.FacadeBeans.PublicBlogFacade;
-import edu.vt.FacadeBeans.UserFacade;
-import edu.vt.controllers.util.JsfUtil;
-import edu.vt.controllers.util.JsfUtil.PersistAction;
-import edu.vt.globals.Methods;
 import edu.vt.pojo.Event;
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +12,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
-
 import org.primefaces.model.timeline.TimelineEvent;
 import org.primefaces.model.timeline.TimelineModel;
 
@@ -107,6 +96,11 @@ public class TimelineController implements Serializable {
 
     }
 
+    /**
+     * Convert string month (3 char code) to its integer equivalent
+     * @param month
+     * @return integer related to the input month
+     */
     public int monthToInt(String month) {
         if (month.equals("Jan")) {
             return 0;
@@ -136,6 +130,7 @@ public class TimelineController implements Serializable {
 
     }
 
+    // Getter/Setter methods
     public TimelineModel getModel() {
         return model;
     }

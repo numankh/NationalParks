@@ -126,6 +126,11 @@ public class ParkController implements Serializable {
         return parkDescription;
     }
 
+    /**
+     * This method returns a formatted string composed of both longitude and latitude 
+     * @return
+     * @throws Exception 
+     */
     public String selectedParkLatLong() throws Exception {
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getSelected().getParkCode() + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
@@ -138,6 +143,12 @@ public class ParkController implements Serializable {
         return parkLatLong;
     }
 
+    /**
+     * This method uses the NPS API to find the latitude of a given park
+     * @param parkName
+     * @return
+     * @throws Exception 
+     */
     public String givenParkLat(String parkName) throws Exception {
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
@@ -150,10 +161,15 @@ public class ParkController implements Serializable {
         parkLatLong = parkLatLong.substring(0, index);
         int secondIndex = parkLatLong.indexOf(",");
         parkLatLong = parkLatLong.substring(0, secondIndex);
-        System.out.println(parkName + " is at " + parkLatLong);
         return parkLatLong;
     }
 
+    /**
+     * This method user the NPS API to find the longitude of a given park
+     * @param parkName
+     * @return
+     * @throws Exception 
+     */
     public String givenParkLong(String parkName) throws Exception {
         String apiUrl = "https://developer.nps.gov/api/v1/parks?parkCode=" + getCodebyName(parkName) + "&api_key=XM0CTjflUAsumArBchomTuUFRFZDA5xcj5I3v1xY";
         String jsonData = readUrlContent(apiUrl);
@@ -167,6 +183,12 @@ public class ParkController implements Serializable {
         return parkLatLong;
     }
 
+    /**
+     * This method uses the aviation-edge api to find the nearest code of the airport nearest to the inputted park.
+     * @param parkName
+     * @return
+     * @throws Exception 
+     */
     public String airportCode(String parkName) throws Exception {
         String apiUrl = "http://aviation-edge.com/v2/public/nearby?";
         apiUrl += "key=";
@@ -177,14 +199,12 @@ public class ParkController implements Serializable {
         apiUrl += givenParkLong(parkName);
         apiUrl += "&distance=200";
         String jsonData = readUrlContent(apiUrl);
-        System.out.println("apiURL= " + apiUrl);
         JSONArray data = new JSONArray(jsonData);
-        String aCode = "Brannon Sucks";
+        String aCode = "Bad Data";
         if (data.length() > 0) {
             JSONObject code = data.getJSONObject(0);
             aCode = code.optString("codeIataAirport");
         }
-        System.out.println(aCode);
         return aCode;
     }
 
@@ -240,6 +260,10 @@ public class ParkController implements Serializable {
         }
     }
 
+    /**
+     * Redirect browser to a specific park when selected a marker on the home page
+     * @return 
+     */
     public String selectByMarker() {
         getItems();
         String parkName = parkMarkers.getMarker().getTitle();
@@ -252,6 +276,11 @@ public class ParkController implements Serializable {
         return "index?faces-redirect=true";
     }
 
+    /**
+     * Grab the fullname of a park given its code
+     * @param code
+     * @return 
+     */
     public String getNameByCode(String code) {
         getItems();
         for (int i = 0; i < items.size(); i++) {
@@ -262,17 +291,26 @@ public class ParkController implements Serializable {
         return code;
     }
 
+    /**
+     * Grab the parkcode of a park given its full name
+     * @param name
+     * @return 
+     */
     public String getCodebyName(String name) {
         getItems();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getFullName().equalsIgnoreCase(name)) {
-                System.out.println("didn't fuck up here! " + items.get(i).getParkCode());
                 return items.get(i).getParkCode();
             }
         }
         return "failed";
     }
 
+    /**
+     * Grab a list of events using the NPS API
+     * @return
+     * @throws Exception 
+     */
     public List<Event> getEvents() throws Exception {
         List<Event> list = new ArrayList<Event>();
 
@@ -322,6 +360,12 @@ public class ParkController implements Serializable {
 
     }
 
+    /**
+     * Grab a list of events happening at a given park
+     * @param parkName
+     * @return
+     * @throws Exception 
+     */
     public List<Event> getTripEvents(String parkName) throws Exception {
         List<Event> list = new ArrayList<Event>();
 
@@ -354,8 +398,6 @@ public class ParkController implements Serializable {
                date = cal.getTime();
 
             }
-            //"times":[{"timeStart":"06:45 AM","timeEnd":"04:30 PM","sunsetEnd":false,"sunriseStart":false}]
-
             JSONArray temp = param1.getJSONArray("times");
             if (temp.length() != 0) {
                 JSONObject param2 = temp.getJSONObject(0);

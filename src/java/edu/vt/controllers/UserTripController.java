@@ -132,6 +132,10 @@ public class UserTripController implements Serializable {
         this.selected = selected;
     }
 
+    /**
+     * Create a list of categorical trip items by parsing the trip string from the userTrip database
+     * @return 
+     */
     public List<Category> getTripItems() {
         if (tripItems == null) {
 
@@ -158,12 +162,13 @@ public class UserTripController implements Serializable {
         return tripItems;
     }
     
+    /**
+     * Convert a date from a java.util.Date.toString() format to year-mo-da format
+     * @param date
+     * @return 
+     */
     public String convertDate(String date){
-        System.out.println("date = " + date);
         String newDate = "";
-        //Sun Dec 09 00:00:00 EST 2018. 
-        //0123456789012345678901234567
-        //0000000000111111111222222222
         newDate += date.substring(24);
         newDate += "-";
         newDate += this.toMonth(date.substring(4,7));
@@ -172,6 +177,11 @@ public class UserTripController implements Serializable {
         return newDate;
     }
     
+    /**
+     * convert a month from string format to 2digit string code
+     * @param month
+     * @return 
+     */
     public String toMonth (String month){
         if (month.equals("Jan")){
             return "01";
@@ -212,8 +222,6 @@ public class UserTripController implements Serializable {
     public List<Category> getAllTrips() {
         if (allTrips == null){
             allTrips = new ArrayList<>();
-            
-           
         }
         return allTrips;
     }

@@ -761,6 +761,10 @@ public class UserController implements Serializable {
         }
     }
     
+    /**
+     * Use the google maps API to find the Latitude and Longitude using a street address
+     * @return 
+     */
     public String getLatitude(){
         User signedInUser = (User) Methods.sessionMap().get("user");
         String formatedAddress = signedInUser.getAddress1() + ", " + signedInUser.getCity() + ", " + signedInUser.getState() + ", " + signedInUser.getZipcode();
@@ -796,6 +800,11 @@ public class UserController implements Serializable {
         return longitude;
     }
     
+    /**
+     * Grab airport code pulled from the aviation-edge API using a users address 
+     * @return
+     * @throws Exception 
+     */
     public String airportCode() throws Exception{
               String apiUrl = "http://aviation-edge.com/v2/public/nearby?";
               apiUrl += "key=";
@@ -805,15 +814,13 @@ public class UserController implements Serializable {
               apiUrl += "&lng=";
               apiUrl += this.getLongitude();
               apiUrl += "&distance=200";
-              System.out.println("url = " + apiUrl);
               String jsonData = readUrlContent(apiUrl);
               JSONArray data = new JSONArray(jsonData);
-              String aCode = "Brannon Sucks";
+              String aCode = "Bad Code";
               if (data.length() > 0){
                   JSONObject code = data.getJSONObject(0);
                   aCode = code.optString("codeIataAirport");
               }         
-              System.out.println(aCode);
               return aCode;
           
     }
