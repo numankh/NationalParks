@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-// The @Entity annotation designates this class as a JPA Entity class representing the User table in the CloudDriveDB database.
+// The @Entity annotation designates this class as a JPA Entity class representing the User table in the NationalParksDB database.
 @Entity
 
 // Name of the database table represented
@@ -145,7 +145,7 @@ public class User implements Serializable {
     /*
     ===============================================================
     Class constructors for instantiating a User entity object to
-    represent a row in the User table in the CloudDriveDB database.
+    represent a row in the User table in the NationalParksDB database.
     ===============================================================
      */
     public User() {

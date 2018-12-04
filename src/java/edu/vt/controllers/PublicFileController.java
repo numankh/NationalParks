@@ -244,7 +244,7 @@ public class PublicFileController implements Serializable {
         // Obtain the object reference of the UserFile whose primary key = fileId
         PublicFile publicFile = getFacade().getPublicFile(fileId);
 
-        // Obtain the userFile's filename as it is stored in the CloudDrive DB database
+        // Obtain the userFile's filename as it is stored in the NationalParks DB database
         String imageFileName = publicFile.getFilename();
 
         // Extract the file extension from the filename

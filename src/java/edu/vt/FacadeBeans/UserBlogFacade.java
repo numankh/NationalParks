@@ -25,7 +25,7 @@ public class UserBlogFacade extends AbstractFacade<UserBlog> {
     
     Within the persistence context, the entity (UserBlog) instances and their life cycle are
     managed. The EntityManager API is used to create and remove persistent entity (UserBlog)
-    instances, to find entities by their primary key, and to query over entities (Companies).
+    instances, to find entities by their primary key, and to query over entities (NationalParks).
      */
     @PersistenceContext(unitName = "NationalParksPU")
     
@@ -112,7 +112,7 @@ public class UserBlogFacade extends AbstractFacade<UserBlog> {
     -----------------------------
      */
     /**
-     * Searches CompaniesDB for companies where company name contains the searchString entered by the user.
+     * Searches NationalParksDB for companies where company name contains the searchString entered by the user.
      *
      * @param searchString contains the search string the user entered for searching company names
      * @return A list of UserBlog object references as the search results
@@ -131,7 +131,7 @@ public class UserBlogFacade extends AbstractFacade<UserBlog> {
     --------------------------------------
      */
     /**
-     * Searches CompaniesDB for companies where company's stock ticker name contains the searchString entered by the user.
+     * Searches NationalParksDB for companies where company's stock ticker name contains the searchString entered by the user.
      *
      * @param searchString contains the search string the user entered for searching stock tickers
      * @return A list of UserBlog object references as the search results
@@ -150,7 +150,7 @@ public class UserBlogFacade extends AbstractFacade<UserBlog> {
     -------------------------------------
      */
     /**
-     * Searches CompaniesDB for companies where business Sector name contains the searchString entered by the user.
+     * Searches NationalParksDB for companies where business Sector name contains the searchString entered by the user.
      *
      * @param searchString contains the search string the user entered for searching business Sector names
      * @return A list of UserBlog object references as the search results
@@ -169,7 +169,7 @@ public class UserBlogFacade extends AbstractFacade<UserBlog> {
     --------------------
      */
     /**
-     * Searches CompaniesDB for companies where company name, ticker, and sector name contains the searchString entered by the user.
+     * Searches NationalParksDB for companies where company name, ticker, and sector name contains the searchString entered by the user.
      *
      * @param searchString contains the search string the user entered for searching company name, ticker, and sector name
      * @return A list of UserBlog object references as the search results

@@ -128,7 +128,7 @@ public class UserTripController implements Serializable {
     }
 
     public void setSelected(UserTrip selected) {
-        tripItems = null;    // Invalidate list of BEVQ items to trigger re-query.
+        tripItems = null;    // Invalidate list of Trip items to trigger re-query.
         this.selected = selected;
     }
 

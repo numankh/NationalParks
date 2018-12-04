@@ -137,10 +137,10 @@ public class TripManager implements Serializable {
 
         
         /*
-        The UserTrip Table in HealthTripqDB database has the following attributes to set:
+        The UserTrip Table in NationalParksDB database has the following attributes to set:
             Integer id (The DB Primary Key id value is generated and set at the time of UserTrip object creation)
             Date    dateEntered
-            String  trip (Stored as MEDIUMTEXT in HealthTripqDB containing the JSON Array of all BEVQ 15 categories)
+            String  trip (Stored as MEDIUMTEXT in NationalParksDB containing the JSON Array of all Trip categories)
             User    userId
          */
         //--------------------------------------

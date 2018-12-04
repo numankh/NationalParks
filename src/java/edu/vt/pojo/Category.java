@@ -4,7 +4,7 @@
  */
 package edu.vt.pojo;
 
-// This class provides a Plain Old Java Object (POJO) representing a BEVQ category
+// This class provides a Plain Old Java Object (POJO) representing a Trip category
 public class Category {
 
     /*
