@@ -732,6 +732,12 @@ if content overflows an element's box.
     width: 200px;
 }
 
+/* Used in List.xhtml */
+.aboutParkImage {
+    height: auto;
+    width: 500px;
+}
+
 
 .topnav {
   overflow: hidden;

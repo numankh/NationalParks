@@ -1,8 +1,9 @@
 /*
- * Created by Osman Balci on 2018.06.20
- * Copyright © 2018 Osman Balci. All rights reserved. 
+ * Created by Numan Khan on 2018.11.20
+ * Copyright © 2018 Numan Khan. All rights reserved. 
  */
 package edu.vt.controllers;
+
 
 import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.UserFacade;
@@ -12,6 +13,8 @@ import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Methods;
 import edu.vt.pojo.Category;
+import edu.vt.pojo.Event;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -499,55 +502,7 @@ public class UserTripController implements Serializable {
         String test = destination;
         return test;
     }
-    
-//    public void getFlightInfo() {
-//        tool.disableCertificateValidation();
-//        getItems();
-//        String apiUrl = "https://aviation-edge.com/v2/public/flights?key=40ebc2-b3c00f";
-//        apiUrl += "&arrIata=";
-//        apiUrl += getClosestAirport(getTripItems().get(0).getDestination());
-//        for (int i = 1; i < items.size(); i++) {
-//            apiUrl += ",";
-//            apiUrl += items.get(i).getParkCode();
-//        }
-//        apiUrl += "&api_key=7Rm7J7uafcu5ov3oZxLNnUybQNYjxRkAXWXuMemx";
-//
-//        try {
-//            String jsonData = readUrlContent(apiUrl);
-//            JSONObject data = new JSONObject(jsonData);
-//            JSONArray params = data.getJSONArray("data");
-//
-//            for (int j = 0; j < params.length(); j++) {
-//                JSONObject param = params.getJSONObject(j);
-//                String latLong = param.optString("latLong", "");
-//                String parkName = param.optString("name", "");
-//                String name = "";
-//                if (parkName.equals("Denali") || parkName.equals("Gates Of The Arctic")
-//                        || parkName.equals("Glacier Bay") || parkName.equals("Great Sand Dunes")
-//                        || parkName.equals("Katmai") || parkName.equals("Lake Clark")
-//                        || parkName.equals("Wrangell - St Elias")) {
-//                    name = parkName + " National Park & Preserve";
-//                } else if (parkName.equals("Redwood")) {
-//                    name = parkName + " National and State Parks";
-//                } else if (parkName.equals("Sequoia & Kings Canyon")) {
-//                    name = parkName + " National Parks";
-//                } else if (parkName.equals("National Park of American Samoa")) {
-//                    name = parkName;
-//                } else {
-//                    name = parkName + " National Park";
-//                }
-//                String[] splits = latLong.split("[:,]");
-//
-//                Double lat = Double.parseDouble(splits[1]);
-//                Double lon = Double.parseDouble(splits[3]);
-//                LatLng coord = new LatLng(lat, lon);
-//                parkModel.addOverlay(new Marker(coord, name, ""));
-//            }
-//        } catch (Exception ex) {
-//            Methods.showMessage("Error", "Cannot load Park information",
-//                    "See: " + ex.getMessage());
-//        }
-//    }
+ 
     
      /**
      * Composes the initial content of the Email message.
@@ -579,12 +534,38 @@ public class UserTripController implements Serializable {
         String imglink = parkController.getParkFacade().findImageURLByFullName(temp.get(0));        
         
         String img = "<img src=\"" + imglink + "\"" +  " style=\"width:100px;height:100px;\">";
-
-        // Compose the email message content in HTML format
-        String emailBodyText = "<div align=\"center\">"
+        
+        List<Event> eventList;
+        String aEvent = "";
+        String emailBodyText = "";
+        try {
+            eventList = parkController.getTripEvents(temp.get(0));
+            if(eventList.isEmpty()) {
+                // Compose the email message content in HTML format
+                emailBodyText = "<div align=\"center\">"
                 + "<br /><br />Your trip is scheduled at " + temp.get(0) + "<br /> from " + temp.get(1)
-                + " to " + temp.get(2) + "<br/><br/> " + img
+                + " to " + temp.get(2) + "<br/><br/> " + img 
                 + "<p>&nbsp;</p></div>";
+                
+            }
+            else {
+                aEvent = eventList.get(0).getDescription();
+                 
+                // Compose the email message content in HTML format
+                emailBodyText = "<div align=\"center\">"
+                + "<br /><br />Your trip is scheduled at " + temp.get(0) + "<br /> from " + temp.get(1)
+                + " to " + temp.get(2) + "<br/><br/> " + img + "<br/><br/> Here's an event you can attend!: "
+                + "<br/><br/>"
+                + aEvent + "<br/><br/>"
+                + "<p>&nbsp;</p></div>";
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(UserTripController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+
         
 
         // Set the HTML content to be the body of the email message
@@ -595,9 +576,9 @@ public class UserTripController implements Serializable {
     }
     
      /**
-     * Composes the initial content of the Email message.
+     * Composes the initial content of the Text message.
      *
-     * @return Email.xhtml
+     * @return TextMessage.xhtml
      */
     public String prepareTextBody() {
         
@@ -620,23 +601,45 @@ public class UserTripController implements Serializable {
 
 
         });
-                
+        
+        List<Event> eventList;
+        String aEvent = "";
+        String textmessageBodyText = "";
+        
         // Compose the email message content in HTML format
-        String textmessageBodyText = "Your trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
-                + " to " + temp.get(2);
+        try {
+            eventList = parkController.getTripEvents(temp.get(0));
+            if(eventList.isEmpty()) {
+                textmessageBodyText = "Your trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
+                + " to " + temp.get(2) + ".";
+                
+            }
+            else {
+                textmessageBodyText = "Your trip is scheduled at " + temp.get(0) + " from " + temp.get(1)
+                + " to " + temp.get(2) + ". Please check your trip planner, there are park related events happening during your stay!";
+                 
+
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(UserTripController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        
+        
         
 
-        // Set the HTML content to be the body of the email message
+        // Set the HTML content to be the body of the text message
         setTextMessage(textmessageBodyText);
 
-        // Redirect to show the Email.xhtml page
+        // Redirect to show the TextMessage.xhtml page
         return "/send/TextMessage?faces-redirect=true";
     }
     
-    /*
-    ===================
-    Clear Email Content
-    ===================
+    /**
+     * Clears email content
+     *
+     * 
      */
     public void clearEmailContent() {
 
